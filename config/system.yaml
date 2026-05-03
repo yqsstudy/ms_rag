@@ -1,0 +1,56 @@
+# System Configuration
+
+# Embedding settings
+embedding:
+  model: "BAAI/bge-large-zh"
+  device: "cpu"  # cpu | cuda | mps
+  batch_size: 32
+  normalize: true
+
+# Vector store settings
+vector_store:
+  type: "chroma"
+  persist_directory: "./data/chroma"
+  collection_name: "performance_guide"
+
+# Keyword index settings
+keyword_index:
+  type: "bm25"
+  k1: 1.5
+  b: 0.75
+
+# Retrieval settings
+retrieval:
+  vector_weight: 0.6
+  keyword_weight: 0.4
+  top_k: 10
+  rerank: true
+
+# LLM settings
+llm:
+  provider: "anthropic"  # anthropic | openai | deepseek
+  model: "claude-sonnet-4-6"
+  api_key: "${LLM_API_KEY}"
+  max_tokens: 2000
+  temperature: 0.7
+  timeout: 60
+
+# API settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins:
+    - "*"
+
+# Document processing settings
+document:
+  min_chunk_size: 1500
+  max_chunk_size: 2000
+  chunk_overlap: 200
+
+# Logging settings
+logging:
+  level: "INFO"
+  format: "json"
+  file: "./logs/app.log"

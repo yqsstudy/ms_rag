@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/composables/usechat.ts","./src/types/index.ts","./src/app.vue","./src/components/chatinput.vue","./src/components/imagegallery.vue","./src/components/loadingdots.vue","./src/components/messagecard.vue","./src/components/quickquestions.vue","./src/components/sourcecard.vue"],"version":"5.9.3"}

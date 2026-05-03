@@ -1,0 +1,174 @@
+"""Vector store using Chroma"""
+
+import json
+from pathlib import Path
+from typing import List, Optional
+
+import chromadb
+from chromadb.config import Settings as ChromaSettings
+
+from ..data.splitter import Chunk
+
+
+class SearchResult:
+    """Search result from vector store"""
+
+    def __init__(
+        self,
+        chunk_id: str,
+        content: str,
+        metadata: dict,
+        score: float,
+    ):
+        self.chunk_id = chunk_id
+        self.content = content
+        self.metadata = metadata
+        self.score = score
+
+    def to_dict(self) -> dict:
+        return {
+            "chunk_id": self.chunk_id,
+            "content": self.content,
+            "metadata": self.metadata,
+            "score": self.score,
+        }
+
+
+class VectorStore:
+    """Vector store wrapper for Chroma"""
+
+    def __init__(
+        self,
+        persist_directory: str = "./data/chroma",
+        collection_name: str = "performance_guide",
+    ):
+        self.persist_directory = Path(persist_directory)
+        self.collection_name = collection_name
+        self._client: Optional[chromadb.Client] = None
+        self._collection: Optional[chromadb.Collection] = None
+
+    def _get_client(self) -> chromadb.Client:
+        """Get or create Chroma client"""
+        if self._client is None:
+            self.persist_directory.mkdir(parents=True, exist_ok=True)
+            self._client = chromadb.PersistentClient(
+                path=str(self.persist_directory),
+                settings=ChromaSettings(anonymized_telemetry=False),
+            )
+        return self._client
+
+    def _get_collection(self) -> chromadb.Collection:
+        """Get or create collection"""
+        if self._collection is None:
+            client = self._get_client()
+            self._collection = client.get_or_create_collection(
+                name=self.collection_name,
+                metadata={"hnsw:space": "cosine"},
+            )
+        return self._collection
+
+    def add_chunks(
+        self,
+        chunks: List[Chunk],
+        embeddings: List[List[float]],
+    ) -> int:
+        """Add chunks with embeddings to the store"""
+        collection = self._get_collection()
+
+        ids = [chunk.chunk_id for chunk in chunks]
+        documents = [chunk.content for chunk in chunks]
+        metadatas = [
+            {
+                "doc_id": chunk.doc_id,
+                "doc_title": chunk.doc_title,
+                "section_title": chunk.section_title,
+                "source_url": chunk.source_url,
+                "parent_topic": chunk.parent_topic or "",
+                "images": json.dumps(chunk.images, ensure_ascii=False),  # 存储图片信息
+            }
+            for chunk in chunks
+        ]
+
+        collection.add(
+            ids=ids,
+            embeddings=embeddings,
+            documents=documents,
+            metadatas=metadatas,
+        )
+
+        return len(chunks)
+
+    def search(
+        self,
+        query_embedding: List[float],
+        k: int = 10,
+        where: Optional[dict] = None,
+    ) -> List[SearchResult]:
+        """Search for similar documents"""
+        collection = self._get_collection()
+
+        results = collection.query(
+            query_embeddings=[query_embedding],
+            n_results=k,
+            where=where,
+            include=["documents", "metadatas", "distances"],
+        )
+
+        search_results = []
+        if results["ids"] and results["ids"][0]:
+            for i, chunk_id in enumerate(results["ids"][0]):
+                # Convert distance to similarity score (1 - distance for cosine)
+                score = 1 - results["distances"][0][i] if results["distances"] else 0.0
+
+                # 解析图片信息
+                metadata = results["metadatas"][0][i]
+                if "images" in metadata and isinstance(metadata["images"], str):
+                    try:
+                        metadata["images"] = json.loads(metadata["images"])
+                    except json.JSONDecodeError:
+                        metadata["images"] = []
+
+                search_results.append(
+                    SearchResult(
+                        chunk_id=chunk_id,
+                        content=results["documents"][0][i],
+                        metadata=metadata,
+                        score=score,
+                    )
+                )
+
+        return search_results
+
+    def delete_all(self) -> None:
+        """Delete all documents from collection"""
+        client = self._get_client()
+        try:
+            client.delete_collection(self.collection_name)
+            self._collection = None
+        except Exception:
+            pass
+
+    def count(self) -> int:
+        """Get number of documents in collection"""
+        collection = self._get_collection()
+        return collection.count()
+
+    def get_chunk(self, chunk_id: str) -> Optional[dict]:
+        """Get a specific chunk by ID"""
+        collection = self._get_collection()
+        results = collection.get(ids=[chunk_id], include=["documents", "metadatas"])
+        if results["ids"]:
+            metadata = results["metadatas"][0]
+            # 解析图片信息
+            if "images" in metadata and isinstance(metadata["images"], str):
+                try:
+                    metadata["images"] = json.loads(metadata["images"])
+                except json.JSONDecodeError:
+                    metadata["images"] = []
+
+            return {
+                "chunk_id": chunk_id,
+                "content": results["documents"][0],
+                "metadata": metadata,
+            }
+        return None

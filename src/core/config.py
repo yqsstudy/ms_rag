@@ -1,0 +1,147 @@
+"""Configuration management using Pydantic"""
+
+import os
+from pathlib import Path
+from typing import Literal, Optional
+
+import yaml
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class EmbeddingConfig(BaseSettings):
+    """Embedding configuration"""
+
+    model: str = "BAAI/bge-large-zh"
+    device: Literal["cpu", "cuda", "mps"] = "cpu"
+    batch_size: int = 32
+    normalize: bool = True
+
+
+class VectorStoreConfig(BaseSettings):
+    """Vector store configuration"""
+
+    type: Literal["chroma", "milvus"] = "chroma"
+    persist_directory: str = "./data/chroma"
+    collection_name: str = "performance_guide"
+
+
+class KeywordIndexConfig(BaseSettings):
+    """Keyword index configuration"""
+
+    type: Literal["bm25"] = "bm25"
+    k1: float = 1.5  # BM25 term frequency saturation parameter
+    b: float = 0.75  # BM25 length normalization parameter
+
+
+class RetrievalConfig(BaseSettings):
+    """Retrieval configuration"""
+
+    vector_weight: float = Field(default=0.6, ge=0.0, le=1.0)
+    keyword_weight: float = Field(default=0.4, ge=0.0, le=1.0)
+    top_k: int = Field(default=10, ge=1, le=50)
+    rerank: bool = True
+
+
+class LLMConfig(BaseSettings):
+    """LLM configuration"""
+
+    provider: Literal["anthropic", "openai", "deepseek"] = "anthropic"
+    model: str = "claude-sonnet-4-6"
+    api_key: Optional[str] = None
+    max_tokens: int = Field(default=2000, ge=100, le=8000)
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    timeout: int = Field(default=60, ge=10, le=300)
+
+
+class APIConfig(BaseSettings):
+    """API configuration"""
+
+    host: str = "0.0.0.0"
+    port: int = Field(default=8000, ge=1, le=65535)
+    debug: bool = False
+    cors_origins: list[str] = ["*"]
+
+
+class DocumentConfig(BaseSettings):
+    """Document processing configuration"""
+
+    min_chunk_size: int = Field(default=1500, ge=100)
+    max_chunk_size: int = Field(default=2000, ge=500)
+    chunk_overlap: int = Field(default=200, ge=0)
+
+
+class LoggingConfig(BaseSettings):
+    """Logging configuration"""
+
+    level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
+    format: Literal["standard", "json"] = "json"
+    file: str = "./logs/app.log"
+
+
+class Settings(BaseSettings):
+    """Main settings class"""
+
+    model_config = SettingsConfigDict(
+        env_prefix="MS_RAG_",
+        env_nested_delimiter="__",
+        case_sensitive=False,
+    )
+
+    embedding: EmbeddingConfig = EmbeddingConfig()
+    vector_store: VectorStoreConfig = VectorStoreConfig()
+    keyword_index: KeywordIndexConfig = KeywordIndexConfig()
+    retrieval: RetrievalConfig = RetrievalConfig()
+    llm: LLMConfig = LLMConfig()
+    api: APIConfig = APIConfig()
+    document: DocumentConfig = DocumentConfig()
+    logging: LoggingConfig = LoggingConfig()
+
+    # Paths
+    corpus_path: str = "./corpus/performance_guide"
+    config_path: str = "./config"
+
+    @classmethod
+    def from_yaml(cls, yaml_path: str) -> "Settings":
+        """Load settings from YAML file"""
+        with open(yaml_path, encoding="utf-8") as f:
+            config_dict = yaml.safe_load(f)
+
+        # Handle environment variable substitution
+        if "llm" in config_dict and "api_key" in config_dict["llm"]:
+            api_key = config_dict["llm"]["api_key"]
+            if api_key.startswith("${") and api_key.endswith("}"):
+                env_var = api_key[2:-1]
+                config_dict["llm"]["api_key"] = os.environ.get(env_var)
+
+        return cls(**config_dict)
+
+    def get_llm_api_key(self) -> str:
+        """Get LLM API key from config or environment"""
+        if self.llm.api_key:
+            return self.llm.api_key
+
+        # Try provider-specific environment variable
+        env_key = f"{self.llm.provider.upper()}_API_KEY"
+        api_key = os.environ.get(env_key)
+
+        if not api_key:
+            api_key = os.environ.get("LLM_API_KEY")
+
+        if not api_key:
+            raise ValueError(
+                f"LLM API key not found. Set {env_key} or LLM_API_KEY environment variable"
+            )
+
+        return api_key
+
+
+def get_settings(config_path: Optional[str] = None) -> Settings:
+    """Get settings instance"""
+    if config_path is None:
+        config_path = os.environ.get("MS_RAG_CONFIG_PATH", "./config/system.yaml")
+
+    if Path(config_path).exists():
+        return Settings.from_yaml(config_path)
+
+    return Settings()

@@ -1,0 +1,155 @@
+"""API routes"""
+
+import json
+import time
+from typing import AsyncIterator
+
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+
+from ..core.config import get_settings
+from ..pipeline.rag_pipeline import RAGPipeline
+from .schemas import (
+    HealthResponse,
+    QARequest,
+    QAResponse,
+    RetrieveRequest,
+    RetrieveResponse,
+)
+
+router = APIRouter()
+
+# Global pipeline instance
+_pipeline: RAGPipeline = None
+
+
+def get_pipeline() -> RAGPipeline:
+    """Get or create pipeline instance"""
+    global _pipeline
+    if _pipeline is None:
+        settings = get_settings()
+        _pipeline = RAGPipeline(settings)
+    return _pipeline
+
+
+@router.get("/health", response_model=HealthResponse)
+async def health_check():
+    """Health check endpoint"""
+    pipeline = get_pipeline()
+    return HealthResponse(
+        status="healthy",
+        version="0.1.0",
+        vector_store_count=pipeline.vector_store.count(),
+        keyword_index_count=pipeline.keyword_index.count(),
+    )
+
+
+@router.post("/qa", response_model=QAResponse)
+async def qa_endpoint(request: QARequest):
+    """Question answering endpoint"""
+    start_time = time.time()
+
+    try:
+        pipeline = get_pipeline()
+        top_k = request.options.get("top_k", 5)
+
+        response = pipeline.query(request.query, top_k=top_k)
+
+        response_time_ms = int((time.time() - start_time) * 1000)
+
+        return QAResponse(
+            code=0,
+            message="success",
+            data={
+                "answer": response.answer,
+                "question_type": response.question_type,
+                "keywords": response.keywords,
+                "sources": response.sources,
+                "metadata": {
+                    **response.metadata,
+                    "response_time_ms": response_time_ms,
+                },
+            },
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/qa/stream")
+async def qa_stream_endpoint(request: QARequest):
+    """Streaming question answering endpoint"""
+
+    async def generate() -> AsyncIterator[str]:
+        start_time = time.time()
+
+        try:
+            pipeline = get_pipeline()
+            top_k = request.options.get("top_k", 5)
+
+            # Get streaming response
+            metadata, stream, model_info = pipeline.query_stream(
+                request.query, top_k=top_k
+            )
+
+            # Send metadata event
+            yield f"event: metadata\ndata: {json.dumps(metadata, ensure_ascii=False)}\n\n"
+
+            # Stream answer chunks
+            for chunk in stream:
+                yield f"event: answer\ndata: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
+
+            # Send done event
+            response_time_ms = int((time.time() - start_time) * 1000)
+            done_data = {
+                "tokens_used": 0,  # Not tracked in this implementation
+                "response_time_ms": response_time_ms,
+                "model": model_info.get("model"),
+            }
+            yield f"event: done\ndata: {json.dumps(done_data, ensure_ascii=False)}\n\n"
+
+        except Exception as e:
+            error_data = {"error": str(e)}
+            yield f"event: error\ndata: {json.dumps(error_data, ensure_ascii=False)}\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        },
+    )
+
+
+@router.post("/retrieve", response_model=RetrieveResponse)
+async def retrieve_endpoint(request: RetrieveRequest):
+    """Document retrieval endpoint"""
+    try:
+        pipeline = get_pipeline()
+
+        # Get query embedding
+        query_embedding = pipeline.embedding_service.embed_query(request.query)
+
+        # Retrieve documents
+        results = pipeline.retriever.retrieve(
+            query=request.query,
+            query_embedding=query_embedding,
+            k=request.top_k,
+        )
+
+        # Rerank if enabled
+        if pipeline.settings.retrieval.rerank:
+            results = pipeline.reranker.rerank(results)
+
+        return RetrieveResponse(
+            code=0,
+            data={
+                "results": [r.to_dict() for r in results[: request.top_k]],
+                "total": len(results),
+            },
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
