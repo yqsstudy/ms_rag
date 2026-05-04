@@ -1,5 +1,7 @@
 """RAG Pipeline"""
 
+import logging
+import time
 from dataclasses import dataclass
 from typing import Iterator, List, Optional
 
@@ -12,6 +14,8 @@ from ..retrieval.hybrid_retriever import HybridRetriever, HybridResult
 from ..retrieval.reranker import Reranker
 from ..storage.keyword_index import BM25Index
 from ..storage.vector_store import VectorStore
+
+logger = logging.getLogger("ms_rag")
 
 
 @dataclass
@@ -78,6 +82,7 @@ class RAGPipeline:
                 provider=self.settings.llm.provider,
                 api_key=api_key,
                 model=self.settings.llm.model,
+                base_url=self.settings.llm.base_url,
                 max_tokens=self.settings.llm.max_tokens,
                 temperature=self.settings.llm.temperature,
             )
@@ -85,20 +90,25 @@ class RAGPipeline:
 
     def query(self, question: str, top_k: int = 5) -> QAResponse:
         """Process a question and return answer"""
+        logger.info(f"[Pipeline] query: {question}")
+
         # 1. Embed the query
+        t0 = time.time()
         query_embedding = self.embedding_service.embed_query(question)
+        logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
 
         # 2. Retrieve relevant documents
+        t0 = time.time()
         results = self.retriever.retrieve(
             query=question,
             query_embedding=query_embedding,
             k=top_k * 2,
         )
+        logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
 
         # 3. Rerank results
         if self.settings.retrieval.rerank:
             results = self.reranker.rerank(results)
-
         results = results[:top_k]
 
         # 4. Classify question type
@@ -115,8 +125,10 @@ class RAGPipeline:
         )
 
         # 7. Generate answer
+        t0 = time.time()
         llm = self._get_llm_service()
         answer = llm.generate(prompt)
+        logger.info(f"[Pipeline] LLM generate done in {time.time()-t0:.2f}s")
 
         # 8. Build response
         return QAResponse(
@@ -134,20 +146,25 @@ class RAGPipeline:
         self, question: str, top_k: int = 5
     ) -> tuple[dict, Iterator[str], dict]:
         """Process a question and return streaming answer"""
+        logger.info(f"[Pipeline] query_stream: {question}")
+
         # 1. Embed the query
+        t0 = time.time()
         query_embedding = self.embedding_service.embed_query(question)
+        logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
 
         # 2. Retrieve relevant documents
+        t0 = time.time()
         results = self.retriever.retrieve(
             query=question,
             query_embedding=query_embedding,
             k=top_k * 2,
         )
+        logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
 
         # 3. Rerank results
         if self.settings.retrieval.rerank:
             results = self.reranker.rerank(results)
-
         results = results[:top_k]
 
         # 4. Classify question type
@@ -171,6 +188,7 @@ class RAGPipeline:
         }
 
         # 8. Generate streaming answer
+        logger.info("[Pipeline] Starting LLM stream generation...")
         llm = self._get_llm_service()
         stream = llm.generate_stream(prompt)
 

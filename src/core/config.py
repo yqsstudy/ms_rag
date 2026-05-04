@@ -5,8 +5,12 @@ from pathlib import Path
 from typing import Literal, Optional
 
 import yaml
+from dotenv import load_dotenv
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Load .env file
+load_dotenv()
 
 
 class EmbeddingConfig(BaseSettings):
@@ -49,6 +53,7 @@ class LLMConfig(BaseSettings):
     provider: Literal["anthropic", "openai", "deepseek"] = "anthropic"
     model: str = "claude-sonnet-4-6"
     api_key: Optional[str] = None
+    base_url: Optional[str] = None
     max_tokens: int = Field(default=2000, ge=100, le=8000)
     temperature: float = Field(default=0.7, ge=0.0, le=2.0)
     timeout: int = Field(default=60, ge=10, le=300)
@@ -102,17 +107,28 @@ class Settings(BaseSettings):
     config_path: str = "./config"
 
     @classmethod
+    def _resolve_env_var(cls, value: str) -> Optional[str]:
+        """Resolve ${VAR} or ${VAR:default} syntax"""
+        if not (value.startswith("${") and value.endswith("}")):
+            return value
+        inner = value[2:-1]
+        if ":" in inner:
+            env_var, default = inner.split(":", 1)
+        else:
+            env_var, default = inner, None
+        return os.environ.get(env_var, default)
+
+    @classmethod
     def from_yaml(cls, yaml_path: str) -> "Settings":
         """Load settings from YAML file"""
         with open(yaml_path, encoding="utf-8") as f:
             config_dict = yaml.safe_load(f)
 
-        # Handle environment variable substitution
-        if "llm" in config_dict and "api_key" in config_dict["llm"]:
-            api_key = config_dict["llm"]["api_key"]
-            if api_key.startswith("${") and api_key.endswith("}"):
-                env_var = api_key[2:-1]
-                config_dict["llm"]["api_key"] = os.environ.get(env_var)
+        # Handle environment variable substitution for LLM config
+        if "llm" in config_dict:
+            for key in ("provider", "model", "api_key", "base_url"):
+                if key in config_dict["llm"]:
+                    config_dict["llm"][key] = cls._resolve_env_var(config_dict["llm"][key])
 
         return cls(**config_dict)
 

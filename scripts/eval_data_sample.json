@@ -1,0 +1,49 @@
+[
+  {
+    "question": "模型训练很慢，怎么定位问题？",
+    "ground_truth_answer": "定位模型训练慢的问题需要系统化的方法。首先收集问题基本信息，包括模型类型、作业规模、软件环境等。然后使用Advisor工具进行快速定界，判断问题在计算、通信还是其他环节。接着使用MindStudio Insight进行Profiling分析，采用从集群到节点、从整体到算子的Top-Down方法。针对通信问题，需关注通信算子耗时，若超过4秒高度怀疑数据包重传。",
+    "ground_truth_contexts": [
+      "toolsample6_005_chunk_0",
+      "toolsample6_002_chunk_0",
+      "toolsample6_009_chunk_0"
+    ],
+    "question_type": "定位指导"
+  },
+  {
+    "question": "msprof工具怎么使用？",
+    "ground_truth_answer": "msprof是昇腾AI计算平台的性能采集工具，用于采集模型训练或推理过程中的性能数据。使用步骤包括：1）配置采集参数，如采集类型、采集范围等；2）运行性能采集命令；3）采集完成后生成性能数据文件；4）使用MindStudio Insight工具查看和分析采集到的性能数据。",
+    "ground_truth_contexts": [
+      "toolsample6_013_chunk_0",
+      "toolsample6_014_chunk_0"
+    ],
+    "question_type": "工具使用"
+  },
+  {
+    "question": "什么是通信重传？",
+    "ground_truth_answer": "通信重传是指在分布式训练过程中，由于网络抖动或其他原因导致数据包丢失，需要重新传输数据的现象。通信重传会导致通信算子耗时异常增大（通常超过4秒），是集群训练中性能抖动的常见原因。可以通过MindStudio Insight对比正常Step与异常Step的Profiling数据来确认。",
+    "ground_truth_contexts": [
+      "toolsample6_039_chunk_1",
+      "toolsample6_019_chunk_0"
+    ],
+    "question_type": "概念理解"
+  },
+  {
+    "question": "算子性能问题如何定位？",
+    "ground_truth_answer": "算子性能问题定位需要先确定是哪个算子性能异常，然后分析算子的执行时间、调度时间等指标。可以通过MindStudio Insight查看算子级别的Profiling数据，对比理论执行时间与实际执行时间。常见问题包括：Cube类算子计算效率低、MTE类算子访存效率低、通信算子耗时异常等。",
+    "ground_truth_contexts": [
+      "toolsample6_048_chunk_1_0",
+      "toolsample6_020_chunk_0",
+      "toolsample6_048_chunk_1_1"
+    ],
+    "question_type": "问题诊断"
+  },
+  {
+    "question": "如何查看MindStudio Insight的Profiling数据？",
+    "ground_truth_answer": "查看MindStudio Insight的Profiling数据的步骤：1）打开MindStudio Insight工具；2）导入采集到的性能数据文件（由msprof生成）；3）在Timeline视图中查看计算、通信、调度的时间分布；4）在Summary视图中查看各算子的耗时统计；5）使用Top-Down分析方法从整体到细节逐步定位瓶颈。",
+    "ground_truth_contexts": [
+      "toolsample6_015_chunk_0",
+      "toolsample6_009_chunk_1_0"
+    ],
+    "question_type": "操作步骤"
+  }
+]

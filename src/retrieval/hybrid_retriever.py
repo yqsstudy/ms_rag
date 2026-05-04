@@ -1,10 +1,14 @@
 """Hybrid retriever combining vector and keyword search"""
 
+import logging
+import time
 from dataclasses import dataclass, field
 from typing import List, Optional
 
 from ..storage.keyword_index import BM25Index
 from ..storage.vector_store import SearchResult, VectorStore
+
+logger = logging.getLogger("ms_rag")
 
 
 @dataclass
@@ -61,15 +65,20 @@ class HybridRetriever:
         k: int = 10,
     ) -> List[HybridResult]:
         """Retrieve documents using hybrid search"""
+        t0 = time.time()
+
         # Vector search
         vector_results = self.vector_store.search(query_embedding, k=k * 2)
+        logger.debug(f"[Retriever] Vector search returned {len(vector_results)} results")
 
         # Keyword search
         keyword_results = self.keyword_index.search(query, k=k * 2)
+        logger.debug(f"[Retriever] Keyword search returned {len(keyword_results)} results")
 
         # Merge and rank using RRF (Reciprocal Rank Fusion)
         merged = self._merge_results(vector_results, keyword_results)
 
+        logger.debug(f"[Retriever] Merged {len(merged)} results in {time.time()-t0:.3f}s")
         return merged[:k]
 
     def _merge_results(

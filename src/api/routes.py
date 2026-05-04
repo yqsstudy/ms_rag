@@ -1,6 +1,7 @@
 """API routes"""
 
 import json
+import logging
 import time
 from typing import AsyncIterator
 
@@ -17,6 +18,8 @@ from .schemas import (
     RetrieveRequest,
     RetrieveResponse,
 )
+
+logger = logging.getLogger("ms_rag")
 
 router = APIRouter()
 
@@ -49,6 +52,7 @@ async def health_check():
 async def qa_endpoint(request: QARequest):
     """Question answering endpoint"""
     start_time = time.time()
+    logger.info(f"[QA] Received query: {request.query}")
 
     try:
         pipeline = get_pipeline()
@@ -57,6 +61,7 @@ async def qa_endpoint(request: QARequest):
         response = pipeline.query(request.query, top_k=top_k)
 
         response_time_ms = int((time.time() - start_time) * 1000)
+        logger.info(f"[QA] Completed in {response_time_ms}ms, type={response.question_type}")
 
         return QAResponse(
             code=0,
@@ -74,6 +79,7 @@ async def qa_endpoint(request: QARequest):
         )
 
     except Exception as e:
+        logger.error(f"[QA] Error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -83,33 +89,44 @@ async def qa_stream_endpoint(request: QARequest):
 
     async def generate() -> AsyncIterator[str]:
         start_time = time.time()
+        logger.info(f"[Stream] Received query: {request.query}")
 
         try:
             pipeline = get_pipeline()
             top_k = request.options.get("top_k", 5)
 
             # Get streaming response
+            logger.info("[Stream] Starting pipeline.query_stream...")
             metadata, stream, model_info = pipeline.query_stream(
                 request.query, top_k=top_k
             )
+            logger.info(f"[Stream] Pipeline returned, model={model_info}")
 
             # Send metadata event
-            yield f"event: metadata\ndata: {json.dumps(metadata, ensure_ascii=False)}\n\n"
+            metadata_json = json.dumps(metadata, ensure_ascii=False)
+            logger.info(f"[Stream] Sending metadata: {metadata_json[:200]}")
+            yield f"event: metadata\ndata: {metadata_json}\n\n"
 
             # Stream answer chunks
+            chunk_count = 0
             for chunk in stream:
+                chunk_count += 1
                 yield f"event: answer\ndata: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
+
+            logger.info(f"[Stream] Stream finished, sent {chunk_count} chunks")
 
             # Send done event
             response_time_ms = int((time.time() - start_time) * 1000)
             done_data = {
-                "tokens_used": 0,  # Not tracked in this implementation
+                "tokens_used": 0,
                 "response_time_ms": response_time_ms,
                 "model": model_info.get("model"),
             }
             yield f"event: done\ndata: {json.dumps(done_data, ensure_ascii=False)}\n\n"
+            logger.info(f"[Stream] Completed in {response_time_ms}ms")
 
         except Exception as e:
+            logger.error(f"[Stream] Error: {e}", exc_info=True)
             error_data = {"error": str(e)}
             yield f"event: error\ndata: {json.dumps(error_data, ensure_ascii=False)}\n\n"
 

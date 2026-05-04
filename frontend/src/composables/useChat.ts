@@ -10,27 +10,25 @@ export function useChat() {
     if (!query.trim() || isLoading.value) return
 
     // 添加用户消息
-    const userMessage: Message = {
+    messages.value.push({
       id: Date.now().toString(),
       type: 'user',
       content: query,
-    }
-    messages.value.push(userMessage)
+    })
 
-    // 创建AI消息占位
-    const aiMessage: Message = {
+    // 创建AI消息占位 — push后从数组取回Proxy引用
+    messages.value.push({
       id: (Date.now() + 1).toString(),
       type: 'assistant',
       content: '',
       sources: [],
       images: [],
-    }
-    messages.value.push(aiMessage)
+    })
+    const aiMessage = messages.value[messages.value.length - 1]
 
     isLoading.value = true
 
     try {
-      // 使用流式API
       await streamAnswer(query, aiMessage)
     } catch (error) {
       aiMessage.content = '抱歉，发生了错误，请稍后重试。'
@@ -58,11 +56,7 @@ export function useChat() {
     const decoder = new TextDecoder()
     let buffer = ''
 
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-
-      buffer += decoder.decode(value, { stream: true })
+    function processBuffer() {
       const lines = buffer.split('\n')
       buffer = lines.pop() || ''
 
@@ -75,11 +69,23 @@ export function useChat() {
             const data = JSON.parse(line.slice(6))
             handleSSEEvent(currentEvent, data, message)
           } catch (e) {
-            console.error('Failed to parse SSE data:', line)
+            console.error('[SSE] Parse error:', line)
           }
           currentEvent = ''
         }
       }
+    }
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      buffer += decoder.decode(value, { stream: true })
+      processBuffer()
+    }
+
+    // Flush remaining buffer
+    if (buffer.trim()) {
+      processBuffer()
     }
   }
 

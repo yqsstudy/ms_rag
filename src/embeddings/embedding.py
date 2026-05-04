@@ -1,8 +1,12 @@
 """Embedding service using sentence-transformers"""
 
+import logging
+import time
 from typing import List, Optional
 
 from sentence_transformers import SentenceTransformer
+
+logger = logging.getLogger("ms_rag")
 
 
 class EmbeddingService:
@@ -41,11 +45,13 @@ class EmbeddingService:
 
     def embed_query(self, query: str) -> List[float]:
         """Embed a single query"""
+        t0 = time.time()
         model = self._load_model()
         embedding = model.encode(
             query,
             normalize_embeddings=self.normalize,
         )
+        logger.debug(f"[Embedding] embed_query done in {time.time()-t0:.3f}s")
         return embedding.tolist()
 
     def get_embedding_dimension(self) -> int:
