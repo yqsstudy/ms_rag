@@ -1,0 +1,72 @@
+---
+title: "code_gen"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0161.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0161.html"
+---
+
+# code_gen
+
+#### 功能说明
+
+根据输入的模板库Kernel信息，生成Kernel下发代码。
+
+#### 函数原型
+
+```
+gen_file = mskpp.Launcher(config).code_gen()
+```
+
+#### 参数说明
+
+参数名
+
+输入/输出
+
+说明
+
+gen_file
+
+输入
+
+指定生成Kernel侧下发代码的文件路径。
+
+数据类型：str。
+
+可选参数，默认值为_gen_launch.cpp。
+|  |  |  |
+| --- | --- | --- |
+|  |  |  |
+
+#### 返回值说明
+
+生成代码的文件路径。
+
+#### 调用示例
+
+```
+config = mskpp.KernelInvokeConfig(kernel_file, kernel_name) 
+gen_file = mskpp.Launcher(config).code_gen() 
+```
+
+#### 相关类/结构体定义
+
+```
+class KernelInvokeConfig:
+    ...
+    A configuration descriptor for a possible kernel developed based on an Act example
+    ...
+    def __init__(self, kernel_src_file : str, kernel_name : str):
+        pass
+# 用户仅能传KernelInvokeConfig类型
+class Launcher:
+    def __init__(self, config: KernelInvokeConfig): 
+      ...
+        a class that generates launch source code for a kernel
+
+        Args:
+            config (KernelInvokeConfig): A configuration descriptor for a kernel
+        ...
+```
+**父主题：**[接口列表](atlasopdev_16_0156.html)

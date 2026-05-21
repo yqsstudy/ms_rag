@@ -11,8 +11,6 @@ from ..data.splitter import Chunk
 
 
 class SearchResult:
-    """Search result from vector store"""
-
     def __init__(
         self,
         chunk_id: str,
@@ -24,6 +22,7 @@ class SearchResult:
         self.content = content
         self.metadata = metadata
         self.score = score
+        self.parent_id = metadata.get("parent_id", "")
 
     def to_dict(self) -> dict:
         return {
@@ -31,6 +30,7 @@ class SearchResult:
             "content": self.content,
             "metadata": self.metadata,
             "score": self.score,
+            "parent_id": self.parent_id,
         }
 
 
@@ -72,7 +72,6 @@ class VectorStore:
         chunks: List[Chunk],
         embeddings: List[List[float]],
     ) -> int:
-        """Add chunks with embeddings to the store"""
         collection = self._get_collection()
 
         ids = [chunk.chunk_id for chunk in chunks]
@@ -84,19 +83,34 @@ class VectorStore:
                 "section_title": chunk.section_title,
                 "source_url": chunk.source_url,
                 "parent_topic": chunk.parent_topic or "",
-                "images": json.dumps(chunk.images, ensure_ascii=False),  # 存储图片信息
+                "images": json.dumps(chunk.images, ensure_ascii=False),
+                "parent_id": chunk.parent_id or "",
             }
             for chunk in chunks
         ]
 
-        collection.add(
-            ids=ids,
-            embeddings=embeddings,
-            documents=documents,
-            metadatas=metadatas,
-        )
+        MAX_CHROMA_BATCH_SIZE = 5000
+        for i in range(0, len(ids), MAX_CHROMA_BATCH_SIZE):
+            collection.add(
+                ids=ids[i:i + MAX_CHROMA_BATCH_SIZE],
+                embeddings=embeddings[i:i + MAX_CHROMA_BATCH_SIZE],
+                documents=documents[i:i + MAX_CHROMA_BATCH_SIZE],
+                metadatas=metadatas[i:i + MAX_CHROMA_BATCH_SIZE],
+            )
 
         return len(chunks)
+
+    import asyncio
+    
+    async def asearch(
+        self,
+        query_embedding: List[float],
+        k: int = 10,
+        where: Optional[dict] = None,
+    ) -> List[SearchResult]:
+        import asyncio
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, self.search, query_embedding, k, where)
 
     def search(
         self,
@@ -139,7 +153,25 @@ class VectorStore:
 
         return search_results
 
+    def delete_chunks(self, chunk_ids: List[str]) -> None:
+        if not chunk_ids:
+            return
+        collection = self._get_collection()
+        
+        MAX_CHROMA_BATCH_SIZE = 5000
+        for i in range(0, len(chunk_ids), MAX_CHROMA_BATCH_SIZE):
+            try:
+                collection.delete(ids=chunk_ids[i:i + MAX_CHROMA_BATCH_SIZE])
+            except Exception as e:
+                pass
+
     def delete_all(self) -> None:
+        client = self._get_client()
+        try:
+            client.delete_collection(self.collection_name)
+            self._collection = None
+        except Exception:
+            pass
         """Delete all documents from collection"""
         client = self._get_client()
         try:

@@ -23,8 +23,16 @@ class ContextBuilder:
         current_chars = 0
         max_chars = self.max_tokens * self.chars_per_token
 
-        for i, result in enumerate(results[:max_chunks]):
-            chunk_text = self._format_chunk(result, i + 1)
+        seen_docs = {}
+        doc_counter = 1
+
+        for result in results[:max_chunks]:
+            if result.doc_id not in seen_docs:
+                seen_docs[result.doc_id] = doc_counter
+                doc_counter += 1
+                
+            doc_index = seen_docs[result.doc_id]
+            chunk_text = self._format_chunk(result, doc_index)
             chunk_chars = len(chunk_text)
 
             if current_chars + chunk_chars > max_chars:

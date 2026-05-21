@@ -98,6 +98,9 @@ export function useChat() {
           message.questionType = metadata.question_type
           message.sources = metadata.sources || []
           message.images = extractImages(metadata.sources)
+          message.relatedTopics = metadata.related_topics || []
+          message.cached = metadata.cached || false
+          message.cacheLevel = metadata.cache_level || ''
         }
         break
       case 'answer':

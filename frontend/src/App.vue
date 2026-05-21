@@ -33,6 +33,7 @@
             v-for="msg in messages"
             :key="msg.id"
             :message="msg"
+            @related-topic-select="handleRelatedTopic"
           />
         </div>
 
@@ -71,5 +72,9 @@ const handleSend = () => {
 
 const handleQuickQuestion = (question: string) => {
   sendMessage(question)
+}
+
+const handleRelatedTopic = (topic: { title: string; doc_id: string }) => {
+  sendMessage(topic.title)
 }
 </script>

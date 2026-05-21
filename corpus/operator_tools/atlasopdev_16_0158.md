@@ -1,0 +1,31 @@
+---
+title: "Cache热力图"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0158.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0158.html"
+---
+
+# Cache热力图
+
+针对用户程序Kernel函数内的L2 Cache访问情况，msProf工具可以记录并通过MindStudio Insight工具进行可视化呈现Cache热力图，该热力图可显示对应指令信息，以便用户优化L2Cache命中率，从而优化算子程序。
+
+- [若要使用MindStudio Insight进行查看时，需要单独安装MindStudio Insight软件包，具体下载链接请参见“安装与卸载](https://www.hiascend.com/document/detail/zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0005.html)”。
+- 将visualize_data.bin文件导入MindStudio Insight的具体操作请参考导入性能数据。
+- [MindStudio Insight具体操作和详细字段解释请参考源码（Source）](https://www.hiascend.com/document/detail/zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0068.html)。
+- 添加-g编译选项会在生成的二进制文件中附带调试信息，建议限制带有调试信息的用户程序的访问权限，确保只有授权人员可以访问该二进制文件。
+- 若不使用llvm-symbolizer组件提供的相关功能，输入msProf的程序编译时不包含-g即可，msProf工具则不会调用llvm-symbolizer组件的相关功能。
+- Cache热力图功能不适用于
+ Atlas 推理系列产品
+ 。
+- [MC2算子和LCCL算子均不支持生成Cache热力图](atlasopdev_16_0158.html#ZH-CN_TOPIC_0000002536800589)。
+**图1**
+![](figure/zh-cn_image_0000002502586710.png "点击放大")Cache热力图
+- Hit展示Cacheline的命中情况，Miss展示Cacheline未命中情况，以便用户分析L2Cache的使用情况，
+- [在缓存（Cache）界面，选择命中和未命中事件图，单击放大，在放大的事件图中右键单击所选内存单元格，选择“显示指令”，可跳转至源码（Source）](https://www.hiascend.com/document/detail/zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0068.html)**界面，并高亮显示相关指令行。
+ 
+ 图2**
+![](figure/zh-cn_image_0000002534426525.png "点击放大")Cacheline对应的算子代码热点图
+[若要使用Cache热力图跳转至算子代码热点图功能，需参考msprof op配置](atlasopdev_16_0083.html#ZH-CN_TOPIC_0000002536800585__zh-cn_topic_0000002534506431_section9922438155112)，提前进行配置。
+
+**父主题：**[算子调优（msProf）](atlasopdev_16_0081.html)

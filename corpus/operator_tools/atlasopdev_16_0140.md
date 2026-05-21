@@ -1,0 +1,42 @@
+---
+title: "采集MC2算子的性能数据"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0140.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0140.html"
+---
+
+# 采集MC2算子的性能数据
+
+展示如何使用msProf工具来上板调优一个MC2算子，并生成通算流水图。
+
+#### 前提条件
+
+- 完成MC2算子的开发。
+- [参考使用前准备](atlasopdev_16_0083.html#ZH-CN_TOPIC_0000002536800585)完成相关环境变量配置。
+
+#### 操作步骤
+
+[本示例以Ascend CL单算子调用](atlasopdev_16_0082.html#ZH-CN_TOPIC_0000002505040624__zh-cn_topic_0000002534506413_zh-cn_topic_0000001740005733_li112151547153912)[为例，其他调用场景请参见《Ascend C算子开发指南](https://www.hiascend.com/document/detail/zh/canncommercial/850/opdevg/Ascendcopdevg/atlas_ascendc_map_10_0002.html)》。
+
+1. [请参考算子编译部署](atlasopdev_16_0024.html#ZH-CN_TOPIC_0000002504880720)，完成算子的编译部署。
+
+  1. 在算子编译文件op_kernel目录下的CMakeLists.txt中引入以下编译选项，使能MC2算子的AIC打点和代码行映射功能。****
+```
+add_ops_compile_options(ALL OPTIONS -DASCENDC_TIME_STAMP_ON, -g)
+```
+
+  2. 进入自定义算子工程目录下编译部署算子。********
+```
+./build_out/custom_opp_<target_os>_<target_architecture>.run
+```
+
+2. 使用msProf采集MC2算子的性能数据。
+********************
+```
+msprof op --output=$HOME/projects/output $HOME/projects/MyApp blockdim 1 // --output为可选参数,$HOME/projects/MyApp为使用的app,blockdim 1为用户app的可选参数 
+```
+
+3. [界面生成以下目录结构和性能数据文件，具体请参见msprof op](atlasopdev_16_0131.html#ZH-CN_TOPIC_0000002536920573)章节。
+4. [将trace.json或visualize_data.bin文件导入MindStudio Insight工具进行可视化呈现，具体请参见计算内存热力图](atlasopdev_16_0086.html#ZH-CN_TOPIC_0000002504880804)[、通算流水图](atlasopdev_16_0139.html#ZH-CN_TOPIC_0000002536920563)[和Roofline瓶颈分析图](atlasopdev_16_0119.html#ZH-CN_TOPIC_0000002505040630)。
+**父主题：**[典型案例](atlasopdev_16_0089.html)

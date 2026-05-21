@@ -13,7 +13,13 @@
 - **可配置性**：关键参数可通过配置文件调整
 - **可观测性**：完善的日志和监控支持
 
-### 1.3 系统架构总览
+### 1.3 当前实现状态
+
+当前代码已实现 FastAPI 后端、Vue 3 前端、Chroma 向量库、BM25 关键词索引、父子 chunk 存储、多级缓存、知识图谱增强、SSE 流式问答和前端相关主题展示。索引构建脚本支持基于文件 hash 的增量更新，并会同步生成 `data/docstore/`、`data/graph.json` 和 `data/index_state.json`。
+
+在线问答链路为：缓存查找 → query embedding → Chroma/BM25 混合检索 → 父 chunk 回填 → rerank → 知识图谱增强 → 上下文构建 → Prompt 渲染 → LLM 生成 → 写入缓存。API 层已提供 `/qa`、`/qa/stream`、`/retrieve`、`/health`、`/cache/stats` 和 `/cache/clear`。
+
+### 1.4 系统架构总览
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐

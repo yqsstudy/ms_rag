@@ -1,0 +1,199 @@
+---
+title: "检测CANN软件栈的内存"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0047.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0047.html"
+---
+
+# 检测CANN软件栈的内存
+
+针对用户程序调用CANN软件栈接口可能出现的内存异常操作场景，msSanitizer检测工具提供了Device相关接口和AscendCL相关接口的内存检测能力，方便用户对程序内存异常操作位置的排查和定位。
+
+#### 内存泄漏检测使用原理
+
+**当npu-smi info**命令查询到的设备内存不断增大时，可使用本工具进行内存泄漏定位定界，若AscendCL系列接口泄漏可支持定位到代码行。
+如图1所示，CANN软件栈内存操作接口包含两个层级，向下使用驱动侧提供的Device侧接口，向上提供了AscendCL系列接口供用户代码调用。**图1**
+内存检测
+内存泄漏定位可分为以下步骤：
+
+1. 使能Device系列接口进行泄漏检测，判断内存泄漏是否发生在Host侧。若没有，则定界到Device侧的应用出现泄漏；若有，则通过下一个步骤判断AscendCL接口调用是否发生泄漏；
+2. 使能AscendCL系列接口进行泄漏检测，判断用户代码调用AscendCL接口是否存在泄漏。若没有，则定界为非AscendCL接口调用问题；如果出现泄漏，则通过下一步定位到具体代码行；
+3. [使用msSanitizer检测工具中提供的新接口，对头文件重新编译，再用检测工具拉起检测程序，可定位到未释放内存的分配函数所对应的文件名与代码行号。新接口的详细说明请参见对外接口使用说明](atlasopdev_16_0048.html#ZH-CN_TOPIC_0000002536800541)。
+
+#### 排查步骤
+
+1. [参考使用前准备](atlasopdev_16_0040.html#ZH-CN_TOPIC_0000002536800523)完成相关环境变量配置。
+2. 定界是否为Host侧泄漏。
+
+  1. 使用msSanitizer检测工具拉起待检测程序，命令示例如下：**
+```
+mssanitizer --check-device-heap=yes --leak-check=yes ./add_npu
+```
+
+*待检测程序（以add_custom_npu*为例）所在路径可配置为绝对路径或相对路径，请根据实际环境配置。
+
+  2. 若无异常输出则说明检测程序运行成功，且Host侧不存在内存泄漏情况；若输出如下错误说明Host侧的应用出现了内存泄漏。以下输出结果表明Host侧共有一处分配了内存但未释放，导致内存泄漏32800字节。
+```
+1
+2
+3
+4
+5
+6
+```
+
+```
+====== ERROR: LeakCheck: detected memory leaks
+  
+======    Direct leak of 32800 byte(s) 
+======      at 0x124080024000 on GM allocated in <unknown>:0 (serialNo:0)
+  
+====== SUMMARY: 32800 byte(s) leaked in 1 allocation(s)
+
+```
+|  |  |
+| --- | --- |
+
+3. 定界是否为AscendCL接口调用导致泄漏。
+
+  1. 使用msSanitizer检测工具拉起待检测程序，命令示例如下：**
+```
+mssanitizer --check-cann-heap=yes --leak-check=yes ./add_npu
+```
+
+  2. 若无异常输出则说明检测程序运行成功，且AscendCL接口调用不存在内存泄漏情况；若输出如下错误说明AscendCL接口调用出现了内存泄漏。以下输出结果表明调用AscendCL接口时共有一处分配了内存但未释放，导致内存泄漏32768字节。
+```
+1
+2
+3
+4
+5
+6
+```
+
+```
+====== ERROR: LeakCheck: detected memory leaks
+
+======    Direct leak of 32768 byte(s) 
+======      at 0x124080024000 on GM allocated in <unknown>:0 (serialNo:0)
+
+====== SUMMARY: 32768 byte(s) leaked in 1 allocation(s)
+
+```
+|  |  |
+| --- | --- |
+
+4. 若存在泄漏，可通过msSanitizer工具中提供的msSanitizer API头文件“acl.h”和对应的动态库文件定位发生泄漏的代码文件和代码行。
+
+定位发生泄漏的代码文件和代码行时，需要将用户代码中原有的“acl/acl.h”头文件替换为工具中提供的msSanitizer API头文件“acl.h”，并将动态库libascend_acl_hook.so文件链接至用户的应用工程中，并重新编译应用工程，具体操作步骤请参见导入API头文件和链接动态库。
+
+5. 使用msSanitizer工具重新拉起程序，命令示例如下：
+**
+```
+mssanitizer --check-cann-heap=yes --leak-check=yes ./add_npu
+```
+
+以下输出结果表明在调用应用程序main.cpp的第55行存在一次内存分配但未释放，至此可定位到内存泄漏的原因。
+
+```
+1
+2
+3
+4
+5
+6
+```
+
+```
+====== ERROR: LeakCheck: detected memory leaks  
+
+======    Direct leak of 32768 byte(s) 
+======     at 0x124080024000 on GM allocated in main.cpp:55 (serialNo:0)
+
+====== SUMMARY: 32768 byte(s) leaked in 1 allocation(s)
+
+```
+|  |  |
+| --- | --- |
+
+#### 导入API头文件和链接动态库
+
+本示例以Atlas A2 训练系列产品/Atlas A2 推理系列产品的内核调用符场景为例，说明导入msSanitizer API头文件“acl.h”和链接相对应的动态库文件的具体操作步骤，其他类型的自定义工程需根据用户实际构建的脚本进行调整。
+
+1. [单击Link](https://gitee.com/ascend/samples/tree/master/operator/ascendc/0_introduction/3_add_kernellaunch/AddKernelInvocationNeo)，获取验证代码的样例工程。
+下载代码样例时，需执行以下命令指定分支版本。
+```
+git clone https://gitee.com/ascend/samples.git -b master
+```
+
+2. 在${git_clone_path}/samples/operator/ascendc/0_introduction/3_add_kernellaunch/AddKernelInvocationNeo目录中，将main.cpp文件引入的“acl/acl.h”头文件替换为msSanitizer工具提供的头文件“acl.h”。
+
+**在模板库场景下，需将Ascend C模板库/examples/common/helper.hpp****路径下的#include <acl/acl.h>****替换为#include "acl.h"**，具体操作步骤如下。
+
+  1. [执行以下命令，下载Link](https://gitcode.com/cann/catlass/tree/catlass-v1-stable)中的Ascend C模板库。
+```
+git clone https://gitcode.com/cann/catlass.git -b catlass-v1-stable
+```
+
+  2. **进入/examples/common/****helper.hpp**代码目录。
+```
+cd catlass/examples/common/helper.hpp
+```
+
+  3. **将#include <acl/acl.h>****替换为#include "acl.h"**。
+************
+```
+#include "data_utils.h"
+#ifndef ASCENDC_CPU_DEBUG
+// #include "acl/acl.h"
+// acl/acl.h 替换为 acl.h
+#include "acl.h"
+extern void add_custom_do(uint32_t blockDim, void *stream, uint8_t *x, uint8_t *y, uint8_t *z);
+#else
+```
+
+3. 在${git_clone_path}/samples/operator/ascendc/0_introduction/3_add_kernellaunch/AddKernelInvocationNeo目录下编辑CMakeLists.txt文件，导入API头文件路径 ${INSTALL_DIR}/tools/mssanitizer/include/acl和动态库路径
+${INSTALL_DIR}/tools/mssanitizer/lib64/libascend_acl_hook.so。
+  - 模板库场景仅适用于Atlas A2 训练系列产品/Atlas A2 推理系列产品。
+  - 模板库场景时，可通过以下方式增加检测编译选项。
+```
+-I$ENV{ASCEND_HOME_PATH}/tools/mssanitizer/include/acl 
+-L$ENV{ASCEND_HOME_PATH}/tools/mssanitizer/lib64 
+-lascend_acl_hook 
+```
+
+********************************
+```
+add_executable(ascendc_kernels_bbit ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+
+target_compile_options(ascendc_kernels_bbit PRIVATE
+    $<BUILD_INTERFACE:$<$<STREQUAL:${RUN_MODE},cpu>:-g>>
+    -O2 -std=c++17 -D_GLIBCXX_USE_CXX11_ABI=0 -Wall -Werror
+)
+# 算子可执行文件编译时，引入API头文件路径
+target_include_directories(ascendc_kernels_bbit PUBLIC
+    $ENV{ASCEND_HOME_PATH}/tools/mssanitizer/include/acl)
+# 算子可执行文件链接时，引入libascend_acl_hook.so动态库路径
+target_link_directories(ascendc_kernels_bbit PRIVATE
+    $ENV{ASCEND_HOME_PATH}/tools/mssanitizer/lib64)
+
+target_link_libraries(ascendc_kernels_bbit PRIVATE
+    $<BUILD_INTERFACE:$<$<OR:$<STREQUAL:${RUN_MODE},npu>,$<STREQUAL:${RUN_MODE},sim>>:host_intf_pub>>
+    $<BUILD_INTERFACE:$<$<STREQUAL:${RUN_MODE},cpu>:ascendcl>>
+    ascendc_kernels_${RUN_MODE}
+    # 将算子可执行文件链接至libascend_acl_hook.so动态库
+    ascend_acl_hook
+)
+```
+
+4. 导入环境变量，并重新编译算子。
+
+**在安装昇腾AI处理器的服务器执行npu-smi info****命令进行查询，获取Chip Name****信息。实际配置值为AscendChip Name，例如Chip Name***取值为xxxyy**，实际配置值为Ascendxxxyy*。
+
+```
+export LD_LIBRARY_PATH=${ASCEND_HOME_PATH}/tools/mssanitizer/lib64:$LD_LIBRARY_PATH
+mssanitizer --check-cann-heap=yes --leak-check=yes -- bash run.sh -r npu -v Ascendxxxyy
+```
+
+**父主题：**[典型案例](atlasopdev_16_0044.html)

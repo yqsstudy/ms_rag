@@ -1,0 +1,2933 @@
+{
+  "sections": {
+    "版本说明": [
+      {
+        "name": "版本配套关系",
+        "url": "zh/mindstudio/830/releasenote/firstpage_0005_001.html"
+      },
+      {
+        "name": "文件校验标准",
+        "url": "zh/mindstudio/830/releasenote/firstpage_0005_010.html"
+      },
+      {
+        "name": "新增特性",
+        "url": "zh/mindstudio/830/releasenote/firstpage_0005_004.html"
+      },
+      {
+        "name": "删除特性",
+        "url": "zh/mindstudio/830/releasenote/firstpage_0005_005.html"
+      },
+      {
+        "name": "漏洞修补列表",
+        "url": "zh/mindstudio/830/releasenote/firstpage_0005_006.html"
+      }
+    ],
+    "快速入门": [
+      {
+        "name": "MindStudio是什么",
+        "url": "zh/mindstudio/830/msquickstart/tools_qucikstart_0001.html"
+      },
+      {
+        "name": "选择框架场景",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0001.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0002.html"
+      },
+      {
+        "name": "模型开发&迁移",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0003.html"
+      },
+      {
+        "name": "训练前配置检查",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0006.html"
+      },
+      {
+        "name": "精度数据采集",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0008.html"
+      },
+      {
+        "name": "精度预检",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0009.html"
+      },
+      {
+        "name": "compare精度比对",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0011.html"
+      },
+      {
+        "name": "分级可视化构图比对",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0012.html"
+      },
+      {
+        "name": "性能数据采集",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0015.html"
+      },
+      {
+        "name": "使用msprof-analyze工具分析性能数据",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0017.html"
+      },
+      {
+        "name": "使用MindStudio Insight工具可视化性能数据",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0018.html"
+      },
+      {
+        "name": "代码样例",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0019.html"
+      },
+      {
+        "name": "模型开发&迁移",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0020.html"
+      },
+      {
+        "name": "训练前配置检查",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0023.html"
+      },
+      {
+        "name": "训练状态监控",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0024.html"
+      },
+      {
+        "name": "精度数据采集",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0025.html"
+      },
+      {
+        "name": "精度预检",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0026.html"
+      },
+      {
+        "name": "compare精度比对",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0028.html"
+      },
+      {
+        "name": "分级可视化构图比对",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0029.html"
+      },
+      {
+        "name": "性能数据采集",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0032.html"
+      },
+      {
+        "name": "使用msprof-analyze工具分析性能数据",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0034.html"
+      },
+      {
+        "name": "使用MindStudio Insight工具可视化性能数据",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0035.html"
+      },
+      {
+        "name": "代码样例",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0036.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0001.html"
+      },
+      {
+        "name": "模型量化",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0003.html"
+      },
+      {
+        "name": "精度调试",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0004.html"
+      },
+      {
+        "name": "性能调优",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0005.html"
+      },
+      {
+        "name": "服务化调优",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0006.html"
+      },
+      {
+        "name": "进阶开发",
+        "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0007.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0004.html"
+      },
+      {
+        "name": "算子设计（msKPP）",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0003.html"
+      },
+      {
+        "name": "创建算子工程（msOpGen）",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0009.html"
+      },
+      {
+        "name": "算子功能测试（msOpST）",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0005.html"
+      },
+      {
+        "name": "算子异常检测（msSanitizer）",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0006.html"
+      },
+      {
+        "name": "算子调试（msDebug）",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0007.html"
+      },
+      {
+        "name": "算子调优（msProf）",
+        "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0008.html"
+      }
+    ],
+    "MindStudio Insight工具": [
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0002.html"
+      },
+      {
+        "name": "准备环境和软件包",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0005.html"
+      },
+      {
+        "name": "安装MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0006.html"
+      },
+      {
+        "name": "卸载MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0007.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0009.html"
+      },
+      {
+        "name": "准备环境和软件包",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0010.html"
+      },
+      {
+        "name": "依赖列表",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0012.html"
+      },
+      {
+        "name": "安装操作",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0013.html"
+      },
+      {
+        "name": "安装MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0014.html"
+      },
+      {
+        "name": "卸载MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0015.html"
+      },
+      {
+        "name": "准备环境和软件包",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0017.html"
+      },
+      {
+        "name": "安装MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0018.html"
+      },
+      {
+        "name": "卸载MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0019.html"
+      },
+      {
+        "name": "升级MindStudio Insight",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0025.html"
+      },
+      {
+        "name": "基础设置",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0029.html"
+      },
+      {
+        "name": "导入数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0027.html"
+      },
+      {
+        "name": "管理数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0028.html"
+      },
+      {
+        "name": "管理日志",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0030.html"
+      },
+      {
+        "name": "常用快捷键",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0104.html"
+      },
+      {
+        "name": "导入性能数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0032.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0034.html"
+      },
+      {
+        "name": "基础功能",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0036.html"
+      },
+      {
+        "name": "性能数据展示",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0037.html"
+      },
+      {
+        "name": "页面调优展示",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0038.html"
+      },
+      {
+        "name": "系统功能展示",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0039.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0041.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0042.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0045.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0046.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0049.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0050.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0052.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0053.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0127.html"
+      },
+      {
+        "name": "导入性能数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0059.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0061.html"
+      },
+      {
+        "name": "基础功能",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0063.html"
+      },
+      {
+        "name": "性能数据展示",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0064.html"
+      },
+      {
+        "name": "页面调优展示",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0065.html"
+      },
+      {
+        "name": "统计信息展示",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0066.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0068.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0069.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0071.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0072.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0105.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0106.html"
+      },
+      {
+        "name": "导入性能数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0112.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0114.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0115.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0117.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0118.html"
+      },
+      {
+        "name": "导入性能数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0120.html"
+      },
+      {
+        "name": "界面介绍",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0122.html"
+      },
+      {
+        "name": "使用说明",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0123.html"
+      },
+      {
+        "name": "安全加固建议",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0081.html"
+      },
+      {
+        "name": "安装操作（X11方式）",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0084.html"
+      },
+      {
+        "name": "安装操作（VNC方式）",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0085.html"
+      },
+      {
+        "name": "插件管理",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0107.html"
+      },
+      {
+        "name": "运行MindStudio Insight工具时出现Missing Dependencies报错弹窗",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0087.html"
+      },
+      {
+        "name": "如何重新解析text格式的Profiling文件",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0089.html"
+      },
+      {
+        "name": "EulerOS等系统上运行MindStudio Insight工具无法弹出数据导入选择框",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0090.html"
+      },
+      {
+        "name": "通过X11转发方式运行MindStudio Insight工具时，输入框信息粘贴有误",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0091.html"
+      },
+      {
+        "name": "MindStudio Insight工具拖入网络磁盘目录无法加载数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0093.html"
+      },
+      {
+        "name": "MindStudio Insight工具运行时出现Out of Memory报错",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0094.html"
+      },
+      {
+        "name": "MindStudio Insight工具拖入文件显示禁用",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0103.html"
+      },
+      {
+        "name": "MindStudio Insight运行时出现“cannot open shared object file swrast_dri.so”报错",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0108.html"
+      },
+      {
+        "name": "启动VNC时出现“Oh no! Something has gone wrong.”报错",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0109.html"
+      },
+      {
+        "name": "OpenEuler及其衍生操作系统在安装依赖时提示找不到相关依赖",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0110.html"
+      },
+      {
+        "name": "MindStudio Insight导入数据时显示黑屏",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0124.html"
+      },
+      {
+        "name": "MindStudio Insight导入数据后通信界面未显示数据",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0125.html"
+      },
+      {
+        "name": "MindStudio Insight在TencentOS Server 4.4_x86操作系统中启动失败",
+        "url": "zh/mindstudio/830/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0129.html"
+      }
+    ],
+    "算子开发工具": [
+      {
+        "name": "工具概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0006.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0007.html"
+      },
+      {
+        "name": "原理概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0152.html"
+      },
+      {
+        "name": "算子特性建模",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0009.html"
+      },
+      {
+        "name": "算子计算搬运规格分析",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0010.html"
+      },
+      {
+        "name": "极限性能分析",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0011.html"
+      },
+      {
+        "name": "算子tiling初步设计",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0012.html"
+      },
+      {
+        "name": "接口列表",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0001.html"
+      },
+      {
+        "name": "Chip",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0003.html"
+      },
+      {
+        "name": "Core",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0004.html"
+      },
+      {
+        "name": "Tensor",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0005.html"
+      },
+      {
+        "name": "Tensor.load",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0006.html"
+      },
+      {
+        "name": "set_flag",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_00073.html"
+      },
+      {
+        "name": "wait_flag",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_00074.html"
+      },
+      {
+        "name": "mmad",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0007.html"
+      },
+      {
+        "name": "vadd",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0008.html"
+      },
+      {
+        "name": "vbrcb",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0009.html"
+      },
+      {
+        "name": "vconv",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0010.html"
+      },
+      {
+        "name": "vconv_deq",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0011.html"
+      },
+      {
+        "name": "vconv_vdeq",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0012.html"
+      },
+      {
+        "name": "vector_dup",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0013.html"
+      },
+      {
+        "name": "vexp",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0014.html"
+      },
+      {
+        "name": "vln",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0015.html"
+      },
+      {
+        "name": "vmax",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0016.html"
+      },
+      {
+        "name": "vmul",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0017.html"
+      },
+      {
+        "name": "vmuls",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0018.html"
+      },
+      {
+        "name": "vsub",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0019.html"
+      },
+      {
+        "name": "vdiv",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0020.html"
+      },
+      {
+        "name": "vcadd",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0021.html"
+      },
+      {
+        "name": "vabs",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0022.html"
+      },
+      {
+        "name": "vaddrelu",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0023.html"
+      },
+      {
+        "name": "vaddreluconv",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0024.html"
+      },
+      {
+        "name": "vadds",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0025.html"
+      },
+      {
+        "name": "vand",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0026.html"
+      },
+      {
+        "name": "vaxpy",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0027.html"
+      },
+      {
+        "name": "vbitsort",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0028.html"
+      },
+      {
+        "name": "vcgadd",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0029.html"
+      },
+      {
+        "name": "vcgmax",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0030.html"
+      },
+      {
+        "name": "vcgmin",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0031.html"
+      },
+      {
+        "name": "vcmax",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0032.html"
+      },
+      {
+        "name": "vcmin",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0033.html"
+      },
+      {
+        "name": "vcmp_xxx",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0034.html"
+      },
+      {
+        "name": "vcmpv_xxx",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0035.html"
+      },
+      {
+        "name": "vcmpvs_xxx",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0036.html"
+      },
+      {
+        "name": "vcopy",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0037.html"
+      },
+      {
+        "name": "vcpadd",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0038.html"
+      },
+      {
+        "name": "vgather",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0039.html"
+      },
+      {
+        "name": "vgatherb",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0040.html"
+      },
+      {
+        "name": "vlrelu",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0041.html"
+      },
+      {
+        "name": "vmadd",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0042.html"
+      },
+      {
+        "name": "vmaddrelu",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0043.html"
+      },
+      {
+        "name": "vmaxs",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0044.html"
+      },
+      {
+        "name": "vmin",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0045.html"
+      },
+      {
+        "name": "vmins",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0046.html"
+      },
+      {
+        "name": "vmla",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0047.html"
+      },
+      {
+        "name": "vmrgsort",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0048.html"
+      },
+      {
+        "name": "vmulconv",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0049.html"
+      },
+      {
+        "name": "vnot",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0050.html"
+      },
+      {
+        "name": "vor",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0051.html"
+      },
+      {
+        "name": "vrec",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0052.html"
+      },
+      {
+        "name": "vreduce",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0053.html"
+      },
+      {
+        "name": "vreducev2",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0054.html"
+      },
+      {
+        "name": "vrelu",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0055.html"
+      },
+      {
+        "name": "vrsqrt",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0056.html"
+      },
+      {
+        "name": "vsel",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0057.html"
+      },
+      {
+        "name": "vshl",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0058.html"
+      },
+      {
+        "name": "vshr",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0059.html"
+      },
+      {
+        "name": "vsqrt",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0060.html"
+      },
+      {
+        "name": "vsubrelu",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0061.html"
+      },
+      {
+        "name": "vsubreluconv",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0062.html"
+      },
+      {
+        "name": "vtranspose",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0063.html"
+      },
+      {
+        "name": "功能介绍",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0173.html"
+      },
+      {
+        "name": "调用示例",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0174.html"
+      },
+      {
+        "name": "mskpp.tiling_func",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0185.html"
+      },
+      {
+        "name": "mskpp.get_kernel_from_binary",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0186.html"
+      },
+      {
+        "name": "功能介绍",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0154.html"
+      },
+      {
+        "name": "快速入门",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0155.html"
+      },
+      {
+        "name": "自动调优示例",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0168.html"
+      },
+      {
+        "name": "autotune",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0163.html"
+      },
+      {
+        "name": "code_gen",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0161.html"
+      },
+      {
+        "name": "compile",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0162.html"
+      },
+      {
+        "name": "autotune_v2",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0171.html"
+      },
+      {
+        "name": "compile_executable",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0170.html"
+      },
+      {
+        "name": "basic_matmul_autotune.py",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0157.html"
+      },
+      {
+        "name": "jit_build.sh",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0164.html"
+      },
+      {
+        "name": "basic_matmul_executable_autotune.py",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0183.html"
+      },
+      {
+        "name": "jit_build_executable.sh",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0182.html"
+      },
+      {
+        "name": "运行Kernel时提示权限错误",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0166.html"
+      },
+      {
+        "name": "工具概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0018.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0019.html"
+      },
+      {
+        "name": "创建算子工程",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0021.html"
+      },
+      {
+        "name": "算子开发",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0023.html"
+      },
+      {
+        "name": "算子编译部署",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0024.html"
+      },
+      {
+        "name": "查看算子仿真流水图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0025.html"
+      },
+      {
+        "name": "Ascend C自定义算子开发实践",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0027.html"
+      },
+      {
+        "name": "工具概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0029.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0030.html"
+      },
+      {
+        "name": "生成测试用例定义文件",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0032.html"
+      },
+      {
+        "name": "生成/执行测试用例",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0033.html"
+      },
+      {
+        "name": "生成单算子上板测试框架",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0034.html"
+      },
+      {
+        "name": "测试用例定义文件",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0036.html"
+      },
+      {
+        "name": "工具概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0039.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0040.html"
+      },
+      {
+        "name": "内存检测",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0042.html"
+      },
+      {
+        "name": "竞争检测",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0043.html"
+      },
+      {
+        "name": "未初始化检测",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0128.html"
+      },
+      {
+        "name": "同步检测",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0181.html"
+      },
+      {
+        "name": "检测内核调用符方式的Ascend C算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0045.html"
+      },
+      {
+        "name": "检测API调用的单算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0046.html"
+      },
+      {
+        "name": "检测PyTorch接口调用的算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0136.html"
+      },
+      {
+        "name": "检测Triton算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0176.html"
+      },
+      {
+        "name": "检测CANN软件栈的内存",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0047.html"
+      },
+      {
+        "name": "msSanitizer工具异常报告中未打印正确的文件名和行号",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0134.html"
+      },
+      {
+        "name": "msSanitizer工具使用\"--cce-enable-sanitizer -g\"编译算子时出现\"InputSection too large\"错误",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0135.html"
+      },
+      {
+        "name": "msSanitizer工具提示--cache-size异常",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0138.html"
+      },
+      {
+        "name": "接口列表",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0150.html"
+      },
+      {
+        "name": "sanitizerRtMalloc",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0050.html"
+      },
+      {
+        "name": "sanitizerRtMallocCached",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0051.html"
+      },
+      {
+        "name": "sanitizerRtFree",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0052.html"
+      },
+      {
+        "name": "sanitizerRtMemset",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0053.html"
+      },
+      {
+        "name": "sanitizerRtMemsetAsync",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0054.html"
+      },
+      {
+        "name": "sanitizerRtMemcpy",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0055.html"
+      },
+      {
+        "name": "sanitizerRtMemcpyAsync",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0056.html"
+      },
+      {
+        "name": "sanitizerRtMemcpy2d",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0057.html"
+      },
+      {
+        "name": "sanitizerRtMemcpy2dAsync",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0058.html"
+      },
+      {
+        "name": "sanitizerReportMalloc",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0059.html"
+      },
+      {
+        "name": "sanitizerReportFree",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0060.html"
+      },
+      {
+        "name": "mstx扩展功能",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0142.html"
+      },
+      {
+        "name": "工具概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0062.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0063.html"
+      },
+      {
+        "name": "指定Device ID（通算融合算子场景）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0169.html"
+      },
+      {
+        "name": "断点设置",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0066.html"
+      },
+      {
+        "name": "内存与变量打印",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0067.html"
+      },
+      {
+        "name": "单步调试",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0068.html"
+      },
+      {
+        "name": "中断运行",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0069.html"
+      },
+      {
+        "name": "核切换",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0070.html"
+      },
+      {
+        "name": "读取寄存器",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0071.html"
+      },
+      {
+        "name": "调试信息展示",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0072.html"
+      },
+      {
+        "name": "解析异常算子dump文件",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0149.html"
+      },
+      {
+        "name": "上板调试Vector算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0074.html"
+      },
+      {
+        "name": "调用Ascend CL单算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0075.html"
+      },
+      {
+        "name": "调试PyTorch接口调用的算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0076.html"
+      },
+      {
+        "name": "上板调试模板库的算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0184.html"
+      },
+      {
+        "name": "msDebug工具打印Tensor变量功能不可用，提示“unavailable”或“memory read failed”",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0079.html"
+      },
+      {
+        "name": "msDebug工具在容器环境中调试运行失败，提示需安装HDK驱动包",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0080.html"
+      },
+      {
+        "name": "msDebug工具断点设置在核函数内，命中断点后执行continue命令，算子运行失败",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0116.html"
+      },
+      {
+        "name": "msDebug工具在docker中执行\"run\"命令运行程序后，提示“'A' packet returned an error: 8”",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0132.html"
+      },
+      {
+        "name": "算子使用\"-O0 -g\"编译选项编译后，运行出错，\"min stack size is xxx, larger than current process default size 32768. Please modify aclInit json, and reboot process.\"",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0145.html"
+      },
+      {
+        "name": "工具概述",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0082.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0083.html"
+      },
+      {
+        "name": "工具使用",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_00851.html"
+      },
+      {
+        "name": "计算内存热力图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0086.html"
+      },
+      {
+        "name": "Roofline瓶颈分析图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0119.html"
+      },
+      {
+        "name": "Cache热力图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0158.html"
+      },
+      {
+        "name": "通算流水图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0139.html"
+      },
+      {
+        "name": "指令流水图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0087.html"
+      },
+      {
+        "name": "算子代码热点图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0088.html"
+      },
+      {
+        "name": "内存通路吞吐率波形图",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0160.html"
+      },
+      {
+        "name": "ArithmeticUtilization（Cube及Vector类型指令耗时和占比）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0093.html"
+      },
+      {
+        "name": "L2Cache（L2 Cache命中率）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0094.html"
+      },
+      {
+        "name": "Memory（内存读写带宽速率）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0095.html"
+      },
+      {
+        "name": "MemoryL0（L0读写带宽速率）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0096.html"
+      },
+      {
+        "name": "MemoryUB（UB读写带宽速率）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0097.html"
+      },
+      {
+        "name": "OpBasicInfo（算子基础信息）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0098.html"
+      },
+      {
+        "name": "PipeUtilization（计算单元和搬运单元耗时占比）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0099.html"
+      },
+      {
+        "name": "ResourceConflictRatio（资源冲突占比）",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0100.html"
+      },
+      {
+        "name": "代码行耗时数据文件",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0101.html"
+      },
+      {
+        "name": "代码指令信息文件",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0102.html"
+      },
+      {
+        "name": "json配置文件说明",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0104.html"
+      },
+      {
+        "name": "采集Ascend C算子的性能数据",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0090.html"
+      },
+      {
+        "name": "通过指令流水图优化算子",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0091.html"
+      },
+      {
+        "name": "采集MC2算子的性能数据",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0140.html"
+      },
+      {
+        "name": "配合mstx接口实现范围级重放",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0187.html"
+      },
+      {
+        "name": "mstx扩展功能",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0115.html"
+      },
+      {
+        "name": "基于msOpGen工具创建算子工程",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0024.html"
+      },
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0088.html"
+      },
+      {
+        "name": "算子工程编译",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0089.html"
+      },
+      {
+        "name": "算子交付件独立编译",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0090.html"
+      },
+      {
+        "name": "算子包部署",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0091.html"
+      },
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0096.html"
+      },
+      {
+        "name": "生成测试用例定义文件",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0097.html"
+      },
+      {
+        "name": "生成/执行测试用例",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0098.html"
+      },
+      {
+        "name": "测试用例定义文件配置样例",
+        "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0099.html"
+      }
+    ],
+    "分析迁移工具": [
+      {
+        "name": "工具简介",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0001.html"
+      },
+      {
+        "name": "环境准备",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0017.html"
+      },
+      {
+        "name": "快速入门",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0030.html"
+      },
+      {
+        "name": "迁移分析",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0018.html"
+      },
+      {
+        "name": "自动迁移方式",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0019.html"
+      },
+      {
+        "name": "PyTorch GPU2Ascend工具迁移方式",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0020.html"
+      },
+      {
+        "name": "训练配置",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0022.html"
+      },
+      {
+        "name": "使用torch.utils.data.DataLoader方式加载数据的场景说明",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0023.html"
+      },
+      {
+        "name": "GPU单卡脚本迁移为NPU多卡脚本",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0038.html"
+      },
+      {
+        "name": "“Segmentation fault”错误",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0025.html"
+      },
+      {
+        "name": "引用库找不到的问题",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0026.html"
+      },
+      {
+        "name": "Muls算子不支持int64",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0027.html"
+      },
+      {
+        "name": "对于报错“No supported Ops kernel and engine are found for [ReduceStdV2A], optype [ReduceStdV2A]”，算子ReduceStdV2A不支持的问题",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0028.html"
+      },
+      {
+        "name": "运行报错",
+        "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0029.html"
+      }
+    ],
+    "精度调试工具": [
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0001.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0002.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_1001.html"
+      },
+      {
+        "name": "准备GPU侧npy文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0006.html"
+      },
+      {
+        "name": "准备NPU侧dump数据和计算图文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0007.html"
+      },
+      {
+        "name": "比对操作和分析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0008.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0014.html"
+      },
+      {
+        "name": "准备TensorFlow模型npy文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0015.html"
+      },
+      {
+        "name": "准备全网层信息文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0016.html"
+      },
+      {
+        "name": "比对操作和分析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0018.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0020.html"
+      },
+      {
+        "name": "准备ONNX模型npy文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0021.html"
+      },
+      {
+        "name": "准备全网层信息文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0022.html"
+      },
+      {
+        "name": "比对操作和分析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0024.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0026.html"
+      },
+      {
+        "name": "Caffe模型npy文件准备",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0027.html"
+      },
+      {
+        "name": "准备模型文件和量化信息文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0030.html"
+      },
+      {
+        "name": "比对操作和分析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0031.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0033.html"
+      },
+      {
+        "name": "准备离线模型文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0034.html"
+      },
+      {
+        "name": "准备离线模型dump数据文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0028.html"
+      },
+      {
+        "name": "比对操作和分析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0035.html"
+      },
+      {
+        "name": "比对结果说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0036.html"
+      },
+      {
+        "name": "比对结果分析指导",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0038.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0040.html"
+      },
+      {
+        "name": "使用前必读",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0041.html"
+      },
+      {
+        "name": "通过命令行方式分析比对结果",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0042.html"
+      },
+      {
+        "name": "通过脚本工具方式分析比对结果",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0043.html"
+      },
+      {
+        "name": "输出结果和优化建议",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0044.html"
+      },
+      {
+        "name": "计算精度评价指标",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0045.html"
+      },
+      {
+        "name": "npy与npy文件之间的精度比对",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0046.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0048.html"
+      },
+      {
+        "name": "比对操作",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0049.html"
+      },
+      {
+        "name": "结果文件说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0050.html"
+      },
+      {
+        "name": "溢出算子数据采集与解析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0052.html"
+      },
+      {
+        "name": "Top溢出算子解析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0053.html"
+      },
+      {
+        "name": "dump数据文件Format转换",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0054.html"
+      },
+      {
+        "name": "查看dump数据文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0055.html"
+      },
+      {
+        "name": "GPU/NPU映射表获取",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0056.html"
+      },
+      {
+        "name": "自定义算法.py文件准备",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0057.html"
+      },
+      {
+        "name": "AICPU自定义算子日志解析",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0058.html"
+      },
+      {
+        "name": "生成npy文件名异常情况批量处理",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0059.html"
+      },
+      {
+        "name": "Windows dump文件转换为Linux dump文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0060.html"
+      },
+      {
+        "name": "数据格式要求",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0062.html"
+      },
+      {
+        "name": "命令格式说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0063.html"
+      },
+      {
+        "name": "完整比对结果参数说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0064.html"
+      },
+      {
+        "name": "数据格式要求",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0067.html"
+      },
+      {
+        "name": "准备离线模型dump数据文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0068.html"
+      },
+      {
+        "name": "准备Caffe模型npy文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0069.html"
+      },
+      {
+        "name": "准备TensorFlow模型npy文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0070.html"
+      },
+      {
+        "name": "说明与约束",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0072.html"
+      },
+      {
+        "name": "比对数据说明",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0073.html"
+      },
+      {
+        "name": "整网比对",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0074.html"
+      },
+      {
+        "name": "单算子比对",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0075.html"
+      },
+      {
+        "name": "如何进行npy文件转dump文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0076.html"
+      },
+      {
+        "name": "如何进行dump数据文件Format转换",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0077.html"
+      },
+      {
+        "name": "如何查看dump数据文件",
+        "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0078.html"
+      }
+    ],
+    "性能调优工具": [
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0001.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0002.html"
+      },
+      {
+        "name": "离线推理场景性能分析快速入门",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0003.html"
+      },
+      {
+        "name": "PyTorch训练场景性能分析快速入门",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0004.html"
+      },
+      {
+        "name": "TensorFlow训练场景性能分析快速入门",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0005.html"
+      },
+      {
+        "name": "msprof采集通用命令",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0008.html"
+      },
+      {
+        "name": "采集AI任务运行性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0009.html"
+      },
+      {
+        "name": "采集昇腾AI处理器系统数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0010.html"
+      },
+      {
+        "name": "采集Host侧系统数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0011.html"
+      },
+      {
+        "name": "采集msproftx数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0012.html"
+      },
+      {
+        "name": "动态采集性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0013.html"
+      },
+      {
+        "name": "延迟采集性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0014.html"
+      },
+      {
+        "name": "解析性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0016.html"
+      },
+      {
+        "name": "查询性能数据文件信息",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0017.html"
+      },
+      {
+        "name": "解析并导出性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0018.html"
+      },
+      {
+        "name": "通信性能数据解析",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0019.html"
+      },
+      {
+        "name": "工具介绍",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0021.html"
+      },
+      {
+        "name": "MSPTI工具使用（Python API）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0022.html"
+      },
+      {
+        "name": "MSPTI工具使用（C API）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0023.html"
+      },
+      {
+        "name": "MSPTI样例集",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0024.html"
+      },
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0027.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0028.html"
+      },
+      {
+        "name": "创建采集配置文件",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0030.html"
+      },
+      {
+        "name": "执行采集",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0031.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0033.html"
+      },
+      {
+        "name": "执行解析",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0034.html"
+      },
+      {
+        "name": "解析结果",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0035.html"
+      },
+      {
+        "name": "MindStudio Insight可视化",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0037.html"
+      },
+      {
+        "name": "Chrome tracing可视化",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0038.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0040.html"
+      },
+      {
+        "name": "连接Grafana画图",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0041.html"
+      },
+      {
+        "name": "可视化结果",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0042.html"
+      },
+      {
+        "name": "自定义添加采集代码",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0044.html"
+      },
+      {
+        "name": "服务化性能数据比对工具",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0045.html"
+      },
+      {
+        "name": "vLLM服务化性能采集工具",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0046.html"
+      },
+      {
+        "name": "服务化自动寻优工具",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0047.html"
+      },
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0049.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0050.html"
+      },
+      {
+        "name": "开启采集开关",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0052.html"
+      },
+      {
+        "name": "配置目标采集服务器",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0053.html"
+      },
+      {
+        "name": "启动Trace转发进程",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0054.html"
+      },
+      {
+        "name": "发送请求",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0055.html"
+      },
+      {
+        "name": "输出结果说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0056.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0060.html"
+      },
+      {
+        "name": "IsEnable",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0061.html"
+      },
+      {
+        "name": "SpanStart",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0062.html"
+      },
+      {
+        "name": "SpanEnd",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0063.html"
+      },
+      {
+        "name": "Metric",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0064.html"
+      },
+      {
+        "name": "MetricInc",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0065.html"
+      },
+      {
+        "name": "MetricScope",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0066.html"
+      },
+      {
+        "name": "MetricScopeAsReqID",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0067.html"
+      },
+      {
+        "name": "MetricScopeAsGlobal",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0068.html"
+      },
+      {
+        "name": "Launch",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0069.html"
+      },
+      {
+        "name": "Event",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0070.html"
+      },
+      {
+        "name": "Link",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0071.html"
+      },
+      {
+        "name": "Attr系列",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0072.html"
+      },
+      {
+        "name": "ArrayResource",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0073.html"
+      },
+      {
+        "name": "Resource",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0074.html"
+      },
+      {
+        "name": "Domain",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0075.html"
+      },
+      {
+        "name": "NumArrayAttr",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0076.html"
+      },
+      {
+        "name": "ArrayAttr",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0077.html"
+      },
+      {
+        "name": "GetMsg",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0078.html"
+      },
+      {
+        "name": "宏定义",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0079.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0081.html"
+      },
+      {
+        "name": "示例代码",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0082.html"
+      },
+      {
+        "name": "GetTraceCtx",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0084.html"
+      },
+      {
+        "name": "addResAttribute",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0085.html"
+      },
+      {
+        "name": "ExtractAndAttach",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0086.html"
+      },
+      {
+        "name": "Attach",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0087.html"
+      },
+      {
+        "name": "Unattach",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0088.html"
+      },
+      {
+        "name": "GetCurrent",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0089.html"
+      },
+      {
+        "name": "Span",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0091.html"
+      },
+      {
+        "name": "Activate",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0092.html"
+      },
+      {
+        "name": "SetAttribute",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0093.html"
+      },
+      {
+        "name": "SetStatus",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0094.html"
+      },
+      {
+        "name": "End",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0095.html"
+      },
+      {
+        "name": "StartSpanAsActive",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0097.html"
+      },
+      {
+        "name": "IsEnable",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0098.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0101.html"
+      },
+      {
+        "name": "init",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0102.html"
+      },
+      {
+        "name": "__enter__/__exit__",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0103.html"
+      },
+      {
+        "name": "span_start",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0104.html"
+      },
+      {
+        "name": "span_end",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0105.html"
+      },
+      {
+        "name": "event",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0106.html"
+      },
+      {
+        "name": "link",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0107.html"
+      },
+      {
+        "name": "metric",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0108.html"
+      },
+      {
+        "name": "metric_inc",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0109.html"
+      },
+      {
+        "name": "metric_scope",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0110.html"
+      },
+      {
+        "name": "metric_scope_as_req_id",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0111.html"
+      },
+      {
+        "name": "launch",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0112.html"
+      },
+      {
+        "name": "attr",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0113.html"
+      },
+      {
+        "name": "domain",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0114.html"
+      },
+      {
+        "name": "res",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0115.html"
+      },
+      {
+        "name": "get_msg",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0116.html"
+      },
+      {
+        "name": "性能数据采集和自动解析",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0118.html"
+      },
+      {
+        "name": "离线解析",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0119.html"
+      },
+      {
+        "name": "性能数据采集和自动解析",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0121.html"
+      },
+      {
+        "name": "离线解析",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0122.html"
+      },
+      {
+        "name": "使用TensorFlow框架接口采集性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0124.html"
+      },
+      {
+        "name": "总体介绍",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0126.html"
+      },
+      {
+        "name": "采集并落盘性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0127.html"
+      },
+      {
+        "name": "使用msproftx扩展接口采集并落盘性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0128.html"
+      },
+      {
+        "name": "订阅算子信息",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0129.html"
+      },
+      {
+        "name": "采集数据说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0130.html"
+      },
+      {
+        "name": "总体介绍",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0132.html"
+      },
+      {
+        "name": "采集并落盘性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0133.html"
+      },
+      {
+        "name": "使用msproftx扩展接口采集并落盘性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0134.html"
+      },
+      {
+        "name": "订阅算子信息",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0135.html"
+      },
+      {
+        "name": "采集数据说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0136.html"
+      },
+      {
+        "name": "使用Ascend Graph接口采集性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0137.html"
+      },
+      {
+        "name": "使用acl.json配置文件采集性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0138.html"
+      },
+      {
+        "name": "使用环境变量采集性能数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0139.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0141.html"
+      },
+      {
+        "name": "msprof导出db格式数据说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0142.html"
+      },
+      {
+        "name": "msprof（timeline数据总表）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0143.html"
+      },
+      {
+        "name": "msproftx数据说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0145.html"
+      },
+      {
+        "name": "task_time（任务调度信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0146.html"
+      },
+      {
+        "name": "api_statistic（API耗时统计信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0147.html"
+      },
+      {
+        "name": "step_trace（迭代轨迹信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0148.html"
+      },
+      {
+        "name": "dp（数据增强信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0149.html"
+      },
+      {
+        "name": "communication_statistic（集合通信算子统计信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0150.html"
+      },
+      {
+        "name": "op_summary（算子详细信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0151.html"
+      },
+      {
+        "name": "op_statistic（算子调用次数及耗时）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0152.html"
+      },
+      {
+        "name": "ai_core_utilization（AI Core指令占比）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0153.html"
+      },
+      {
+        "name": "ai_vector_core_utilization（AI Vector Core指令占比）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0154.html"
+      },
+      {
+        "name": "aicpu（AI CPU算子详细耗时）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0155.html"
+      },
+      {
+        "name": "aicpu_mi（数据准备的队列）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0156.html"
+      },
+      {
+        "name": "l2_cache（L2 Cache命中率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0157.html"
+      },
+      {
+        "name": "fusion_op（算子融合信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0158.html"
+      },
+      {
+        "name": "npu_mem（NPU内存占用）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0159.html"
+      },
+      {
+        "name": "npu_module_mem（NPU组件内存占用）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0160.html"
+      },
+      {
+        "name": "memory_record（CANN算子的内存占用记录）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0161.html"
+      },
+      {
+        "name": "operator_memory（CANN算子的内存占用明细）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0162.html"
+      },
+      {
+        "name": "static_op_mem（静态图算子内存）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0163.html"
+      },
+      {
+        "name": "sys_mem（系统内存数据）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0164.html"
+      },
+      {
+        "name": "process_mem（进程内存占用数据）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0165.html"
+      },
+      {
+        "name": "cpu_usage（AI CPU、Ctrl CPU利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0166.html"
+      },
+      {
+        "name": "process_cpu_usage（进程CPU占用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0167.html"
+      },
+      {
+        "name": "片上内存读写速率",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0168.html"
+      },
+      {
+        "name": "hccs（集合通信带宽）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0170.html"
+      },
+      {
+        "name": "nic（每个时间节点网络信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0171.html"
+      },
+      {
+        "name": "roce（RoCE通信接口带宽）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0172.html"
+      },
+      {
+        "name": "pcie（PCIe带宽）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0173.html"
+      },
+      {
+        "name": "biu_group/aic_core_group/aiv_core_group（AI Core和AI Vector的带宽和延时）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0174.html"
+      },
+      {
+        "name": "Acc PMU（加速器带宽及并发信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0175.html"
+      },
+      {
+        "name": "Stars Soc Info（SoC传输带宽信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0176.html"
+      },
+      {
+        "name": "Stars Chip Trans（片间传输带宽信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0177.html"
+      },
+      {
+        "name": "llc_read_write（三级缓存读写速率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0178.html"
+      },
+      {
+        "name": "dvpp（DVPP信息）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0182.html"
+      },
+      {
+        "name": "ai_cpu_top_function（AI CPU热点函数）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0183.html"
+      },
+      {
+        "name": "ai_cpu_pmu_events（AI CPU PMU事件）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0184.html"
+      },
+      {
+        "name": "ctrl_cpu_top_function（Ctrl CPU热点函数）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0185.html"
+      },
+      {
+        "name": "ctrl_cpu_pmu_events（Ctrl CPU PMU事件）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0186.html"
+      },
+      {
+        "name": "ts_cpu_top_function（TS CPU热点函数）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0187.html"
+      },
+      {
+        "name": "ts_cpu_pmu_events（TS CPU PMU事件）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0188.html"
+      },
+      {
+        "name": "host_cpu_usage（Host侧CPU利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0190.html"
+      },
+      {
+        "name": "host_mem_usage（Host侧内存利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0191.html"
+      },
+      {
+        "name": "host_disk_usage（Host侧磁盘I/O利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0192.html"
+      },
+      {
+        "name": "host_network_usage（Host侧网络I/O利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0193.html"
+      },
+      {
+        "name": "os_runtime_statistic（Host侧syscall和pthreadcall）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0194.html"
+      },
+      {
+        "name": "cpu_usage（Host侧系统CPU利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0195.html"
+      },
+      {
+        "name": "process_cpu_usage（Host侧进程CPU利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0196.html"
+      },
+      {
+        "name": "sys_mem（Host侧系统内存利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0197.html"
+      },
+      {
+        "name": "process_mem（Host侧进程内存利用率）",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0198.html"
+      },
+      {
+        "name": "数据目录说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0204.html"
+      },
+      {
+        "name": "timeline和summary数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0205.html"
+      },
+      {
+        "name": "ascend_pytorch_profiler_{Rank_ID}.db数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0206.html"
+      },
+      {
+        "name": "analysis.db数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0207.html"
+      },
+      {
+        "name": "MindSpore场景特有数据",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0208.html"
+      },
+      {
+        "name": "安装perf、iotop、ltrace工具",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0210.html"
+      },
+      {
+        "name": "配置用户权限",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0211.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0213.html"
+      },
+      {
+        "name": "HcclMonitor.start",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0215.html"
+      },
+      {
+        "name": "HcclMonitor.stop",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0216.html"
+      },
+      {
+        "name": "HcclMonitor.flush_all",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0217.html"
+      },
+      {
+        "name": "HcclMonitor.set_buffer_size",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0218.html"
+      },
+      {
+        "name": "KernelMonitor.start",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0220.html"
+      },
+      {
+        "name": "KernelMonitor.stop",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0221.html"
+      },
+      {
+        "name": "KernelMonitor.flush_all",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0222.html"
+      },
+      {
+        "name": "KernelMonitor.set_buffer_size",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0223.html"
+      },
+      {
+        "name": "MstxMonitor.start",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0225.html"
+      },
+      {
+        "name": "MstxMonitor.stop",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0226.html"
+      },
+      {
+        "name": "MstxMonitor.enable_domain",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0227.html"
+      },
+      {
+        "name": "MstxMonitor.disable_domain",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0228.html"
+      },
+      {
+        "name": "MstxMonitor.flush_all",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0229.html"
+      },
+      {
+        "name": "MstxMonitor.set_buffer_size",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0230.html"
+      },
+      {
+        "name": "HcclData",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0232.html"
+      },
+      {
+        "name": "KernelData",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0233.html"
+      },
+      {
+        "name": "MarkerData",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0234.html"
+      },
+      {
+        "name": "RangeMarkerData",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0235.html"
+      },
+      {
+        "name": "msptiResult",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0237.html"
+      },
+      {
+        "name": "msptiActivityKind",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0238.html"
+      },
+      {
+        "name": "msptiActivityFlag",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0239.html"
+      },
+      {
+        "name": "msptiActivitySourceKind",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0240.html"
+      },
+      {
+        "name": "总体说明",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0242.html"
+      },
+      {
+        "name": "msptiActivityRegisterCallbacks",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0245.html"
+      },
+      {
+        "name": "msptiActivityEnable",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0246.html"
+      },
+      {
+        "name": "msptiActivityDisable",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0247.html"
+      },
+      {
+        "name": "msptiActivityGetNextRecord",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0248.html"
+      },
+      {
+        "name": "msptiActivityFlushAll",
+        "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0249.html"
+      }
+    ],
+    "msLeaks内存泄漏检测工具": [
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0001.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0002.html"
+      },
+      {
+        "name": "Python接口采集",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0009.html"
+      },
+      {
+        "name": "命令行采集",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0007.html"
+      },
+      {
+        "name": "mstx打点采集",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0008.html"
+      },
+      {
+        "name": "Python Trace采集",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0011.html"
+      },
+      {
+        "name": "内存泄漏分析",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0005.html"
+      },
+      {
+        "name": "内存对比",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0006.html"
+      },
+      {
+        "name": "内存块监测",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0013.html"
+      },
+      {
+        "name": "内存拆解",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0014.html"
+      },
+      {
+        "name": "低效内存识别",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0015.html"
+      },
+      {
+        "name": "输出说明",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0016.html"
+      },
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0018.html"
+      },
+      {
+        "name": "list_analyzers",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0019.html"
+      },
+      {
+        "name": "get_analyzer_config",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0020.html"
+      },
+      {
+        "name": "analyze",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0021.html"
+      },
+      {
+        "name": "check_leaks",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0022.html"
+      },
+      {
+        "name": "check_inefficient",
+        "url": "zh/mindstudio/830/T&ITools/msleaks/atlas_msleaks_0023.html"
+      }
+    ],
+    "性能问题通用定位指南": [
+      {
+        "name": "文档简介",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_001.html"
+      },
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_002.html"
+      },
+      {
+        "name": "整体定位流程",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_004.html"
+      },
+      {
+        "name": "问题信息收集",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_005.html"
+      },
+      {
+        "name": "快速排查",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_007.html"
+      },
+      {
+        "name": "详细排查",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_008.html"
+      },
+      {
+        "name": "性能工具总体介绍",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_010.html"
+      },
+      {
+        "name": "使用步骤",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_012.html"
+      },
+      {
+        "name": "模型调优性能采集工具",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_013.html"
+      },
+      {
+        "name": "模型调优快速分析（msprof-analyze命令行工具）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_014.html"
+      },
+      {
+        "name": "总体介绍",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_016.html"
+      },
+      {
+        "name": "获取软件包",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_017.html"
+      },
+      {
+        "name": "概览（Summary）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_019.html"
+      },
+      {
+        "name": "通信（Communication）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_020.html"
+      },
+      {
+        "name": "时间线（Timeline）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_022.html"
+      },
+      {
+        "name": "内存（Memory）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_023.html"
+      },
+      {
+        "name": "算子（Operator）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_024.html"
+      },
+      {
+        "name": "服务化工具",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_025.html"
+      },
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_027.html"
+      },
+      {
+        "name": "总体介绍",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_029.html"
+      },
+      {
+        "name": "总体介绍",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_031.html"
+      },
+      {
+        "name": "快慢卡定点精确分析法",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_032.html"
+      },
+      {
+        "name": "快慢卡定位Timeline操作案例",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_034.html"
+      },
+      {
+        "name": "快慢卡定位算子比对操作案例",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_035.html"
+      },
+      {
+        "name": "案例一：集群保存checkpoint后性能持续劣化",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_037.html"
+      },
+      {
+        "name": "案例二：集群AllReduce通信算子等待时间过长",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_038.html"
+      },
+      {
+        "name": "基于集群数据分析是否出现通信重传",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_040.html"
+      },
+      {
+        "name": "通信重传典型案例",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_041.html"
+      },
+      {
+        "name": "案例：ZeRO3模式导致通信小包",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_043.html"
+      },
+      {
+        "name": "源地址与目的地址字节未对齐",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_044.html"
+      },
+      {
+        "name": "计算通信带宽抢占",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_047.html"
+      },
+      {
+        "name": "Profiling采集性能膨胀",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_046.html"
+      },
+      {
+        "name": "算子性能问题定位方法",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_049.html"
+      },
+      {
+        "name": "亲和算子优化策略",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_050.html"
+      },
+      {
+        "name": "模型代码优化策略",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_051.html"
+      },
+      {
+        "name": "Host Bound问题分类",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_053.html"
+      },
+      {
+        "name": "流水优化",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_054.html"
+      },
+      {
+        "name": "绑核优化",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_058.html"
+      },
+      {
+        "name": "编译优化包获取",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_063.html"
+      },
+      {
+        "name": "毕昇编译器安装",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_064.html"
+      },
+      {
+        "name": "安装依赖",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_066.html"
+      },
+      {
+        "name": "编译Python",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_067.html"
+      },
+      {
+        "name": "配置软链接",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_068.html"
+      },
+      {
+        "name": "注意事项",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_069.html"
+      },
+      {
+        "name": "前置准备",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_071.html"
+      },
+      {
+        "name": "首次编译（插桩编译）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_072.html"
+      },
+      {
+        "name": "采集Profiling数据",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_073.html"
+      },
+      {
+        "name": "二次编译（优化编译）",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_074.html"
+      },
+      {
+        "name": "问题背景",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_076.html"
+      },
+      {
+        "name": "前置检查",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_077.html"
+      },
+      {
+        "name": "CPU运行状态",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_079.html"
+      },
+      {
+        "name": "异常堆栈捕获",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_080.html"
+      },
+      {
+        "name": "集群性能劣化分析思路",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_082.html"
+      },
+      {
+        "name": "定位实操技巧",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_083.html"
+      },
+      {
+        "name": "信息收集",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_085.html"
+      },
+      {
+        "name": "分析性能数据文件",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_091.html"
+      },
+      {
+        "name": "ATC转换日志分析",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_092.html"
+      },
+      {
+        "name": "OM和ONNX文件",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_093.html"
+      },
+      {
+        "name": "模型压缩量化",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_095.html"
+      },
+      {
+        "name": "简化ONNX文件",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_097.html"
+      },
+      {
+        "name": "ATC调优",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_098.html"
+      },
+      {
+        "name": "AOE调优",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_099.html"
+      },
+      {
+        "name": "NCS调优",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_192.html"
+      },
+      {
+        "name": "msit debug surgeon自动优化ONNX",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_103.html"
+      },
+      {
+        "name": "升级CANN版本",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_104.html"
+      },
+      {
+        "name": "改图优化",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_191.html"
+      },
+      {
+        "name": "整体思路",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_106.html"
+      },
+      {
+        "name": "纯模型性能调优",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_107.html"
+      },
+      {
+        "name": "明确优化目标",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_109.html"
+      },
+      {
+        "name": "针对目标进行调优",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_110.html"
+      },
+      {
+        "name": "框架调度耗时导致性能劣化",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_112.html"
+      },
+      {
+        "name": "模型执行耗时优化案例",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_113.html"
+      },
+      {
+        "name": "显存瓶颈分析案例",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_114.html"
+      },
+      {
+        "name": "服务化参数优化案例",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_200.html"
+      },
+      {
+        "name": "DeepSeek进阶调优",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_115.html"
+      },
+      {
+        "name": "确认主要性能瓶颈",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_117.html"
+      },
+      {
+        "name": "算子性能劣化对比分析",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_118.html"
+      },
+      {
+        "name": "通信时间（未被掩盖的）劣化对比分析",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_119.html"
+      },
+      {
+        "name": "内存劣化对比分析",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_120.html"
+      },
+      {
+        "name": "空闲时间劣化对比分析",
+        "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_121.html"
+      }
+    ],
+    "大模型训练性能瓶颈定位流程案例": [
+      {
+        "name": "常见性能问题场景",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_001.html"
+      },
+      {
+        "name": "性能问题定位流程",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_003.html"
+      },
+      {
+        "name": "Ascend PyTorch Profiler采集性能数据",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_004.html"
+      },
+      {
+        "name": "MindStudio Insight定位",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_005.html"
+      },
+      {
+        "name": "案例描述",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_007.html"
+      },
+      {
+        "name": "MindStudio Insight分析定位",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_008.html"
+      },
+      {
+        "name": "mstt advisor辅助定位",
+        "url": "zh/mindstudio/830/practicalcases/Largemodeltraining/toolsample1_009.html"
+      }
+    ],
+    "大模型训练精度问题定位案例": [
+      {
+        "name": "精度问题概述和场景",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_001.html"
+      },
+      {
+        "name": "精度问题定位流程",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_003.html"
+      },
+      {
+        "name": "环境检查",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_004.html"
+      },
+      {
+        "name": "问题复现",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_005.html"
+      },
+      {
+        "name": "精度问题分场景定位",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_006.html"
+      },
+      {
+        "name": "特殊情况排查",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_007.html"
+      },
+      {
+        "name": "硬件压测",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_008.html"
+      },
+      {
+        "name": "配置项不一致",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_011.html"
+      },
+      {
+        "name": "读取数据不一致",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_012.html"
+      },
+      {
+        "name": "模型结构不一致",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_013.html"
+      },
+      {
+        "name": "确定性计算案例",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_014.html"
+      },
+      {
+        "name": "首step loss不一致（或同权重推理不一致）",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_016.html"
+      },
+      {
+        "name": "长稳训练loss不一致，前期对齐，后期差异变大",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_017.html"
+      },
+      {
+        "name": "溢出或NaN问题",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_018.html"
+      },
+      {
+        "name": "特殊情况排查案例",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_019.html"
+      },
+      {
+        "name": "硬件压测案例",
+        "url": "zh/mindstudio/830/practicalcases/LargeModelTrainingAccuracy/toolsample3_020.html"
+      }
+    ],
+    "大模型推理精度问题分析案例": [
+      {
+        "name": "问题现象",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_001.html"
+      },
+      {
+        "name": "定位流程",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_002.html"
+      },
+      {
+        "name": "检查配置",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_004.html"
+      },
+      {
+        "name": "工具简介",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_011.html"
+      },
+      {
+        "name": "选择Bad Case",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_006.html"
+      },
+      {
+        "name": "logits采集比对",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_007.html"
+      },
+      {
+        "name": "整网数据采集比对",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_008.html"
+      },
+      {
+        "name": "算子精度预检",
+        "url": "zh/mindstudio/830/practicalcases/Analysiscaseofreasoningaccuracy/toolsample2_009.html"
+      }
+    ],
+    "大模型推理量化调试调优指南": [
+      {
+        "name": "推理量化精度问题的挑战",
+        "url": "zh/mindstudio/830/practicalcases/InferenceQuantization/toolsample5_001.html"
+      },
+      {
+        "name": "推理量化精度调优指南",
+        "url": "zh/mindstudio/830/practicalcases/InferenceQuantization/toolsample5_002.html"
+      },
+      {
+        "name": "推理量化精度调优案例",
+        "url": "zh/mindstudio/830/practicalcases/InferenceQuantization/toolsample5_003.html"
+      }
+    ],
+    "传统模型推理迁移调试调优全流程指南": [
+      {
+        "name": "概述",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_001.html"
+      },
+      {
+        "name": "问题概述",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_003.html"
+      },
+      {
+        "name": "问题定位",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_004.html"
+      },
+      {
+        "name": "精度调试案例",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_005.html"
+      },
+      {
+        "name": "问题概述",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_007.html"
+      },
+      {
+        "name": "问题定位",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_008.html"
+      },
+      {
+        "name": "性能调优案例",
+        "url": "zh/mindstudio/830/practicalcases/optimizationmodelinference/toolsample4_009.html"
+      }
+    ],
+    "内存问题分析案例": [
+      {
+        "name": "简介",
+        "url": "zh/mindstudio/830/practicalcases/MemoryIssueAnalysisCaseStudy/toolsample6_001.html"
+      },
+      {
+        "name": "调优流程",
+        "url": "zh/mindstudio/830/practicalcases/MemoryIssueAnalysisCaseStudy/toolsample6_002.html"
+      },
+      {
+        "name": "使用前准备",
+        "url": "zh/mindstudio/830/practicalcases/MemoryIssueAnalysisCaseStudy/toolsample6_004.html"
+      },
+      {
+        "name": "内存调优",
+        "url": "zh/mindstudio/830/practicalcases/MemoryIssueAnalysisCaseStudy/toolsample6_005.html"
+      }
+    ],
+    "mstx API参考": [
+      {
+        "name": "接口简介",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0001.html"
+      },
+      {
+        "name": "mstxGetToolId",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0187.html"
+      },
+      {
+        "name": "mstxMarkA",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0003.html"
+      },
+      {
+        "name": "mstxRangeStartA",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0117.html"
+      },
+      {
+        "name": "mstxRangeEnd",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0118.html"
+      },
+      {
+        "name": "mstxDomainCreateA",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0006.html"
+      },
+      {
+        "name": "mstxDomainDestroy",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0007.html"
+      },
+      {
+        "name": "mstxDomainMarkA",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0008.html"
+      },
+      {
+        "name": "mstxDomainRangeStartA",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0009.html"
+      },
+      {
+        "name": "mstxDomainRangeEnd",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0010.html"
+      },
+      {
+        "name": "mstxMemHeapRegister",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0145.html"
+      },
+      {
+        "name": "mstxMemRegionsRegister",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0147.html"
+      },
+      {
+        "name": "mstxMemRegionsUnregister",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0148.html"
+      },
+      {
+        "name": "mstxMemHeapUnregister",
+        "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0146.html"
+      }
+    ]
+  },
+  "total_pages": 724
+}

@@ -1,0 +1,237 @@
+---
+title: "自动调优示例"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0168.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0168.html"
+---
+
+# 自动调优示例
+
+#### 自动调优流程
+自动调优流程包括Kernel级自动调优和应用级自动调优两种，具体流程请参见图1，具体操作请参见Kernel级自动调优和应用级自动调优。**图1**
+自动调优流程示意图
+#### Kernel级自动调优
+
+[本章节以模板库catlass-v1-dev分支的examples/00_basic_matmul](https://gitee.com/ascend/catlass/blob/catlass-v1-dev/examples/00_basic_matmul/basic_matmul.cpp)[为例，介绍如何利用msKPP工具提供的Python接口](atlasopdev_16_0156.html#ZH-CN_TOPIC_0000002505040510)实现Kernel级自动调优。
+
+在运行过程中出现任何异常，可通过设置环境变量的方式来查看debug日志以及保留中间文件，便于问题定位。
+
+```
+export MSKPP_LOG_LEVEL=0
+```
+
+1. 完成算子Kernel开发后，Kernel函数的定义与实现将会呈现在basic_matmul.cpp文件中，如下所示。
+
+```
+// basic_matmul.cpp
+// ...
+template <class LayoutA, class LayoutB, class LayoutC>
+ACT_GLOBAL void BasicMatmul(
+    GemmCoord problemShape,
+    GM_ADDR gmA, LayoutA layoutA,
+    GM_ADDR gmB, LayoutB layoutB,
+    GM_ADDR gmC, LayoutC layoutC
+)
+{
+ // Kernel 实现
+}
+// ...
+```
+
+2. [参考附录，在examples/00_basic_matmul目录中创建Python脚本文件basic_matmul_autotune.py](atlasopdev_16_0157.html#ZH-CN_TOPIC_0000002504880704)[与编译脚本文件jit_build.sh](atlasopdev_16_0164.html#ZH-CN_TOPIC_0000002505040524)。
+
+按照如下要求，定义算子Kernel函数的Python接口：在Python脚本中定义basic_matmul函数，其入参需与C++代码中的Kernel函数保持一致。
+
+```
+# basic_matmul_autotune.py
+import mskpp
+
+def get_kernel():
+    kernel_file = "./basic_matmul.cpp"
+    kernel_name = "BasicMatmul"
+    build_script = "./jit_build.sh" # kernel compile script
+    config = mskpp.KernelInvokeConfig(kernel_file, kernel_name)
+    gen_file = mskpp.Launcher(config).code_gen()
+    kernel = mskpp.compile(build_script=build_script, launch_src_file=gen_file)
+    return kernel
+
+def basic_matmul(problem_shape, a, layout_a, b, layout_b, c, layout_c):
+    # This function's input arguments must exactly match the kernel function.
+    kernel = get_kernel()
+    blockdim = 20 # use the correct aic number that matches your hardware
+    return kernel[blockdim](problem_shape, a, layout_a, b, layout_b, c, layout_c, device_id=1) # invoke the kernel
+```
+
+3. 参考如下代码实现，构造Kernel入参，实现basic_matmul函数的正常运行。
+
+  - 若算子Kernel函数入参是GM_ADDR，则构造入参需使用numpy.array类型。
+  - 若算子Kernel函数入参是C++结构体对象，则需依靠ctypes.Structure在Python中构建一个相同的结构体。
+
+```
+# basic_matmul_autotune.py
+import numpy as np
+from ctypes import Structure, c_uint32, c_int32, c_int64
+class GemmCoord(Structure):
+    _fields_ = [("m", c_uint32),
+                ("n", c_uint32),
+                ("k", c_uint32)]
+    def __init__(self, m, n, k):
+        super().__init__()
+        self.m = (c_uint32)(m)
+        self.n = (c_uint32)(n)
+        self.k = (c_uint32)(k)
+    @staticmethod
+    def get_namespace():
+        return "Catlass::"
+class RowMajor(Structure):
+    _fields_ = [("shape", c_int32 * 2),
+                ("stride", c_int64 * 2)]
+    def __init__(self, rows : int = 0, cols : int = 0, ldm : int = None):
+        super().__init__()
+        self.shape = (c_int32 * 2)(rows, cols)
+        if ldm is None:
+            self.stride = (c_int64 * 2)(cols, 1)
+        else:
+            self.stride = (c_int64 * 2)((c_int64)(ldm), 1)
+    @staticmethod
+    def get_namespace():
+        return "Catlass::layout::"
+if __name__ == "__main__":
+    m = 256
+    n = 512
+    k = 1024
+    problem_shape = GemmCoord(m, n, k)
+    layout_a = RowMajor(m, k)
+    layout_b = RowMajor(k, n)
+    layout_c = RowMajor(m, n)
+    a = np.random.randint(1, 2, [m, k]).astype(np.half)
+    b = np.random.randint(1, 2, [k, n]).astype(np.half)
+    c = np.zeros([m, n]).astype(np.half)
+    basic_matmul(problem_shape, a, layout_a, b, layout_b, c, layout_c)
+    # check if the output tensor c is consistent with the golden data
+    golden = np.matmul(a, b)
+    is_equal = np.array_equal(c, golden)
+    result = "success" if is_equal else "failed"
+    print("compare {}.".format(result))
+```
+
+4. 运行Python脚本，获得如下提示，说明算子Kernel已可正常通过Python接口拉起。
+
+```
+$ python3 basic_matmul_autotune.py
+compare success.
+```
+
+5. 在算子代码程序basic_matmul.cpp中标识需调优的参数。
+
+**在模板参数的声明代码行末尾使用// tunable**标记，用于替换"="号后的代码内容。
+****************
+```
+using L1TileShape = GemmShape<128, 256, 256>; // tunable
+using L0TileShape = GemmShape<128, 256, 64>; // tunable
+```
+**除tunable标识的方法之外，还可以通过换行，在需要整行替换的代码行末尾使用// tunable: 别名（L0Shape）**方式标记。其中，别名用于搜索空间索引。****
+```
+using L0TileShape =
+ MatmulShape<128, 256, 64>; // tunable: L0Shape
+```
+
+6. [通过autotune](atlasopdev_16_0163.html#ZH-CN_TOPIC_0000002536800469)接口的configs入参定义参数搜索空间，每一类参数组合会替换算子Kernel代码中被标记的代码行，然后进行编译、运行并完成Kernel性能采集。搜索空间定义示例可参考如下所示。
+
+  - 参数替换需合理，不能造成编译或运行错误。
+  - 参数替换原则如下（以configs中的第一行为例）：
+    1. 先替换// tunable: L0Shape方式标记的参数，将标记代码行（MatmulShape<128, 256, 64>）整行替换为configs中的value字符串（MatmulShape<128, 256, 64>）。
+    2. 再替换// tunable方式标记的代码行，将"="号后的MatmulShape<128, 256, 256>替换为configs中value字符串MatmulShape<64, 64, 64>。
+      - 不同作用域中，可能会有两个同名的变量被声明。若两个变量均符合匹配规则时，仅第一个变量会被修改。
+      - 若其中一个config未匹配成功，该config对应的任务会停止并报错。但其他匹配成功的config将会成功进行参数替换。
+
+```
+@mskpp.autotune(configs=[ # add and try your own config here for a better kernel performance
+    {'L1TileShape': 'GemmShape<128, 256, 256>', 'L0TileShape': 'GemmShape<128, 256, 64>'}, #0 the same config as in basic_matmul.cpp
+    {'L1TileShape': 'GemmShape<128, 256, 128>', 'L0TileShape': 'GemmShape<128, 256, 64>'},
+    {'L1TileShape': 'GemmShape<128, 128, 256>', 'L0TileShape': 'GemmShape<128, 128, 64>'},
+    {'L1TileShape': 'GemmShape<64, 128, 128>', 'L0TileShape': 'GemmShape<64, 128, 128>'},
+    {'L1TileShape': 'GemmShape<64, 128, 256>', 'L0TileShape': 'GemmShape<64, 128, 128>'},
+    {'L1TileShape': 'GemmShape<64, 128, 512>', 'L0TileShape': 'GemmShape<64, 128, 128>'},
+    {'L1TileShape': 'GemmShape<64, 64, 128>', 'L0TileShape': 'GemmShape<64, 64, 128>'},
+    {'L1TileShape': 'GemmShape<64, 64, 256>', 'L0TileShape': 'GemmShape<64, 64, 128>'},
+    {'L1TileShape': 'GemmShape<64, 64, 512>', 'L0TileShape': 'GemmShape<64, 64, 128>'},
+    {'L1TileShape': 'GemmShape<128, 128, 128>', 'L0TileShape': 'GemmShape<128, 128, 128>'},
+    {'L1TileShape': 'GemmShape<128, 128, 256>', 'L0TileShape': 'GemmShape<128, 128, 128>'},
+    {'L1TileShape': 'GemmShape<128, 128, 512>', 'L0TileShape': 'GemmShape<128, 128, 128>'},
+], warmup=1000, repeat=10, device_ids=[0]) # set kernel warmup 1000us
+```
+
+7. [执行basic_matmul_autotune.py](atlasopdev_16_0157.html#ZH-CN_TOPIC_0000002504880704)文件运行算子，获得每种参数组合的耗时及最佳调优参数集合。以下仅展示可能的一种命令行输出结果。
+****
+```
+# python3 basic_matmul_autotune.py 
+No.0: 22.562μs, {'L1TileShape': 'GemmShape<128, 256, 256>', 'L0TileShape': 'GemmShape<128, 256, 64>'}
+No.1: 22.109μs, {'L1TileShape': 'GemmShape<128, 256, 128>', 'L0TileShape': 'GemmShape<128, 256, 64>'}
+No.2: 17.778μs, {'L1TileShape': 'GemmShape<128, 128, 256>', 'L0TileShape': 'GemmShape<128, 128, 64>'}
+No.3: 15.378μs, {'L1TileShape': 'GemmShape<64, 128, 128>', 'L0TileShape': 'GemmShape<64, 128, 128>'}
+No.4: 14.982μs, {'L1TileShape': 'GemmShape<64, 128, 256>', 'L0TileShape': 'GemmShape<64, 128, 128>'}
+No.5: 15.671μs, {'L1TileShape': 'GemmShape<64, 128, 512>', 'L0TileShape': 'GemmShape<64, 128, 128>'}
+No.6: 19.592μs, {'L1TileShape': 'GemmShape<64, 64, 128>', 'L0TileShape': 'GemmShape<64, 64, 128>'}
+No.7: 18.340μs, {'L1TileShape': 'GemmShape<64, 64, 256>', 'L0TileShape': 'GemmShape<64, 64, 128>'}
+No.8: 18.541μs, {'L1TileShape': 'GemmShape<64, 64, 512>', 'L0TileShape': 'GemmShape<64, 64, 128>'}
+No.9: 20.652μs, {'L1TileShape': 'GemmShape<128, 128, 128>', 'L0TileShape': 'GemmShape<128, 128, 128>'}
+No.10: 17.728μs, {'L1TileShape': 'GemmShape<128, 128, 256>', 'L0TileShape': 'GemmShape<128, 128, 128>'}
+No.11: 17.637μs, {'L1TileShape': 'GemmShape<128, 128, 512>', 'L0TileShape': 'GemmShape<128, 128, 128>'}
+Best config: No.4
+compare success.
+```
+
+通过对比得知，No.4为最佳调优参数集合。
+
+#### 应用级自动调优
+
+[本章节以模板库master分支的examples/00_basic_matmul](https://gitee.com/ascend/catlass/blob/master/examples/00_basic_matmul/basic_matmul.cpp)[为例，介绍如何利用msKPP工具提供的Python接口](atlasopdev_16_0156.html#ZH-CN_TOPIC_0000002505040510)实现对应用级的自动调优。
+
+在运行过程中出现任何异常，可通过设置环境变量的方式来查看debug日志以及保留中间文件，便于问题定位。
+
+```
+export MSKPP_LOG_LEVEL=0
+```
+
+1. [参考examples/00_basic_matmul](https://gitee.com/ascend/catlass/blob/master/examples/00_basic_matmul/basic_matmul.cpp)**示例，使用模板库Device层接口完成算子实现，并分别在115、117行末尾添加// tunable**注释，用于替换"="号后的代码内容。
+
+```
+...
+115 using L1TileShape = GemmShape<128, 256, 256>; // tunable
+116   
+117 using L0TileShape = GemmShape<128, 256, 64>; // tunable
+...
+```
+
+2. [在examples/00_basic_matmul](https://gitee.com/ascend/catlass/blob/master/examples/00_basic_matmul/basic_matmul.cpp)[目录中创建Python脚本文件basic_matmul_executable_autotune.py](atlasopdev_16_0183.html#ZH-CN_TOPIC_0000002536800485)[与编译脚本文件jit_build_executable.sh](atlasopdev_16_0182.html#ZH-CN_TOPIC_0000002536920455)。
+
+[可根据实际需要修改basic_matmul_executable_autotune.py](atlasopdev_16_0183.html#ZH-CN_TOPIC_0000002536800485)[脚本中autotune_v2](atlasopdev_16_0171.html#ZH-CN_TOPIC_0000002505040516)接口传入的configs参数以搜索自定义tiling参数组合。
+
+3. 运行Python脚本basic_matmul_executable_autotune.py，获取每种参数组合的耗时及最佳调优参数集合。以下仅展示可能的一种命令行输出结果。
+
+```
+# python3 basic_matmul_executable_autotune.py
+No.0: 64.081 us, {'L1TileShape': 'GemmShape<128, 256, 256>', 'L0TileShape': 'GemmShape<128, 256, 64>'}
+No.1: 68.041 us, {'L1TileShape': 'GemmShape<256, 128, 256>', 'L0TileShape': 'GemmShape<256, 128, 64>'}
+No.2: 60.701 us, {'L1TileShape': 'GemmShape<128, 128, 256>', 'L0TileShape': 'GemmShape<128, 128, 64>'}
+No.3: 61.121 us, {'L1TileShape': 'GemmShape<128, 128, 512>', 'L0TileShape': 'GemmShape<128, 128, 64>'}
+No.4: 62.361 us, {'L1TileShape': 'GemmShape<64, 256, 128>', 'L0TileShape': 'GemmShape<64, 256, 64>'}
+No.5: 60.661 us, {'L1TileShape': 'GemmShape<64, 256, 256>', 'L0TileShape': 'GemmShape<64, 256, 64>'}
+No.6: 58.261 us, {'L1TileShape': 'GemmShape<64, 128, 256>', 'L0TileShape': 'GemmShape<64, 128, 64>'}
+No.7: 62.381 us, {'L1TileShape': 'GemmShape<128, 128, 256>', 'L0TileShape': 'GemmShape<128, 128, 128>'}
+No.8: 62.621 us, {'L1TileShape': 'GemmShape<128, 128, 512>', 'L0TileShape': 'GemmShape<128, 128, 128>'}
+No.9: 57.501 us, {'L1TileShape': 'GemmShape<64, 128, 256>', 'L0TileShape': 'GemmShape<64, 128, 128>'}
+No.10: 59.281 us, {'L1TileShape': 'GemmShape<64, 128, 512>', 'L0TileShape': 'GemmShape<64, 128, 128>'}
+No.11: 65.041 us, {'L1TileShape': 'GemmShape<128, 64, 512>', 'L0TileShape': 'GemmShape<128, 64, 128>'}
+No.12: 63.561 us, {'L1TileShape': 'GemmShape<64, 64, 256>', 'L0TileShape': 'GemmShape<64, 64, 256>'}
+No.13: 65.121 us, {'L1TileShape': 'GemmShape<64, 64, 512>', 'L0TileShape': 'GemmShape<64, 64, 256>'}
+No.14: 65.081 us, {'L1TileShape': 'GemmShape<64, 64, 1024>', 'L0TileShape': 'GemmShape<64, 64, 256>'}
+Best config: No.9
+autotune results saved in MSKPP_AUTOTUNE_RESULTS_20250604195710.csv
+```
+
+通过对比得知，No.9为最佳调优参数集合。
+
+**父主题：**[自动调优](atlasopdev_16_0153.html)

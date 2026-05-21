@@ -1,0 +1,360 @@
+---
+title: "上板调试Vector算子"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0074.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0074.html"
+---
+
+# 上板调试Vector算子
+
+展示如何使用msDebug工具来上板调试一个Vector算子，该Vector算子可实现两个向量相加并输出结果的功能。
+
+#### 前提条件
+
+- [单击Link](https://gitcode.com/Ascend/mstt/tree/master/sample)获取样例工程，为进行算子调试做准备。
+- [参考使用前准备](atlasopdev_16_0063.html#ZH-CN_TOPIC_0000002536920529)完成相关环境变量配置。
+
+#### 操作步骤
+
+1. 基于样例工程编译算子，获取可执行文件add.fatbin。
+
+  1. 修改sample/normal_sample/vec_only/Makefile中的COMPILER_FLAG编译选项，将 -O2修改为 -O0 -g --cce-ignore-always-inline=true，使能编译器调试功能。****
+```
+# Makefile
+...
+COMPILER            := $(ASCEND_HOME_PATH)/compiler/ccec_compiler/bin/ccec
+COMPILER_FLAG       := -xcce -O0 -g --cce-ignore-always-inline=true -std=c++17 # 使能编译器调试功能
+```
+
+  2. 执行以下命令完成算子编译。
+非首次场景，可以使用make clean && make命令替代make命令。
+
+```
+1
+2
+```
+
+```
+cd ./mstt/sample/normal_sample/vec_only/
+make clean && make
+
+```
+|  |  |
+| --- | --- |
+
+2. 设置断点。
+
+  1. 启动msDebug工具拉起算子程序，进入调试界面。
+```
+1
+2
+3
+4
+```
+
+```
+msdebug add.fatbin  
+(msdebug) target create "add.fatbin"
+Current executable set to '/home/mindstudio/projects/mstt/sample/build/add.fatbin' (aarch64).
+(msdebug) 
+
+```
+|  |  |
+| --- | --- |
+
+  2. 该sample中核函数的代码实现位于add_kernel.cpp中，在此文件中，为需要的代码行设置NPU断点。
+```
+1
+2
+3
+4
+```
+
+```
+(msdebug) b add_kernel.cpp:69
+Breakpoint 1: where = device_debugdata`::add_custom(uint8_t *, uint8_t *, uint8_t *) + 18804 [inlined] 
+KernelAdd::Compute(int) + 5144 at add_kernel.cpp:69:9, address = 0x0000000000004974
+(msdebug) 
+
+```
+|  |  |
+| --- | --- |
+
+3. 运行算子程序。
+程序会开始运行直到命中第一个断点（add_kernel.cpp:69）后停下，msDebug检测到NPU核函数add_custom开始运行，运行在Device 0。
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+```
+
+```
+(msdebug) run
+Process 730254 launched
+[Launch of Kernel add_custom on Device 0]
+Process 730254 stopped
+[Switching to focus on Kernel add_custom, CoreId 13, Type aiv]
+* thread #1, name = 'add.fatbin', stop reason = breakpoint 2.1
+    frame #0: 0x0000000000004974 device_debugdata`::add_custom(uint8_t *, uint8_t *, uint8_t *) [inlined] KernelAdd::Compute(this=0x000000000019a930, progress=0) at add_kernel.cpp:69:9
+   66              // call Add instr for computation
+   67              Add(zLocal, xLocal, yLocal, TILE_LENGTH);
+   68              // enque the output tensor to VECOUT queue
+-> 69              outQueueZ.EnQue<int16_t>(zLocal);  # 断点位置
+   70              // free input tensors for reuse
+   71              inQueueX.FreeTensor(xLocal);
+   72              inQueueY.FreeTensor(yLocal);
+(msdebug)
+
+```
+|  |  |
+| --- | --- |
+
+4. **检视信息。**
+
+  - 使用ascend info cores命令查询NPU核信息。
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+```
+
+```
+(msdebug) ascend info cores 
+  CoreId  Type  Device Stream Task Block         PC               Exception
+*  13     aiv      0     3     0     0     0x1240c0034974         f0000000
+   14     aiv      0     3     0     1     0x1240c0034974         f0000000
+   15     aiv      0     3     0     2     0x1240c0034974         f0000000
+   20     aiv      0     3     0     3     0x1240c0034974         f0000000
+   21     aiv      0     3     0     4     0x1240c0034974         f0000000
+   22     aiv      0     3     0     5     0x1240c0034974         f0000000
+   23     aiv      0     3     0     6     0x1240c0034974         f0000000
+   24     aiv      0     3     0     7     0x1240c0034974         f0000000
+(msdebug)
+
+```
+|  |  |
+| --- | --- |
+
+  - 使用print命令直接打印变量信息。
+```
+1
+2
+```
+
+```
+(msdebug) print progress 
+(int32_t) $0 = 0
+
+```
+|  |  |
+| --- | --- |
+
+  - 使用print命令与memory read命令配合可打印出Tensor变量中存放的值。
+    - 打印位于UB内存上的LocalTensor中存放的数据。
+**UB内存打印起始地址需参考LocalTensor变量展示的address_****字段中的bufferAddr参数。此处以变量xLocal****为例，其内存起始地址为0**。
+
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+```
+
+```
+(msdebug) print xLocal
+(AscendC::LocalTensor<short>) $0 = {
+  address_ = (dataLen = 256, bufferAddr = 0, bufferHandle = "", logicPos = '\t')
+  shapeInfo_ = {
+    shapeDim = '\0'
+    originalShapeDim = '\0'
+    shape = ([0] = 0, [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0)
+    originalShape = ([0] = 0, [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0)
+    dataFormat = ND
+  }
+}
+(msdebug) memory read -m UB -f int16_t[] 0 -s 256 -c 1
+0x00000000: {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127}
+(msdebug) 
+
+```
+|  |  |
+| --- | --- |
+
+    - 打印位于GM内存上的GlobalTensor中存放的数据。
+**GM内存打印的起始地址需参考GlobalTensor变量展示的address_****字段。此处以变量xGm****为例，其内存起始地址为0x00001240c0015000**。
+
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+```
+
+```
+(msdebug) print xGm
+(AscendC::GlobalTensor<short>) $0 = {
+  bufferSize_ = 2048
+  shapeInfo_ = {
+    shapeDim = '\0'
+    originalShapeDim = '\0'
+    shape = ([0] = 0, [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0)
+    originalShape = ([0] = 0, [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0)
+    dataFormat = ND
+  }
+  address_ = 0x00001240c0015000
+}
+(msdebug) memory read -m GM -f int16_t[] 0x00001240c0015000 -s 256 -c 1
+0x1240c0015000: {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127}
+
+```
+|  |  |
+| --- | --- |
+
+  - 进行核切换，切换至另一个aiv核，并打印需要的信息。
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+```
+
+```
+(msdebug) ascend aiv 24  // ascend info cores中选择block 7对应的coreId,此处为24
+[Switching to focus on Kernel add_custom, CoreId 24, Type aiv]
+* thread #1, name = 'add.fatbin', stop reason = breakpoint 2.1
+    frame #0: 0x0000000000004974 device_debugdata`::add_custom(uint8_t *, uint8_t *, uint8_t *) [inlined] KernelAdd::Compute(this=0x00000000001c6930, progress=0) at add_kernel.cpp:69:9
+   66              // call Add instr for computation
+   67              Add(zLocal, xLocal, yLocal, TILE_LENGTH);
+   68              // enque the output tensor to VECOUT queue
+-> 69              outQueueZ.EnQue<int16_t>(zLocal);
+                ^
+   70              // free input tensors for reuse
+   71              inQueueX.FreeTensor(xLocal);
+   72              inQueueY.FreeTensor(yLocal);
+(msdebug) p xLocal
+(AscendC::LocalTensor<short>) $0 = {
+  address_ = (dataLen = 256, bufferAddr = 0, bufferHandle = "", logicPos = '\t')
+  shapeInfo_ = {
+    shapeDim = '\0'
+    originalShapeDim = '\0'
+    shape = ([0] = 0, [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0)
+    originalShape = ([0] = 0, [1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0)
+    dataFormat = ND
+  }
+}
+(msdebug) memory read -m UB -f int16_t[] 0 -s 256 -c 1
+0x00000000: {14336 14337 14338 14339 14340 14341 14342 14343 14344 14345 14346 14347 14348 14349 14350 14351 14352 14353 14354 14355 14356 14357 14358 14359 14360 14361 14362 14363 14364 14365 14366 14367 14368 14369 14370 14371 14372 14373 14374 14375 14376 14377 14378 14379 14380 14381 14382 14383 14384 14385 14386 14387 14388 14389 14390 14391 14392 14393 14394 14395 14396 14397 14398 14399 14400 14401 14402 14403 14404 14405 14406 14407 14408 14409 14410 14411 14412 14413 14414 14415 14416 14417 14418 14419 14420 14421 14422 14423 14424 14425 14426 14427 14428 14429 14430 14431 14432 14433 14434 14435 14436 14437 14438 14439 14440 14441 14442 14443 14444 14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14455 14456 14457 14458 14459 14460 14461 14462 14463}
+(msdebug)
+
+```
+|  |  |
+| --- | --- |
+
+5. 查询并删除断点，恢复程序运行。
+
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+```
+
+```
+(msdebug) breakpoint list
+Current breakpoints:
+1: name = 'main', locations = 1, resolved = 1, hit count = 1
+  1.1: where = add.fatbin`main + 36 at main.cpp:39:12, address = 0x0000aaaaaab0f568, resolved, hit count = 1 
+2: file = 'add_kernel.cpp', line = 69, exact_match = 0, locations = 1, resolved = 1, hit count = 1
+  2.1: where = device_debugdata`::add_custom(uint8_t *, uint8_t *, uint8_t *) + 18804 [inlined] KernelAdd::Compute(int) + 5144 at add_kernel.cpp:69:9, address = 0x0000000000004974, resolved, hit count = 1 
+(msdebug) breakpoint delete 2
+1 breakpoints deleted; 0 breakpoint locations disabled.
+(msdebug) continue 
+Process 730254 resuming
+0 2 4 6 8 10 12 14                                                             
+16 18 20 22 24 26 28 30 
+Process 730254 exited with status = 0 (0x00000000) 
+
+```
+|  |  |
+| --- | --- |
+
+6. 调试完以后，执行q命令并输入Y或y结束调试。
+********
+```
+(msdebug) q
+Quitting LLDB will kill one or more processes. Do you really want to proceed: [Y/n] y
+```
+
+**父主题：**[典型案例](atlasopdev_16_0073.html)

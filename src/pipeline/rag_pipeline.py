@@ -2,18 +2,23 @@
 
 import logging
 import time
+from pathlib import Path
 from dataclasses import dataclass
-from typing import Iterator, List, Optional
+from typing import Iterator, List, Optional, Any
 
+from ..cache.cache_manager import CacheManager
 from ..core.config import Settings
+from ..core.tracing import tracer
 from ..embeddings.embedding import EmbeddingService
 from ..generation.context_builder import ContextBuilder
 from ..generation.llm_service import LLMService
 from ..generation.prompt_templates import PromptTemplateManager
 from ..retrieval.hybrid_retriever import HybridRetriever, HybridResult
+from ..retrieval.kg_enhancer import KnowledgeGraphEnhancer
 from ..retrieval.reranker import Reranker
 from ..storage.keyword_index import BM25Index
 from ..storage.vector_store import VectorStore
+from ..storage.document_store import DocumentStore
 
 logger = logging.getLogger("ms_rag")
 
@@ -46,6 +51,9 @@ class RAGPipeline:
             persist_directory=settings.vector_store.persist_directory,
             collection_name=settings.vector_store.collection_name,
         )
+        
+        doc_store_path = Path(settings.vector_store.persist_directory).parent / "docstore"
+        self.document_store = DocumentStore(persist_directory=str(doc_store_path))
 
         self.keyword_index = BM25Index(
             k1=settings.keyword_index.k1,
@@ -58,6 +66,7 @@ class RAGPipeline:
         self.retriever = HybridRetriever(
             vector_store=self.vector_store,
             keyword_index=self.keyword_index,
+            document_store=self.document_store,
             vector_weight=settings.retrieval.vector_weight,
             keyword_weight=settings.retrieval.keyword_weight,
         )
@@ -74,6 +83,20 @@ class RAGPipeline:
 
         self.llm_service: Optional[LLMService] = None
 
+        # Knowledge graph enhancer
+        self.kg_enhancer = KnowledgeGraphEnhancer(
+            config=settings.knowledge_graph,
+            vector_store=self.vector_store,
+            document_store=self.document_store,
+        )
+        self._load_kg_graph()
+
+        # Cache manager
+        self.cache_manager = CacheManager(
+            config=settings.cache,
+            embedding_service=self.embedding_service,
+        )
+
     def _get_llm_service(self) -> LLMService:
         """Get or create LLM service"""
         if self.llm_service is None:
@@ -88,111 +111,485 @@ class RAGPipeline:
             )
         return self.llm_service
 
+    def _load_kg_graph(self):
+        """Load knowledge graph from file or build from chunks"""
+        from pathlib import Path
+        graph_path = Path(self.settings.knowledge_graph.graph_path)
+        if graph_path.exists():
+            self.kg_enhancer.load_graph()
+        else:
+            logger.info("[Pipeline] No graph.json found, KG will be built on first query if needed")
+
+    async def aquery(self, question: str, top_k: int = 5) -> QAResponse:
+        """Process a question and return answer asynchronously"""
+        logger.info(f"[Pipeline] aquery: {question}")
+
+        with tracer("rag_pipeline.aquery", question=question):
+            # 1. Check L1 cache
+            with tracer("cache_l1_lookup"):
+                cached = self.cache_manager.get(question)
+            if cached:
+                logger.info("[Pipeline] L1 cache hit, returning cached response")
+                return QAResponse(
+                    answer=cached["answer"],
+                    sources=cached.get("sources", []),
+                    question_type=cached.get("question_type", ""),
+                    keywords=cached.get("keywords", []),
+                    metadata={**cached.get("metadata", {}), "cached": True, "cache_level": "L1"},
+                )
+
+            # 2. Embed the query
+            with tracer("query_embedding"):
+                t0 = time.time()
+                query_embedding = self.cache_manager.get_embedding(question)
+                if query_embedding:
+                    logger.info("[Pipeline] L3 embedding cache hit")
+                else:
+                    import asyncio
+                    loop = asyncio.get_running_loop()
+                    query_embedding = await loop.run_in_executor(
+                        None, self.embedding_service.embed_query, question
+                    )
+                    self.cache_manager.put_embedding(question, query_embedding)
+                    logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
+
+            # 3. Check L2 semantic cache
+            with tracer("cache_l2_lookup"):
+                cached = self.cache_manager.get(question, query_embedding)
+            if cached:
+                logger.info("[Pipeline] L2 cache hit, returning cached response")
+                return QAResponse(
+                    answer=cached["answer"],
+                    sources=cached.get("sources", []),
+                    question_type=cached.get("question_type", ""),
+                    keywords=cached.get("keywords", []),
+                    metadata={**cached.get("metadata", {}), "cached": True, "cache_level": "L2"},
+                )
+
+            # 4. Retrieve relevant documents (async concurrency)
+            with tracer("retrieval"):
+                t0 = time.time()
+                results = await self.retriever.aretrieve(
+                    query=question,
+                    query_embedding=query_embedding,
+                    k=top_k * 2,
+                )
+                logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
+
+            # 5. Rerank results
+            if self.settings.retrieval.rerank:
+                with tracer("rerank"):
+                    results = self.reranker.rerank(results)
+
+            # 6. Knowledge graph enhancement
+            with tracer("kg_enhance"):
+                results = self.kg_enhancer.enhance(results, question)
+                results = results[:top_k]
+
+            # 7. Classify question type
+            with tracer("classify_question"):
+                question_type = self._classify_question(question)
+
+            # 8. Build context
+            with tracer("build_context"):
+                context = self.context_builder.build_context(results)
+
+            # 9. Generate prompt
+            with tracer("render_prompt"):
+                prompt = self.prompt_manager.render(
+                    question_type=question_type,
+                    query=question,
+                    context=context,
+                )
+
+            # 10. Generate answer
+            with tracer("llm_generate", model=self.settings.llm.model):
+                t0 = time.time()
+                llm = self._get_llm_service()
+                import asyncio
+                loop = asyncio.get_running_loop()
+                answer = await loop.run_in_executor(None, llm.generate, prompt)
+                logger.info(f"[Pipeline] LLM generate done in {time.time()-t0:.2f}s")
+
+            # 11. Get related topics
+            with tracer("get_related_topics"):
+                related_topics = self.kg_enhancer.get_related_topics(results)
+
+            # 12. Build response and cache
+            sources = self.context_builder.build_sources(results)
+            response = QAResponse(
+                answer=answer,
+                sources=sources,
+                question_type=question_type,
+                keywords=self._extract_keywords(question),
+                metadata={
+                    "model": self.settings.llm.model,
+                    "provider": self.settings.llm.provider,
+                    "related_topics": related_topics,
+                },
+            )
+
+            # Write to cache
+            with tracer("cache_write"):
+                self.cache_manager.put(question, query_embedding, {
+                    "answer": answer,
+                    "sources": sources,
+                    "question_type": question_type,
+                    "keywords": response.keywords,
+                    "metadata": response.metadata,
+                })
+
+            return response
+
     def query(self, question: str, top_k: int = 5) -> QAResponse:
         """Process a question and return answer"""
         logger.info(f"[Pipeline] query: {question}")
 
-        # 1. Embed the query
-        t0 = time.time()
-        query_embedding = self.embedding_service.embed_query(question)
-        logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
+        with tracer("rag_pipeline.query", question=question):
+            # 1. Check L1 cache
+            with tracer("cache_l1_lookup"):
+                cached = self.cache_manager.get(question)
+            if cached:
+                logger.info("[Pipeline] L1 cache hit, returning cached response")
+                return QAResponse(
+                    answer=cached["answer"],
+                    sources=cached.get("sources", []),
+                    question_type=cached.get("question_type", ""),
+                    keywords=cached.get("keywords", []),
+                    metadata={**cached.get("metadata", {}), "cached": True, "cache_level": "L1"},
+                )
 
-        # 2. Retrieve relevant documents
-        t0 = time.time()
-        results = self.retriever.retrieve(
-            query=question,
-            query_embedding=query_embedding,
-            k=top_k * 2,
-        )
-        logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
+            # 2. Embed the query (with L3 cache)
+            with tracer("query_embedding"):
+                t0 = time.time()
+                query_embedding = self.cache_manager.get_embedding(question)
+                if query_embedding:
+                    logger.info("[Pipeline] L3 embedding cache hit")
+                else:
+                    query_embedding = self.embedding_service.embed_query(question)
+                    self.cache_manager.put_embedding(question, query_embedding)
+                    logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
 
-        # 3. Rerank results
-        if self.settings.retrieval.rerank:
-            results = self.reranker.rerank(results)
-        results = results[:top_k]
+            # 3. Check L2 semantic cache
+            with tracer("cache_l2_lookup"):
+                cached = self.cache_manager.get(question, query_embedding)
+            if cached:
+                logger.info("[Pipeline] L2 cache hit, returning cached response")
+                return QAResponse(
+                    answer=cached["answer"],
+                    sources=cached.get("sources", []),
+                    question_type=cached.get("question_type", ""),
+                    keywords=cached.get("keywords", []),
+                    metadata={**cached.get("metadata", {}), "cached": True, "cache_level": "L2"},
+                )
 
-        # 4. Classify question type
-        question_type = self._classify_question(question)
+            # 4. Retrieve relevant documents
+            with tracer("retrieval"):
+                t0 = time.time()
+                results = self.retriever.retrieve(
+                    query=question,
+                    query_embedding=query_embedding,
+                    k=top_k * 2,
+                )
+                logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
 
-        # 5. Build context
-        context = self.context_builder.build_context(results)
+            # 5. Rerank results
+            if self.settings.retrieval.rerank:
+                with tracer("rerank"):
+                    results = self.reranker.rerank(results)
 
-        # 6. Generate prompt
-        prompt = self.prompt_manager.render(
-            question_type=question_type,
-            query=question,
-            context=context,
-        )
+            # 6. Knowledge graph enhancement
+            with tracer("kg_enhance"):
+                results = self.kg_enhancer.enhance(results, question)
+                results = results[:top_k]
 
-        # 7. Generate answer
-        t0 = time.time()
-        llm = self._get_llm_service()
-        answer = llm.generate(prompt)
-        logger.info(f"[Pipeline] LLM generate done in {time.time()-t0:.2f}s")
+            # 7. Classify question type
+            with tracer("classify_question"):
+                question_type = self._classify_question(question)
 
-        # 8. Build response
-        return QAResponse(
-            answer=answer,
-            sources=self.context_builder.build_sources(results),
-            question_type=question_type,
-            keywords=self._extract_keywords(question),
-            metadata={
-                "model": self.settings.llm.model,
-                "provider": self.settings.llm.provider,
-            },
-        )
+            # 8. Build context
+            with tracer("build_context"):
+                context = self.context_builder.build_context(results)
 
-    def query_stream(
+            # 9. Generate prompt
+            with tracer("render_prompt"):
+                prompt = self.prompt_manager.render(
+                    question_type=question_type,
+                    query=question,
+                    context=context,
+                )
+
+            # 10. Generate answer
+            with tracer("llm_generate", model=self.settings.llm.model):
+                t0 = time.time()
+                llm = self._get_llm_service()
+                answer = llm.generate(prompt)
+                logger.info(f"[Pipeline] LLM generate done in {time.time()-t0:.2f}s")
+
+            # 11. Get related topics
+            with tracer("get_related_topics"):
+                related_topics = self.kg_enhancer.get_related_topics(results)
+
+            # 12. Build response and cache
+            sources = self.context_builder.build_sources(results)
+            response = QAResponse(
+                answer=answer,
+                sources=sources,
+                question_type=question_type,
+                keywords=self._extract_keywords(question),
+                metadata={
+                    "model": self.settings.llm.model,
+                    "provider": self.settings.llm.provider,
+                    "related_topics": related_topics,
+                },
+            )
+
+            # Write to cache
+            with tracer("cache_write"):
+                self.cache_manager.put(question, query_embedding, {
+                    "answer": answer,
+                    "sources": sources,
+                    "question_type": question_type,
+                    "keywords": response.keywords,
+                    "metadata": response.metadata,
+                })
+
+            return response
+
+    async def aquery_stream(
         self, question: str, top_k: int = 5
-    ) -> tuple[dict, Iterator[str], dict]:
+    ) -> tuple[dict, Any, dict]:
+        """Process a question and return streaming answer asynchronously"""
+        logger.info(f"[Pipeline] aquery_stream: {question}")
+
+        with tracer("rag_pipeline.aquery_stream", question=question):
+            with tracer("cache_l1_lookup"):
+                cached = self.cache_manager.get(question)
+            if cached:
+                logger.info("[Pipeline] L1 cache hit, returning cached stream")
+                metadata = {
+                    "question_type": cached.get("question_type", ""),
+                    "keywords": cached.get("keywords", []),
+                    "sources": cached.get("sources", []),
+                    "related_topics": cached.get("metadata", {}).get("related_topics", []),
+                    "cached": True,
+                    "cache_level": "L1",
+                }
+                return metadata, self._make_cached_stream(cached["answer"]), cached.get("metadata", {})
+
+            with tracer("query_embedding"):
+                t0 = time.time()
+                query_embedding = self.cache_manager.get_embedding(question)
+                if query_embedding:
+                    logger.info("[Pipeline] L3 embedding cache hit")
+                else:
+                    import asyncio
+                    loop = asyncio.get_running_loop()
+                    query_embedding = await loop.run_in_executor(
+                        None, self.embedding_service.embed_query, question
+                    )
+                    self.cache_manager.put_embedding(question, query_embedding)
+                    logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
+
+            with tracer("cache_l2_lookup"):
+                cached = self.cache_manager.get(question, query_embedding)
+            if cached:
+                logger.info("[Pipeline] L2 cache hit, returning cached stream")
+                metadata = {
+                    "question_type": cached.get("question_type", ""),
+                    "keywords": cached.get("keywords", []),
+                    "sources": cached.get("sources", []),
+                    "related_topics": cached.get("metadata", {}).get("related_topics", []),
+                    "cached": True,
+                    "cache_level": "L2",
+                }
+                return metadata, self._make_cached_stream(cached["answer"]), cached.get("metadata", {})
+
+            with tracer("retrieval"):
+                t0 = time.time()
+                results = await self.retriever.aretrieve(
+                    query=question,
+                    query_embedding=query_embedding,
+                    k=top_k * 2,
+                )
+                logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
+
+            if self.settings.retrieval.rerank:
+                with tracer("rerank"):
+                    results = self.reranker.rerank(results)
+
+            with tracer("kg_enhance"):
+                results = self.kg_enhancer.enhance(results, question)
+                results = results[:top_k]
+
+            with tracer("classify_question"):
+                question_type = self._classify_question(question)
+
+            with tracer("build_context"):
+                context = self.context_builder.build_context(results)
+
+            with tracer("render_prompt"):
+                prompt = self.prompt_manager.render(
+                    question_type=question_type,
+                    query=question,
+                    context=context,
+                )
+
+            with tracer("build_metadata"):
+                related_topics = self.kg_enhancer.get_related_topics(results)
+                sources = self.context_builder.build_sources(results)
+                metadata = {
+                    "question_type": question_type,
+                    "keywords": self._extract_keywords(question),
+                    "sources": sources,
+                    "related_topics": related_topics,
+                }
+
+            with tracer("llm_generate_stream", model=self.settings.llm.model):
+                logger.info("[Pipeline] Starting LLM stream generation...")
+                llm = self._get_llm_service()
+                
+                import asyncio
+                loop = asyncio.get_running_loop()
+                stream = await loop.run_in_executor(None, llm.generate_stream, prompt)
+
+                async def caching_stream():
+                    full_answer = ""
+                    for chunk in stream:
+                        full_answer += chunk
+                        yield chunk
+                    self.cache_manager.put(question, query_embedding, {
+                        "answer": full_answer,
+                        "sources": sources,
+                        "question_type": question_type,
+                        "keywords": metadata["keywords"],
+                        "metadata": {"model": self.settings.llm.model, "related_topics": related_topics},
+                    })
+
+                return metadata, caching_stream(), {"model": self.settings.llm.model}
         """Process a question and return streaming answer"""
         logger.info(f"[Pipeline] query_stream: {question}")
 
-        # 1. Embed the query
-        t0 = time.time()
-        query_embedding = self.embedding_service.embed_query(question)
-        logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
+        with tracer("rag_pipeline.query_stream", question=question):
+            # 1. Check L1 cache
+            with tracer("cache_l1_lookup"):
+                cached = self.cache_manager.get(question)
+            if cached:
+                logger.info("[Pipeline] L1 cache hit, returning cached stream")
+                metadata = {
+                    "question_type": cached.get("question_type", ""),
+                    "keywords": cached.get("keywords", []),
+                    "sources": cached.get("sources", []),
+                    "related_topics": cached.get("metadata", {}).get("related_topics", []),
+                    "cached": True,
+                    "cache_level": "L1",
+                }
+                return metadata, self._make_cached_stream(cached["answer"]), cached.get("metadata", {})
 
-        # 2. Retrieve relevant documents
-        t0 = time.time()
-        results = self.retriever.retrieve(
-            query=question,
-            query_embedding=query_embedding,
-            k=top_k * 2,
-        )
-        logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
+            # 2. Embed the query (with L3 cache)
+            with tracer("query_embedding"):
+                t0 = time.time()
+                query_embedding = self.cache_manager.get_embedding(question)
+                if query_embedding:
+                    logger.info("[Pipeline] L3 embedding cache hit")
+                else:
+                    query_embedding = self.embedding_service.embed_query(question)
+                    self.cache_manager.put_embedding(question, query_embedding)
+                    logger.info(f"[Pipeline] Embedding done in {time.time()-t0:.2f}s")
 
-        # 3. Rerank results
-        if self.settings.retrieval.rerank:
-            results = self.reranker.rerank(results)
-        results = results[:top_k]
+            # 3. Check L2 semantic cache
+            with tracer("cache_l2_lookup"):
+                cached = self.cache_manager.get(question, query_embedding)
+            if cached:
+                logger.info("[Pipeline] L2 cache hit, returning cached stream")
+                metadata = {
+                    "question_type": cached.get("question_type", ""),
+                    "keywords": cached.get("keywords", []),
+                    "sources": cached.get("sources", []),
+                    "related_topics": cached.get("metadata", {}).get("related_topics", []),
+                    "cached": True,
+                    "cache_level": "L2",
+                }
+                return metadata, self._make_cached_stream(cached["answer"]), cached.get("metadata", {})
 
-        # 4. Classify question type
-        question_type = self._classify_question(question)
+            # 4. Retrieve relevant documents
+            with tracer("retrieval"):
+                t0 = time.time()
+                results = self.retriever.retrieve(
+                    query=question,
+                    query_embedding=query_embedding,
+                    k=top_k * 2,
+                )
+                logger.info(f"[Pipeline] Retrieved {len(results)} results in {time.time()-t0:.2f}s")
 
-        # 5. Build context
-        context = self.context_builder.build_context(results)
+            # 5. Rerank results
+            if self.settings.retrieval.rerank:
+                with tracer("rerank"):
+                    results = self.reranker.rerank(results)
 
-        # 6. Generate prompt
-        prompt = self.prompt_manager.render(
-            question_type=question_type,
-            query=question,
-            context=context,
-        )
+            # 6. Knowledge graph enhancement
+            with tracer("kg_enhance"):
+                results = self.kg_enhancer.enhance(results, question)
+                results = results[:top_k]
 
-        # 7. Build metadata
-        metadata = {
-            "question_type": question_type,
-            "keywords": self._extract_keywords(question),
-            "sources": self.context_builder.build_sources(results),
-        }
+            # 7. Classify question type
+            with tracer("classify_question"):
+                question_type = self._classify_question(question)
 
-        # 8. Generate streaming answer
-        logger.info("[Pipeline] Starting LLM stream generation...")
-        llm = self._get_llm_service()
-        stream = llm.generate_stream(prompt)
+            # 8. Build context
+            with tracer("build_context"):
+                context = self.context_builder.build_context(results)
 
-        return metadata, stream, {"model": self.settings.llm.model}
+            # 9. Generate prompt
+            with tracer("render_prompt"):
+                prompt = self.prompt_manager.render(
+                    question_type=question_type,
+                    query=question,
+                    context=context,
+                )
+
+            # 10. Build metadata
+            with tracer("build_metadata"):
+                related_topics = self.kg_enhancer.get_related_topics(results)
+                sources = self.context_builder.build_sources(results)
+                metadata = {
+                    "question_type": question_type,
+                    "keywords": self._extract_keywords(question),
+                    "sources": sources,
+                    "related_topics": related_topics,
+                }
+
+            # 11. Generate streaming answer with cache collection
+            with tracer("llm_generate_stream", model=self.settings.llm.model):
+                logger.info("[Pipeline] Starting LLM stream generation...")
+                llm = self._get_llm_service()
+                stream = llm.generate_stream(prompt)
+
+                # Wrap stream to collect full answer for caching
+                def caching_stream():
+                    full_answer = ""
+                    for chunk in stream:
+                        full_answer += chunk
+                        yield chunk
+                    # Write to cache after stream completes
+                    self.cache_manager.put(question, query_embedding, {
+                        "answer": full_answer,
+                        "sources": sources,
+                        "question_type": question_type,
+                        "keywords": metadata["keywords"],
+                        "metadata": {"model": self.settings.llm.model, "related_topics": related_topics},
+                    })
+
+                return metadata, caching_stream(), {"model": self.settings.llm.model}
+
+    def _make_cached_stream(self, answer: str) -> Iterator[str]:
+        """Convert cached full answer to a simulated stream"""
+        # Split by sentences for natural streaming feel
+        import re
+        sentences = re.split(r"(?<=[。！？\n])", answer)
+        for sentence in sentences:
+            if sentence.strip():
+                yield sentence
 
     def _classify_question(self, question: str) -> str:
         """Classify question type"""

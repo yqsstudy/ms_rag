@@ -1,0 +1,28 @@
+{
+  "section": "release_notes",
+  "total_pages": 5,
+  "success": 5,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "版本配套关系",
+      "url": "zh/mindstudio/830/releasenote/firstpage_0005_001.html"
+    },
+    {
+      "name": "文件校验标准",
+      "url": "zh/mindstudio/830/releasenote/firstpage_0005_010.html"
+    },
+    {
+      "name": "新增特性",
+      "url": "zh/mindstudio/830/releasenote/firstpage_0005_004.html"
+    },
+    {
+      "name": "删除特性",
+      "url": "zh/mindstudio/830/releasenote/firstpage_0005_005.html"
+    },
+    {
+      "name": "漏洞修补列表",
+      "url": "zh/mindstudio/830/releasenote/firstpage_0005_006.html"
+    }
+  ]
+}

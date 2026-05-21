@@ -1,0 +1,1024 @@
+{
+  "section": "profiling_tools",
+  "total_pages": 254,
+  "success": 254,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0001.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0002.html"
+    },
+    {
+      "name": "离线推理场景性能分析快速入门",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0003.html"
+    },
+    {
+      "name": "PyTorch训练场景性能分析快速入门",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0004.html"
+    },
+    {
+      "name": "TensorFlow训练场景性能分析快速入门",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0005.html"
+    },
+    {
+      "name": "msprof采集通用命令",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0008.html"
+    },
+    {
+      "name": "采集AI任务运行性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0009.html"
+    },
+    {
+      "name": "采集昇腾AI处理器系统数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0010.html"
+    },
+    {
+      "name": "采集Host侧系统数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0011.html"
+    },
+    {
+      "name": "采集msproftx数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0012.html"
+    },
+    {
+      "name": "动态采集性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0013.html"
+    },
+    {
+      "name": "延迟采集性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0014.html"
+    },
+    {
+      "name": "解析性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0016.html"
+    },
+    {
+      "name": "查询性能数据文件信息",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0017.html"
+    },
+    {
+      "name": "解析并导出性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0018.html"
+    },
+    {
+      "name": "通信性能数据解析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0019.html"
+    },
+    {
+      "name": "工具介绍",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0021.html"
+    },
+    {
+      "name": "MSPTI工具使用（Python API）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0022.html"
+    },
+    {
+      "name": "MSPTI工具使用（C API）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0023.html"
+    },
+    {
+      "name": "MSPTI样例集",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0024.html"
+    },
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0027.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0028.html"
+    },
+    {
+      "name": "创建采集配置文件",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0030.html"
+    },
+    {
+      "name": "执行采集",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0031.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0033.html"
+    },
+    {
+      "name": "执行解析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0034.html"
+    },
+    {
+      "name": "解析结果",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0035.html"
+    },
+    {
+      "name": "MindStudio Insight可视化",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0037.html"
+    },
+    {
+      "name": "Chrome tracing可视化",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0038.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0040.html"
+    },
+    {
+      "name": "连接Grafana画图",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0041.html"
+    },
+    {
+      "name": "可视化结果",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0042.html"
+    },
+    {
+      "name": "自定义添加采集代码",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0044.html"
+    },
+    {
+      "name": "服务化性能数据比对工具",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0045.html"
+    },
+    {
+      "name": "vLLM服务化性能采集工具",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0046.html"
+    },
+    {
+      "name": "服务化自动寻优工具",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0047.html"
+    },
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0049.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0050.html"
+    },
+    {
+      "name": "开启采集开关",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0052.html"
+    },
+    {
+      "name": "配置目标采集服务器",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0053.html"
+    },
+    {
+      "name": "启动Trace转发进程",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0054.html"
+    },
+    {
+      "name": "发送请求",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0055.html"
+    },
+    {
+      "name": "输出结果说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0056.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0060.html"
+    },
+    {
+      "name": "IsEnable",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0061.html"
+    },
+    {
+      "name": "SpanStart",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0062.html"
+    },
+    {
+      "name": "SpanEnd",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0063.html"
+    },
+    {
+      "name": "Metric",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0064.html"
+    },
+    {
+      "name": "MetricInc",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0065.html"
+    },
+    {
+      "name": "MetricScope",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0066.html"
+    },
+    {
+      "name": "MetricScopeAsReqID",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0067.html"
+    },
+    {
+      "name": "MetricScopeAsGlobal",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0068.html"
+    },
+    {
+      "name": "Launch",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0069.html"
+    },
+    {
+      "name": "Event",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0070.html"
+    },
+    {
+      "name": "Link",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0071.html"
+    },
+    {
+      "name": "Attr系列",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0072.html"
+    },
+    {
+      "name": "ArrayResource",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0073.html"
+    },
+    {
+      "name": "Resource",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0074.html"
+    },
+    {
+      "name": "Domain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0075.html"
+    },
+    {
+      "name": "NumArrayAttr",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0076.html"
+    },
+    {
+      "name": "ArrayAttr",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0077.html"
+    },
+    {
+      "name": "GetMsg",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0078.html"
+    },
+    {
+      "name": "宏定义",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0079.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0081.html"
+    },
+    {
+      "name": "示例代码",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0082.html"
+    },
+    {
+      "name": "GetTraceCtx",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0084.html"
+    },
+    {
+      "name": "addResAttribute",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0085.html"
+    },
+    {
+      "name": "ExtractAndAttach",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0086.html"
+    },
+    {
+      "name": "Attach",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0087.html"
+    },
+    {
+      "name": "Unattach",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0088.html"
+    },
+    {
+      "name": "GetCurrent",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0089.html"
+    },
+    {
+      "name": "Span",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0091.html"
+    },
+    {
+      "name": "Activate",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0092.html"
+    },
+    {
+      "name": "SetAttribute",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0093.html"
+    },
+    {
+      "name": "SetStatus",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0094.html"
+    },
+    {
+      "name": "End",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0095.html"
+    },
+    {
+      "name": "StartSpanAsActive",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0097.html"
+    },
+    {
+      "name": "IsEnable",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0098.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0101.html"
+    },
+    {
+      "name": "init",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0102.html"
+    },
+    {
+      "name": "__enter__/__exit__",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0103.html"
+    },
+    {
+      "name": "span_start",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0104.html"
+    },
+    {
+      "name": "span_end",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0105.html"
+    },
+    {
+      "name": "event",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0106.html"
+    },
+    {
+      "name": "link",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0107.html"
+    },
+    {
+      "name": "metric",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0108.html"
+    },
+    {
+      "name": "metric_inc",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0109.html"
+    },
+    {
+      "name": "metric_scope",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0110.html"
+    },
+    {
+      "name": "metric_scope_as_req_id",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0111.html"
+    },
+    {
+      "name": "launch",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0112.html"
+    },
+    {
+      "name": "attr",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0113.html"
+    },
+    {
+      "name": "domain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0114.html"
+    },
+    {
+      "name": "res",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0115.html"
+    },
+    {
+      "name": "get_msg",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0116.html"
+    },
+    {
+      "name": "性能数据采集和自动解析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0118.html"
+    },
+    {
+      "name": "离线解析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0119.html"
+    },
+    {
+      "name": "性能数据采集和自动解析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0121.html"
+    },
+    {
+      "name": "离线解析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0122.html"
+    },
+    {
+      "name": "使用TensorFlow框架接口采集性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0124.html"
+    },
+    {
+      "name": "总体介绍",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0126.html"
+    },
+    {
+      "name": "采集并落盘性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0127.html"
+    },
+    {
+      "name": "使用msproftx扩展接口采集并落盘性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0128.html"
+    },
+    {
+      "name": "订阅算子信息",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0129.html"
+    },
+    {
+      "name": "采集数据说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0130.html"
+    },
+    {
+      "name": "总体介绍",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0132.html"
+    },
+    {
+      "name": "采集并落盘性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0133.html"
+    },
+    {
+      "name": "使用msproftx扩展接口采集并落盘性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0134.html"
+    },
+    {
+      "name": "订阅算子信息",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0135.html"
+    },
+    {
+      "name": "采集数据说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0136.html"
+    },
+    {
+      "name": "使用Ascend Graph接口采集性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0137.html"
+    },
+    {
+      "name": "使用acl.json配置文件采集性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0138.html"
+    },
+    {
+      "name": "使用环境变量采集性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0139.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0141.html"
+    },
+    {
+      "name": "msprof导出db格式数据说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0142.html"
+    },
+    {
+      "name": "msprof（timeline数据总表）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0143.html"
+    },
+    {
+      "name": "msproftx数据说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0145.html"
+    },
+    {
+      "name": "task_time（任务调度信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0146.html"
+    },
+    {
+      "name": "api_statistic（API耗时统计信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0147.html"
+    },
+    {
+      "name": "step_trace（迭代轨迹信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0148.html"
+    },
+    {
+      "name": "dp（数据增强信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0149.html"
+    },
+    {
+      "name": "communication_statistic（集合通信算子统计信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0150.html"
+    },
+    {
+      "name": "op_summary（算子详细信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0151.html"
+    },
+    {
+      "name": "op_statistic（算子调用次数及耗时）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0152.html"
+    },
+    {
+      "name": "ai_core_utilization（AI Core指令占比）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0153.html"
+    },
+    {
+      "name": "ai_vector_core_utilization（AI Vector Core指令占比）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0154.html"
+    },
+    {
+      "name": "aicpu（AI CPU算子详细耗时）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0155.html"
+    },
+    {
+      "name": "aicpu_mi（数据准备的队列）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0156.html"
+    },
+    {
+      "name": "l2_cache（L2 Cache命中率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0157.html"
+    },
+    {
+      "name": "fusion_op（算子融合信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0158.html"
+    },
+    {
+      "name": "npu_mem（NPU内存占用）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0159.html"
+    },
+    {
+      "name": "npu_module_mem（NPU组件内存占用）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0160.html"
+    },
+    {
+      "name": "memory_record（CANN算子的内存占用记录）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0161.html"
+    },
+    {
+      "name": "operator_memory（CANN算子的内存占用明细）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0162.html"
+    },
+    {
+      "name": "static_op_mem（静态图算子内存）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0163.html"
+    },
+    {
+      "name": "sys_mem（系统内存数据）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0164.html"
+    },
+    {
+      "name": "process_mem（进程内存占用数据）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0165.html"
+    },
+    {
+      "name": "cpu_usage（AI CPU、Ctrl CPU利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0166.html"
+    },
+    {
+      "name": "process_cpu_usage（进程CPU占用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0167.html"
+    },
+    {
+      "name": "片上内存读写速率",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0168.html"
+    },
+    {
+      "name": "hccs（集合通信带宽）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0170.html"
+    },
+    {
+      "name": "nic（每个时间节点网络信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0171.html"
+    },
+    {
+      "name": "roce（RoCE通信接口带宽）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0172.html"
+    },
+    {
+      "name": "pcie（PCIe带宽）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0173.html"
+    },
+    {
+      "name": "biu_group/aic_core_group/aiv_core_group（AI Core和AI Vector的带宽和延时）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0174.html"
+    },
+    {
+      "name": "Acc PMU（加速器带宽及并发信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0175.html"
+    },
+    {
+      "name": "Stars Soc Info（SoC传输带宽信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0176.html"
+    },
+    {
+      "name": "Stars Chip Trans（片间传输带宽信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0177.html"
+    },
+    {
+      "name": "llc_read_write（三级缓存读写速率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0178.html"
+    },
+    {
+      "name": "dvpp（DVPP信息）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0182.html"
+    },
+    {
+      "name": "ai_cpu_top_function（AI CPU热点函数）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0183.html"
+    },
+    {
+      "name": "ai_cpu_pmu_events（AI CPU PMU事件）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0184.html"
+    },
+    {
+      "name": "ctrl_cpu_top_function（Ctrl CPU热点函数）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0185.html"
+    },
+    {
+      "name": "ctrl_cpu_pmu_events（Ctrl CPU PMU事件）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0186.html"
+    },
+    {
+      "name": "ts_cpu_top_function（TS CPU热点函数）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0187.html"
+    },
+    {
+      "name": "ts_cpu_pmu_events（TS CPU PMU事件）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0188.html"
+    },
+    {
+      "name": "host_cpu_usage（Host侧CPU利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0190.html"
+    },
+    {
+      "name": "host_mem_usage（Host侧内存利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0191.html"
+    },
+    {
+      "name": "host_disk_usage（Host侧磁盘I/O利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0192.html"
+    },
+    {
+      "name": "host_network_usage（Host侧网络I/O利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0193.html"
+    },
+    {
+      "name": "os_runtime_statistic（Host侧syscall和pthreadcall）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0194.html"
+    },
+    {
+      "name": "cpu_usage（Host侧系统CPU利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0195.html"
+    },
+    {
+      "name": "process_cpu_usage（Host侧进程CPU利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0196.html"
+    },
+    {
+      "name": "sys_mem（Host侧系统内存利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0197.html"
+    },
+    {
+      "name": "process_mem（Host侧进程内存利用率）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0198.html"
+    },
+    {
+      "name": "数据目录说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0204.html"
+    },
+    {
+      "name": "timeline和summary数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0205.html"
+    },
+    {
+      "name": "ascend_pytorch_profiler_{Rank_ID}.db数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0206.html"
+    },
+    {
+      "name": "analysis.db数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0207.html"
+    },
+    {
+      "name": "MindSpore场景特有数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0208.html"
+    },
+    {
+      "name": "安装perf、iotop、ltrace工具",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0210.html"
+    },
+    {
+      "name": "配置用户权限",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0211.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0213.html"
+    },
+    {
+      "name": "HcclMonitor.start",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0215.html"
+    },
+    {
+      "name": "HcclMonitor.stop",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0216.html"
+    },
+    {
+      "name": "HcclMonitor.flush_all",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0217.html"
+    },
+    {
+      "name": "HcclMonitor.set_buffer_size",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0218.html"
+    },
+    {
+      "name": "KernelMonitor.start",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0220.html"
+    },
+    {
+      "name": "KernelMonitor.stop",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0221.html"
+    },
+    {
+      "name": "KernelMonitor.flush_all",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0222.html"
+    },
+    {
+      "name": "KernelMonitor.set_buffer_size",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0223.html"
+    },
+    {
+      "name": "MstxMonitor.start",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0225.html"
+    },
+    {
+      "name": "MstxMonitor.stop",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0226.html"
+    },
+    {
+      "name": "MstxMonitor.enable_domain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0227.html"
+    },
+    {
+      "name": "MstxMonitor.disable_domain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0228.html"
+    },
+    {
+      "name": "MstxMonitor.flush_all",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0229.html"
+    },
+    {
+      "name": "MstxMonitor.set_buffer_size",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0230.html"
+    },
+    {
+      "name": "HcclData",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0232.html"
+    },
+    {
+      "name": "KernelData",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0233.html"
+    },
+    {
+      "name": "MarkerData",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0234.html"
+    },
+    {
+      "name": "RangeMarkerData",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0235.html"
+    },
+    {
+      "name": "msptiResult",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0237.html"
+    },
+    {
+      "name": "msptiActivityKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0238.html"
+    },
+    {
+      "name": "msptiActivityFlag",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0239.html"
+    },
+    {
+      "name": "msptiActivitySourceKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0240.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0242.html"
+    },
+    {
+      "name": "msptiActivityRegisterCallbacks",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0245.html"
+    },
+    {
+      "name": "msptiActivityEnable",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0246.html"
+    },
+    {
+      "name": "msptiActivityDisable",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0247.html"
+    },
+    {
+      "name": "msptiActivityGetNextRecord",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0248.html"
+    },
+    {
+      "name": "msptiActivityFlushAll",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0249.html"
+    },
+    {
+      "name": "msptiActivityFlushPeriod",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0250.html"
+    },
+    {
+      "name": "msptiActivityPushExternalCorrelationId",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0251.html"
+    },
+    {
+      "name": "msptiActivityPopExternalCorrelationId",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0252.html"
+    },
+    {
+      "name": "msptiActivityEnableMarkerDomain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0253.html"
+    },
+    {
+      "name": "msptiActivityDisableMarkerDomain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0254.html"
+    },
+    {
+      "name": "msptiBuffersCallbackRequestFunc",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0256.html"
+    },
+    {
+      "name": "msptiBuffersCallbackCompleteFunc",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0257.html"
+    },
+    {
+      "name": "msptiActivityKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0259.html"
+    },
+    {
+      "name": "msptiActivityFlag",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0260.html"
+    },
+    {
+      "name": "msptiActivitySourceKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0261.html"
+    },
+    {
+      "name": "msptiActivityMemoryOperationType",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0262.html"
+    },
+    {
+      "name": "msptiActivityMemoryKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0263.html"
+    },
+    {
+      "name": "msptiActivityMemcpyKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0264.html"
+    },
+    {
+      "name": "msptiExternalCorrelationKind",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0265.html"
+    },
+    {
+      "name": "msptiCommunicationDataType",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0266.html"
+    },
+    {
+      "name": "msptiActivity",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0268.html"
+    },
+    {
+      "name": "msptiActivityApi",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0269.html"
+    },
+    {
+      "name": "msptiActivityHccl",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0270.html"
+    },
+    {
+      "name": "msptiActivityKernel",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0271.html"
+    },
+    {
+      "name": "msptiActivityMarker",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0272.html"
+    },
+    {
+      "name": "msptiActivityMemory",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0273.html"
+    },
+    {
+      "name": "msptiActivityMemset",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0274.html"
+    },
+    {
+      "name": "msptiActivityMemcpy",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0275.html"
+    },
+    {
+      "name": "msptiActivityExternalCorrelation",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0276.html"
+    },
+    {
+      "name": "msptiActivityCommunication",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0277.html"
+    },
+    {
+      "name": "msptiObjectId",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0279.html"
+    },
+    {
+      "name": "msptiSubscribe",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0282.html"
+    },
+    {
+      "name": "msptiUnsubscribe",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0283.html"
+    },
+    {
+      "name": "msptiEnableCallback",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0284.html"
+    },
+    {
+      "name": "msptiEnableDomain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0285.html"
+    },
+    {
+      "name": "msptiCallbackFunc",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0287.html"
+    },
+    {
+      "name": "msptiCallbackId",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0288.html"
+    },
+    {
+      "name": "msptiSubscriberHandle",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0289.html"
+    },
+    {
+      "name": "msptiCallbackDomain",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0291.html"
+    },
+    {
+      "name": "msptiApiCallbackSite",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0292.html"
+    },
+    {
+      "name": "msptiCallbackIdRuntime",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0293.html"
+    },
+    {
+      "name": "msptiCallbackIdHccl",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0294.html"
+    },
+    {
+      "name": "msptiCallbackData",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0296.html"
+    },
+    {
+      "name": "msptiResult",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0299.html"
+    },
+    {
+      "name": "mstx API使用示例",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0300.html"
+    },
+    {
+      "name": "Profiling options参数解释",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0301.html"
+    },
+    {
+      "name": "昇腾虚拟化实例场景性能数据采集开关支持情况",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0302.html"
+    },
+    {
+      "name": "集群训练场景性能分析",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0303.html"
+    },
+    {
+      "name": "获取设备信息",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0304.html"
+    },
+    {
+      "name": "性能数据文件分片",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0305.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0307.html"
+    },
+    {
+      "name": "解析性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0308.html"
+    },
+    {
+      "name": "查询性能数据文件信息",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0309.html"
+    },
+    {
+      "name": "导出性能数据",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0310.html"
+    },
+    {
+      "name": "PyTorch Profiling接口采集（PyTorch 1.8.1&1.11.0）",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0311.html"
+    },
+    {
+      "name": "其他工具",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0312.html"
+    },
+    {
+      "name": "性能调优建议",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0313.html"
+    },
+    {
+      "name": "PyTorch多卡大集群场景如何避免性能数据直接落盘到共享存储时导致的性能膨胀问题",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0315.html"
+    },
+    {
+      "name": "PyTorch使用Profiler导致性能膨胀现象",
+      "url": "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_1200.html"
+    }
+  ]
+}

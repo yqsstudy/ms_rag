@@ -74,6 +74,8 @@ class DocumentConfig(BaseSettings):
     min_chunk_size: int = Field(default=1500, ge=100)
     max_chunk_size: int = Field(default=2000, ge=500)
     chunk_overlap: int = Field(default=200, ge=0)
+    child_chunk_size: int = Field(default=400, ge=50)
+    child_chunk_overlap: int = Field(default=50, ge=0)
 
 
 class LoggingConfig(BaseSettings):
@@ -82,6 +84,43 @@ class LoggingConfig(BaseSettings):
     level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     format: Literal["standard", "json"] = "json"
     file: str = "./logs/app.log"
+
+
+class CacheConfig(BaseSettings):
+    """Cache configuration"""
+
+    enabled: bool = True
+
+    # L1: exact match cache
+    l1_max_size: int = Field(default=1000, ge=10)
+    l1_ttl: int = Field(default=3600, ge=60)
+
+    # L2: semantic similarity cache
+    l2_max_size: int = Field(default=500, ge=10)
+    l2_ttl: int = Field(default=1800, ge=60)
+    l2_threshold: float = Field(default=0.92, ge=0.5, le=1.0)
+
+    # L3: embedding cache
+    l3_max_size: int = Field(default=2000, ge=10)
+    l3_ttl: int = Field(default=7200, ge=60)
+
+
+class KnowledgeGraphConfig(BaseSettings):
+    """Knowledge graph enhancement configuration"""
+
+    enabled: bool = True
+    graph_path: str = "./data/graph.json"
+    expand_parent: bool = True
+    expand_sibling: bool = True
+    expand_child: bool = True
+    expand_reference: bool = True
+    max_expand_per_direction: int = Field(default=1, ge=1, le=5)
+    max_enhanced_results: int = Field(default=3, ge=1, le=10)
+    expand_weight_parent: float = Field(default=0.5, ge=0.0, le=1.0)
+    expand_weight_sibling: float = Field(default=0.3, ge=0.0, le=1.0)
+    expand_weight_child: float = Field(default=0.3, ge=0.0, le=1.0)
+    expand_weight_reference: float = Field(default=0.4, ge=0.0, le=1.0)
+    related_topics_count: int = Field(default=5, ge=1, le=10)
 
 
 class Settings(BaseSettings):
@@ -101,9 +140,11 @@ class Settings(BaseSettings):
     api: APIConfig = APIConfig()
     document: DocumentConfig = DocumentConfig()
     logging: LoggingConfig = LoggingConfig()
+    cache: CacheConfig = CacheConfig()
+    knowledge_graph: KnowledgeGraphConfig = KnowledgeGraphConfig()
 
     # Paths
-    corpus_path: str = "./corpus/performance_guide"
+    corpus_path: str = "./corpus"
     config_path: str = "./config"
 
     @classmethod

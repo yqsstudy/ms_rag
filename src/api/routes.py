@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from ..core.config import get_settings
 from ..pipeline.rag_pipeline import RAGPipeline
 from .schemas import (
+    CacheClearRequest,
     HealthResponse,
     QARequest,
     QAResponse,
@@ -58,7 +59,7 @@ async def qa_endpoint(request: QARequest):
         pipeline = get_pipeline()
         top_k = request.options.get("top_k", 5)
 
-        response = pipeline.query(request.query, top_k=top_k)
+        response = await pipeline.aquery(request.query, top_k=top_k)
 
         response_time_ms = int((time.time() - start_time) * 1000)
         logger.info(f"[QA] Completed in {response_time_ms}ms, type={response.question_type}")
@@ -96,8 +97,8 @@ async def qa_stream_endpoint(request: QARequest):
             top_k = request.options.get("top_k", 5)
 
             # Get streaming response
-            logger.info("[Stream] Starting pipeline.query_stream...")
-            metadata, stream, model_info = pipeline.query_stream(
+            logger.info("[Stream] Starting pipeline.aquery_stream...")
+            metadata, stream_gen, model_info = await pipeline.aquery_stream(
                 request.query, top_k=top_k
             )
             logger.info(f"[Stream] Pipeline returned, model={model_info}")
@@ -109,9 +110,19 @@ async def qa_stream_endpoint(request: QARequest):
 
             # Stream answer chunks
             chunk_count = 0
-            for chunk in stream:
-                chunk_count += 1
-                yield f"event: answer\ndata: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
+            if hasattr(stream_gen, "__aiter__"):
+                async for chunk in stream_gen:
+                    if chunk:
+                        yield f"event: answer\ndata: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
+                        chunk_count += 1
+            else:
+                for chunk in stream_gen:
+                    if chunk:
+                        yield f"event: answer\ndata: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
+                        chunk_count += 1
+                        # simulate async yield for sync generators
+                        import asyncio
+                        await asyncio.sleep(0)
 
             logger.info(f"[Stream] Stream finished, sent {chunk_count} chunks")
 
@@ -146,11 +157,14 @@ async def retrieve_endpoint(request: RetrieveRequest):
     try:
         pipeline = get_pipeline()
 
-        # Get query embedding
-        query_embedding = pipeline.embedding_service.embed_query(request.query)
+        import asyncio
+        loop = asyncio.get_running_loop()
+        query_embedding = await loop.run_in_executor(
+            None, pipeline.embedding_service.embed_query, request.query
+        )
 
         # Retrieve documents
-        results = pipeline.retriever.retrieve(
+        results = await pipeline.retriever.aretrieve(
             query=request.query,
             query_embedding=query_embedding,
             k=request.top_k,
@@ -168,5 +182,30 @@ async def retrieve_endpoint(request: RetrieveRequest):
             },
         )
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/cache/clear")
+async def cache_clear_endpoint(request: CacheClearRequest):
+    """Clear cache entries"""
+    try:
+        pipeline = get_pipeline()
+        level = request.level or "all"
+        pipeline.cache_manager.clear(level=level)
+        logger.info(f"[Cache] Cleared cache level={level}")
+        return {"code": 0, "message": f"Cache cleared: {level}"}
+    except Exception as e:
+        logger.error(f"[Cache] Clear error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/cache/stats")
+async def cache_stats_endpoint():
+    """Get cache statistics"""
+    try:
+        pipeline = get_pipeline()
+        stats = pipeline.cache_manager.get_stats()
+        return {"code": 0, "data": stats}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

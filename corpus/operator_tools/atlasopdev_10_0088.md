@@ -1,0 +1,20 @@
+---
+title: "简介"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0088.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0088.html"
+---
+
+# 简介
+
+自定义算子开发完成后，需要对算子工程编译出可直接安装的自定义算子run包，然后进行run包的安装，将自定义算子部署到CANN算子库。
+
+- 算子工程编译的具体内容为：将算子插件实现文件、算子原型定义文件、算子信息库定义文件分别编译成算子插件、算子原型库、算子信息库，针对AI CPU算子，还会将AI CPU算子的实现文件编译为动态库文件。
+- 算子包部署指执行自定义算子包的安装，自定义算子交付件会自动部署到算子包安装目录下。
+
+详细的编译部署流程如下图所示：
+**图1**
+自定义算子编译部署流程
+所有的自定义算子需要在同一算子工程中进行编译，编译成唯一的自定义算子安装包进行部署。
+**父主题：**[算子编译部署](atlasopdev_10_0087.html)

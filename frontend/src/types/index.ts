@@ -7,6 +7,9 @@ export interface Message {
   images?: Image[]
   questionType?: string
   responseTime?: number
+  relatedTopics?: RelatedTopic[]
+  cached?: boolean
+  cacheLevel?: string
 }
 
 // 来源文档
@@ -42,11 +45,21 @@ export interface QAResponse {
   }
 }
 
+// 相关主题
+export interface RelatedTopic {
+  title: string
+  doc_id: string
+  relation: string
+}
+
 // SSE事件数据
 export interface SSEMetadata {
   question_type: string
   keywords: string[]
   sources: Source[]
+  related_topics?: RelatedTopic[]
+  cached?: boolean
+  cache_level?: string
 }
 
 export interface SSEAnswer {

@@ -1,0 +1,143 @@
+---
+title: "mskpp.get_kernel_from_binary"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0186.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0186.html"
+---
+
+# mskpp.get_kernel_from_binary
+
+#### 功能说明
+
+生成一个可以调用用户Kernel函数的实例。
+
+#### 函数原型
+
+```
+def get_kernel_from_binary(kernel_binary_file: str, kernel_type: str = None, tiling_key: int = None) -> CompiledKernel
+```
+
+#### 参数说明
+
+参数名
+
+输入/输出
+
+说明
+
+kernel_binary_file
+
+输入
+
+**算子kernel.o路径，可以在工程目录下执行find . -name '*.o'**命令进行查找。
+
+数据类型：str。
+
+必选参数。
+
+kernel_type
+
+输入
+
+算子类型。可设置为vec、 cube或mix。
+
+若不配置该参数，msKPP工具可能会获取失败。因此，建议手动赋值。
+
+数据类型：str。
+
+可选参数。
+
+tiling_key
+
+输入
+
+[调用用户Kernel函数时使用的tiling_key。若不配置该参数，msKPP工具将会使用最近一次调用mskpp.tiling_func](atlasopdev_16_0185.html#ZH-CN_TOPIC_0000002536920433)的结果。
+
+数据类型：int。
+
+可选参数。
+|  |  |  |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+#### 返回值说明
+
+可运行的Kernel对象。
+**表1**Kernel入参介绍
+参数名
+
+输入/输出
+
+说明
+
+device_id
+
+输入
+
+NPU设备ID，设置运行ST测试用例的昇腾AI处理器的ID。
+
+数据类型：int。
+
+若未设置此参数，默认为0。
+
+timeout
+
+输入
+
+camodel仿真场景需要默认设置较长超时时间，设置为-1时表示不限制。
+
+数据类型：int。
+
+单位: ms，默认值为300000。
+
+repeat
+
+输入
+
+重复运行次数，默认值为1。
+
+数据类型：int。
+
+stream
+
+输入
+
+预留参数。
+
+kernel_name
+
+输入
+
+预留参数。
+|  |  |  |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+Kernel对象类型为CompiledKernel，支持如下方式调用Kernel：kernel[blockdim](arg1, arg2, ..., timeout=-1, device_id=0, repeat=1)，实际调用时，需保证CompiledKernel函数的入参和调用Kernel时的入参一致。
+
+#### 调用示例
+
+- 示例一：
+```
+def run_kernel(input_a, input_b, input_bias, output, workspace, tiling_data):
+    kernel_binary_file = "MatmulLeakyreluCustom.o"   #不同的硬件和操作系统展示的.o文件的名称稍有不同
+    kernel = mskpp.get_kernel_from_binary(kernel_binary_file)
+    return kernel(input_a, input_b, input_bias, output, workspace, tiling_data)
+```
+
+- 示例二：
+```
+def run_kernel(input_a, input_b, input_bias, output, workspace, tiling_data, tiling_key, blockdim):
+    kernel_binary_file = "MatmulLeakyreluCustom.o"    #不同的硬件和操作系统展示的.o文件的名称稍有不同
+    kernel = mskpp.get_kernel_from_binary(kernel_binary_file, kernel_type='mix', tiling_key=tiling_key)
+    return kernel[blockdim](input_a, input_b, input_bias, output, workspace, tiling_data, device_id=1, timeout=-1) #运行仿真时，需要手动将timeout参数设置为-1
+```
+
+**父主题：**[接口列表](atlasopdev_16_0175.html)

@@ -1,0 +1,194 @@
+---
+title: "算子交付件独立编译"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0090.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0090.html"
+---
+
+# 算子交付件独立编译
+
+#### 简介
+
+获取算子开发相关交付件并按照目录结构要求存放后，可进行交付件独立编译，生成自定义算子安装包*.run，详细的编译操作包括：
+
+- 将AI CPU算子代码实现文件*.h与*.cc编译成libcust_aicpu_kernels.so。
+- 将算子信息库定义文件*.ini编译成*.json
+- 将原型定义文件*.h与*.cc编译成libcust_op_proto.so。
+- *将TensorFlow/Caffe/ONNX算子的适配插件实现文件*.h与*.cc编译成libcust_{tf|caffe|onnx**}*_parsers.so。
+- 自动新增编译相关文件，如CMakeLists.txt。
+
+#### 操作步骤
+
+1. 独立编译前需确保算子交付件的目录结构如下所示。
+
+  - TBE算子交付件目录结构：************
+```
+├── framework      // 算子插件实现文件目录，框架为“PyTorch”的算子无需关注
+│   ├── tf_plugin    // 原始框架类型为TensorFlow时生成的算子适配插件代码所在目录
+│       └── tensorflow_conv2_d_plugin.cc       // 算子适配插件实现文件
+│   └── onnx_plugin   // 原始框架类型为ONNX时生成的算子适配插件代码所在目录
+│       └── conv2_d_plugin.cc   // 算子适配插件实现文件
+├── op_proto     // 算子原型定义文件所在目录（必要交付件）   
+│   ├── conv2_d.h
+│   ├── conv2_d.cc
+├── tbe     // 必要交付件
+│   ├── impl    // 算子代码实现文件目录
+│       └── conv2_d.py      // 算子代码实现文件
+│   ├── op_info_cfg   // 算子信息库文件目录
+│       └── ai_core
+│                 ├── {Soc Version}         //昇腾AI处理器类型
+│                     ├── conv2_d.ini         // 算子信息库定义文件、
+├── op_tiling  // 算子tiling实现文件目录，不涉及tiling实现的算子无需关注
+```
+
+  - AI CPU算子交付件目录结构：********
+```
+├── framework      // 算子插件实现文件目录，框架为“PyTorch”的算子无需关注
+│   ├── tf_plugin    // 原始框架类型为TensorFlow时生成的算子适配插件代码所在目录
+│       └── tensorflow_conv2_d_plugin.cc       // 算子适配插件实现文件
+│   └── onnx_plugin   // 原始框架类型为ONNX时生成的算子适配插件代码所在目录
+│       └── conv2_d_plugin.cc   // 算子适配插件实现文件
+├── op_proto     // 算子原型定义文件所在目录（必要交付件） 
+│   ├── conv2_d.h
+│   ├── conv2_d.cc
+├── cpukernel    // 必要交付件
+│   ├── impl        // 算子代码实现文件目录
+│   │   ├── conv2_d_kernels.cc
+│   │   └── conv2_d_kernels.h
+│   ├── op_info_cfg
+│   │   └── aicpu_kernel
+│   │       └── conv2_d.ini      // 算子信息库定义文件
+├── op_tiling  // 算子tiling实现文件目录，不涉及tiling实现的算子无需关注
+```
+
+2. 编译算子交付件。
+
+执行如下命令，参数说明请参见表1。
+
+***msopgen compile -i {operator deliverables******directory******}**-c {CANN installation paths}***
+**表1**参数说明
+参数名称
+
+参数描述
+
+是否必选
+
+compile
+
+用于编译算子交付件。
+
+是
+
+-i，
+
+--input
+
+算子交付件所在路径，可配置为绝对路径或者相对路径。工具执行用户需要有此路径的可读权限。
+
+是
+
+-c，
+
+--cann
+
+CANN软件的安装目录。
+说明：
+CANN包安装的真实路径（非软链接）。
+
+否
+
+-h，
+
+--help
+
+帮助提示参数。
+
+否
+
+-q，
+
+--quiet
+
+是否进行交互。
+
+否
+|  |  |  |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+3. ***编译成功后，会在算子交付件所在路径下创建build_out目录，并在build_out目录下生成自定义算子安装包custom_opp_<target_os>_<target_architecture>*.run**。
+4. 查看算子交付件所在路径，新增独立编译相关文件。
+
+  - 编译后TBE算子交付件目录结构如下所示：************
+```
+├── build_out    // 新增编译输出目录       
+├── build.sh     // 新增编译配置入口脚本
+├── cmake       // 新增编译目录
+│   ├── config.cmake
+│   ├── util        
+├── CMakeLists.txt    // 新增CMakeLists.txt
+├── framework      // 算子插件实现文件目录，框架为“PyTorch”的算子无需关注
+│   ├── CMakeLists.txt    // 新增文件
+│   ├── tf_plugin    // 原始框架类型为TensorFlow时生成的算子适配插件代码所在目录
+│       └── tensorflow_conv2_d_plugin.cc       // 算子适配插件实现文件
+│       └── CMakeLists.txt   // 新增文件
+│   └── onnx_plugin   // 原始框架类型为ONNX时生成的算子适配插件代码所在目录
+│       ├── CMakeLists.txt    // 新增文件
+│       └── conv2_d_plugin.cc   // 算子适配插件实现文件
+├── op_proto     //算子原型定义文件及CMakeLists文件所在目录   
+│   ├── conv2_d.h
+│   ├── conv2_d.cc
+│   ├── CMakeLists.txt     // 新增文件
+├── tbe 
+│   ├── CMakeLists.txt     // 新增文件
+│   ├── impl    //算子代码实现文件目录
+│       └── conv2_d.py      // 算子代码实现文件
+│   ├── op_info_cfg   // 算子信息库文件目录
+│       └── ai_core
+│                 ├── {Soc Version}         // 昇腾AI处理器类型
+│                     ├── conv2_d.ini         // 算子信息库定义文件、
+├── op_tiling  // 算子tiling实现文件目录，不涉及tiling实现的算子无需关注
+│   ├── CMakeLists.txt     // 新增文件
+├── scripts     // 新增自定义算子打包相关脚本所在目录
+```
+
+  - 编译后AI CPU算子交付件目录结构如下所示：********
+```
+├── build_out    // 新增编译输出目录   
+├── build.sh     // 新增编译配置入口脚本
+├── cmake    // 新增编译目录
+│   ├── config.cmake
+│   ├── util        
+├── CMakeLists.txt    // 新增文件
+├── framework      // 算子插件实现文件目录，框架为“PyTorch”的算子无需关注
+│   ├── CMakeLists.txt    // 新增文件
+│   ├── tf_plugin    // 原始框架类型为TensorFlow时生成的算子适配插件代码所在目录
+│       └── tensorflow_conv2_d_plugin.cc       // 算子适配插件实现文件
+│       └── CMakeLists.txt   // 新增文件
+│   └── onnx_plugin   // 原始框架类型为ONNX时生成的算子适配插件代码所在目录
+│       ├── CMakeLists.txt     // 新增文件
+│       └── conv2_d_plugin.cc   // 算子适配插件实现文件
+├── op_proto     // 算子原型定义文件及CMakeLists文件所在目录   
+│   ├── conv2_d.h
+│   ├── conv2_d.cc
+│   ├── CMakeLists.txt     // 新增文件
+├── cpukernel
+│   ├── CMakeLists.txt     // 新增文件
+│   ├── impl        // 算子代码实现文件目录
+│   │   ├── conv2_d_kernels.cc
+│   │   └── conv2_d_kernels.h
+│   ├── op_info_cfg
+│   │   └── aicpu_kernel
+│   │       └── conv2_d.ini      // 算子信息库定义文件
+│   └── toolchain.cmake    // 新增编译文件
+├── op_tiling    // 算子tiling实现文件目录，不涉及tiling实现的算子无需关注
+│   ├── CMakeLists.txt     // 新增文件
+├── scripts     // 新增自定义算子打包相关脚本所在目录
+```
+
+**父主题：**[算子编译部署](atlasopdev_10_0087.html)

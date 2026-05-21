@@ -1,0 +1,238 @@
+---
+title: "调试PyTorch接口调用的算子"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0076.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0076.html"
+---
+
+# 调试PyTorch接口调用的算子
+
+展示如何使用msDebug工具来上板调试一个PyTorch接口调用的add算子，该add算子可实现两个向量相加并输出结果的功能。
+
+#### 前提条件
+
+- [单击Link](https://gitee.com/ascend/samples/tree/master/operator/ascendc/0_introduction/1_add_frameworklaunch/AddCustom)获取样例工程，为进行算子调试做准备。
+  - 此样例工程仅支持Python3.9，若要在其他Python版本上运行，需要修改${git_clone_path}/samples/operator/ascendc/0_introduction/1_add_frameworklaunch/PytorchInvocation目录下run_op_plugin.sh文件中的Python版本。
+  - 此样例工程不支持Atlas A3 训练系列产品。
+  - 下载代码样例时，需执行以下命令指定分支版本。
+```
+git clone https://gitee.com/ascend/samples.git -b master
+```
+
+- [已参考《Ascend Extension for PyTorch 软件安装指南](https://www.hiascend.com/document/detail/zh/Pytorch/730/configandinstg/instg/docs/zh/installation_guide/installation_description.md)》，完成PyTorch框架和torch_npu插件的安装。
+- [参考使用前准备](atlasopdev_16_0063.html#ZH-CN_TOPIC_0000002536920529)完成相关环境变量配置。
+
+#### 操作步骤
+
+1. 执行以下命令，可生成自定义算子工程，并进行Host侧和Kernel侧的算子实现。
+
+```
+1
+```
+
+```
+bash install.sh -v Ascendxxxyy    # xxxyy为用户实际使用的具体芯片类型
+
+```
+|  |  |
+| --- | --- |
+
+2. **在${git_clone_path}/samples/operator/ascendc/0_introduction/1_add_frameworklaunch/CustomOp目录下修改CMakePresets.json文件的cacheVariables的配置项，将"Release"****修改为"Debug"**。
+
+```
+1
+2
+3
+4
+5
+6
+7
+```
+
+```
+"cacheVariables": {               
+       "CMAKE_BUILD_TYPE": {                    
+           "type": "STRING",                    
+           "value": "Debug"               
+       },
+...
+}
+
+```
+|  |  |
+| --- | --- |
+
+3. [参考算子编译部署](atlasopdev_16_0024.html#ZH-CN_TOPIC_0000002504880720)，完成算子的编译部署。
+4. [进入到样例目录，以命令行方式下载样例代码。参考README](https://gitee.com/ascend/samples/blob/master/operator/ascendc/0_introduction/1_add_frameworklaunch/README.md)使用PyTorch调用方式调用AddCustom算子工程，并按照指导完成编译。
+
+PyTorch接入工程的样例工程目录如下：
+
+```
+1
+2
+3
+4
+5
+6
+```
+
+```
+PytorchInvocation
+├── op_plugin_patch  
+├── README.md        //使用PyTorch调用方式调用AddCustom算子工程的注册样例
+├── run_op_plugin.sh      //  5.执行样例时，需要使用
+└── test_ops_custom.py    //  步骤7启动工具时,需要使用
+└── test_ops_custom_register_in_graph.py  // 执行torch.compile模式下用例脚本
+
+```
+|  |  |
+| --- | --- |
+
+```
+cd ${git_clone_path}/samples/operator/ascendc/0_introduction/1_add_frameworklaunch/PytorchInvocation
+```
+
+5. 执行样例，样例执行过程中会自动生成测试数据，然后运行PyTorch样例，最后检验运行结果。
+******************
+```
+bash run_op_plugin.sh
+-- CMAKE_CCE_COMPILER: ${INSTALL_DIR}/toolkit/tools/ccec_compiler/bin/ccec
+-- CMAKE_CURRENT_LIST_DIR: ${INSTALL_DIR}/AddKernelInvocation/cmake/Modules
+-- ASCEND_PRODUCT_TYPE:
+  Ascendxxxyy
+-- ASCEND_CORE_TYPE:
+  VectorCore
+-- ASCEND_INSTALL_PATH:
+  /usr/local/Ascend/cann
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: ${INSTALL_DIR}/AddKernelInvocation/build
+Scanning dependencies of target add_npu
+...
+[100%] Built target add_npu
+INFO: Ascend C Add Custom SUCCESS
+...
+INFO: Ascend C Add Custom  in torch.compile graph SUCCESS
+```
+
+6. 手动导入算子调试信息，示例如下。
+
+  - ${INSTALL_DIR}请替换为CANN软件安装后文件存储路径。以root用户安装为例，则安装后文件存储路径为：/usr/local/Ascend/cann。
+  - **非Atlas A3 训练系列产品/Atlas A3 推理系列产品：在安装昇腾AI处理器的服务器执行npu-smi info****命令进行查询，获取Chip Name****信息。实际配置值为AscendChip Name，例如Chip Name***取值为xxxyy**，实际配置值为Ascendxxxyy**。当Ascendxxxyy为代码样例的路径时，需要配置为ascendxxxyy*。
+  - **Atlas A3 训练系列产品/Atlas A3 推理系列产品：在安装昇腾AI处理器的服务器执行npu-smi info -t board -i***id***-c***chip_id***命令进行查询，获取Chip Name****和NPU Name****信息，实际配置值为Chip Name_NPU Name。例如Chip Name***取值为Ascendxxx***，NPU Name***取值为1234，实际配置值为Ascendxxx**_**1234。当Ascendxxx**_**1234为代码样例的路径时，需要配置为ascendxxx**_*1234。
+其中：
+
+    - **id：设备id，通过npu-smi info -l**命令查出的NPU ID即为设备id。
+    - **chip_id：芯片id，通过npu-smi info -m**命令查出的Chip ID即为芯片id。
+
+```
+export LAUNCH_KERNEL_PATH=${INSTALL_DIR}/opp/vendors/customize/op_impl/ai_core/tbe/kernel/SOC_VERSION/add_custom/AddCustom_1e04ee05ab491cc5ae9c3d5c9ee8950b.o
+```
+
+7. 启动msDebug工具拉起Python程序，进入调试界面。
+
+```
+1
+2
+3
+4
+5
+```
+
+```
+msdebug python3 test_ops_custom.py
+(msdebug) target create "python3"
+Current executable set to '/home/mindstudio/miniconda3/envs/py39/bin/python3' (aarch64).
+(msdebug) settings set -- target.run-args  "test_ops_custom.py"
+(msdebug)
+
+```
+|  |  |
+| --- | --- |
+
+8. 设置断点。
+根据指定源码文件与对应行号，在核函数中设置NPU断点。
+```
+1
+2
+```
+
+```
+(msdebug) b add_custom.cpp:60
+Breakpoint 1: where = AddCustom_1e04ee05ab491cc5ae9c3d5c9ee8950b.o`::AddCustom_1e04ee05ab491cc5ae9c3d5c9ee8950b_1(uint8_t *, uint8_t *, uint8_t *, uint8_t *, uint8_t *) + 9912 [inlined] KernelAdd::Compute(int) + 3400 at add_custom.cpp:60:9, address = 0x00000000000026b8
+
+```
+|  |  |
+| --- | --- |
+
+9. 运行程序，等待直到命中断点。
+
+```
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+```
+
+```
+(msdebug) r
+Process 197189 launched: '/home/miniconda3/envs/py39/bin/python3' (aarch64)
+Process 197189 stopped and restarted: thread 1 received signal: SIGCHLD
+...
+[Launch of Kernel anonymous on Device 0]
+Process 197189 stopped
+[Switching to focus on Kernel anonymous, CoreId 8, Type aiv]
+* thread #1, name = 'python3', stop reason = breakpoint 2.1
+    frame #0: 0x00000000000026b8 AddCustom_1e04ee05ab491cc5ae9c3d5c9ee8950b.o`::AddCustom_1e04ee05ab491cc5ae9c3d5c9ee8950b_1(uint8_t *, uint8_t *, uint8_t *, uint8_t *, uint8_t *) [inlined] KernelAdd::Compute(this=0x000000000020efb8, progress=1) at add_custom.cpp:60:9
+   57              LocalTensor<DTYPE_Y> yLocal = inQueueY.DeQue<DTYPE_Y>();
+   58              LocalTensor<DTYPE_Z> zLocal = outQueueZ.AllocTensor<DTYPE_Z>();
+   59              Add(zLocal, xLocal, yLocal, this->tileLength);
+-> 60              outQueueZ.EnQue<DTYPE_Z>(zLocal);
+   61              inQueueX.FreeTensor(xLocal);
+   62              inQueueY.FreeTensor(yLocal);
+   63          }
+(msdebug)
+
+```
+|  |  |
+| --- | --- |
+
+[其他调试操作可参考导入调试信息](atlasopdev_16_0063.html#ZH-CN_TOPIC_0000002536920529__zh-cn_topic_0000002534426397_section1689328161710)[、内存与变量打印](atlasopdev_16_0067.html#ZH-CN_TOPIC_0000002536800563)[、调试信息展示](atlasopdev_16_0072.html#ZH-CN_TOPIC_0000002536920541)[及核切换](atlasopdev_16_0070.html#ZH-CN_TOPIC_0000002505040604)等，与其操作一致。
+
+10. [删除断点，具体操作请参见删除断点](atlasopdev_16_0066.html#ZH-CN_TOPIC_0000002505040600__zh-cn_topic_0000002502586606_zh-cn_topic_0000001831604765_section812112193320)。
+11. 调试完以后，执行q命令并输入Y或y结束调试。
+
+```
+1
+2
+```
+
+```
+(msdebug) q
+Quitting LLDB will kill one or more processes. Do you really want to proceed: [Y/n] y
+
+```
+|  |  |
+| --- | --- |
+
+**父主题：**[典型案例](atlasopdev_16_0073.html)

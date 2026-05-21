@@ -1,0 +1,64 @@
+{
+  "section": "mstx_api",
+  "total_pages": 14,
+  "success": 14,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "接口简介",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0001.html"
+    },
+    {
+      "name": "mstxGetToolId",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0187.html"
+    },
+    {
+      "name": "mstxMarkA",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0003.html"
+    },
+    {
+      "name": "mstxRangeStartA",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0117.html"
+    },
+    {
+      "name": "mstxRangeEnd",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0118.html"
+    },
+    {
+      "name": "mstxDomainCreateA",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0006.html"
+    },
+    {
+      "name": "mstxDomainDestroy",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0007.html"
+    },
+    {
+      "name": "mstxDomainMarkA",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0008.html"
+    },
+    {
+      "name": "mstxDomainRangeStartA",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0009.html"
+    },
+    {
+      "name": "mstxDomainRangeEnd",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/msprof_tx_0010.html"
+    },
+    {
+      "name": "mstxMemHeapRegister",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0145.html"
+    },
+    {
+      "name": "mstxMemRegionsRegister",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0147.html"
+    },
+    {
+      "name": "mstxMemRegionsUnregister",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0148.html"
+    },
+    {
+      "name": "mstxMemHeapUnregister",
+      "url": "zh/mindstudio/830/API/mstxAPIReference/atlasopdev_16_0146.html"
+    }
+  ]
+}

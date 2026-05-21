@@ -2,6 +2,8 @@
 
 ## 一、技术选型
 
+当前前端已实现流式问答、Markdown 安全渲染、来源文档展示、图片展示、缓存命中标识和知识图谱相关主题推荐。流式处理集中在 `useChat.ts`，后端通过 `/api/v1/qa/stream` 返回 `metadata`、`answer`、`done` 和 `error` 事件。
+
 | 技术 | 版本 | 用途 |
 |------|------|------|
 | Vue 3 | 3.4+ | 前端框架 |
@@ -34,11 +36,11 @@ frontend/
     │   ├── SourceCard.vue         # 来源文档卡片
     │   ├── ImageGallery.vue       # 图片展示组件
     │   ├── QuickQuestions.vue     # 快捷问题组件
+    │   ├── RelatedTopics.vue      # 相关主题推荐组件
     │   └── LoadingDots.vue        # 加载动画组件
     │
     ├── composables/               # 组合式函数
-    │   ├── useChat.ts             # 聊天逻辑
-    │   └── useSSE.ts              # SSE流式处理
+    │   └── useChat.ts             # 聊天逻辑与SSE流式处理
     │
     ├── types/                     # 类型定义
     │   └── index.ts               # 接口类型

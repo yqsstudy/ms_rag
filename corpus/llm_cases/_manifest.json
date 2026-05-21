@@ -1,0 +1,328 @@
+{
+  "section": "llm_cases",
+  "total_pages": 80,
+  "success": 80,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "文档简介",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_001.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_002.html"
+    },
+    {
+      "name": "整体定位流程",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_004.html"
+    },
+    {
+      "name": "问题信息收集",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_005.html"
+    },
+    {
+      "name": "快速排查",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_007.html"
+    },
+    {
+      "name": "详细排查",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_008.html"
+    },
+    {
+      "name": "性能工具总体介绍",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_010.html"
+    },
+    {
+      "name": "使用步骤",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_012.html"
+    },
+    {
+      "name": "模型调优性能采集工具",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_013.html"
+    },
+    {
+      "name": "模型调优快速分析（msprof-analyze命令行工具）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_014.html"
+    },
+    {
+      "name": "总体介绍",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_016.html"
+    },
+    {
+      "name": "获取软件包",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_017.html"
+    },
+    {
+      "name": "概览（Summary）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_019.html"
+    },
+    {
+      "name": "通信（Communication）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_020.html"
+    },
+    {
+      "name": "时间线（Timeline）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_022.html"
+    },
+    {
+      "name": "内存（Memory）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_023.html"
+    },
+    {
+      "name": "算子（Operator）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_024.html"
+    },
+    {
+      "name": "服务化工具",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_025.html"
+    },
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_027.html"
+    },
+    {
+      "name": "总体介绍",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_029.html"
+    },
+    {
+      "name": "总体介绍",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_031.html"
+    },
+    {
+      "name": "快慢卡定点精确分析法",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_032.html"
+    },
+    {
+      "name": "快慢卡定位Timeline操作案例",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_034.html"
+    },
+    {
+      "name": "快慢卡定位算子比对操作案例",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_035.html"
+    },
+    {
+      "name": "案例一：集群保存checkpoint后性能持续劣化",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_037.html"
+    },
+    {
+      "name": "案例二：集群AllReduce通信算子等待时间过长",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_038.html"
+    },
+    {
+      "name": "基于集群数据分析是否出现通信重传",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_040.html"
+    },
+    {
+      "name": "通信重传典型案例",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_041.html"
+    },
+    {
+      "name": "案例：ZeRO3模式导致通信小包",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_043.html"
+    },
+    {
+      "name": "源地址与目的地址字节未对齐",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_044.html"
+    },
+    {
+      "name": "计算通信带宽抢占",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_047.html"
+    },
+    {
+      "name": "Profiling采集性能膨胀",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_046.html"
+    },
+    {
+      "name": "算子性能问题定位方法",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_049.html"
+    },
+    {
+      "name": "亲和算子优化策略",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_050.html"
+    },
+    {
+      "name": "模型代码优化策略",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_051.html"
+    },
+    {
+      "name": "Host Bound问题分类",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_053.html"
+    },
+    {
+      "name": "流水优化",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_054.html"
+    },
+    {
+      "name": "绑核优化",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_058.html"
+    },
+    {
+      "name": "编译优化包获取",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_063.html"
+    },
+    {
+      "name": "毕昇编译器安装",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_064.html"
+    },
+    {
+      "name": "安装依赖",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_066.html"
+    },
+    {
+      "name": "编译Python",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_067.html"
+    },
+    {
+      "name": "配置软链接",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_068.html"
+    },
+    {
+      "name": "注意事项",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_069.html"
+    },
+    {
+      "name": "前置准备",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_071.html"
+    },
+    {
+      "name": "首次编译（插桩编译）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_072.html"
+    },
+    {
+      "name": "采集Profiling数据",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_073.html"
+    },
+    {
+      "name": "二次编译（优化编译）",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_074.html"
+    },
+    {
+      "name": "问题背景",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_076.html"
+    },
+    {
+      "name": "前置检查",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_077.html"
+    },
+    {
+      "name": "CPU运行状态",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_079.html"
+    },
+    {
+      "name": "异常堆栈捕获",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_080.html"
+    },
+    {
+      "name": "集群性能劣化分析思路",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_082.html"
+    },
+    {
+      "name": "定位实操技巧",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_083.html"
+    },
+    {
+      "name": "信息收集",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_085.html"
+    },
+    {
+      "name": "分析性能数据文件",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_091.html"
+    },
+    {
+      "name": "ATC转换日志分析",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_092.html"
+    },
+    {
+      "name": "OM和ONNX文件",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_093.html"
+    },
+    {
+      "name": "模型压缩量化",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_095.html"
+    },
+    {
+      "name": "简化ONNX文件",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_097.html"
+    },
+    {
+      "name": "ATC调优",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_098.html"
+    },
+    {
+      "name": "AOE调优",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_099.html"
+    },
+    {
+      "name": "NCS调优",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_192.html"
+    },
+    {
+      "name": "msit debug surgeon自动优化ONNX",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_103.html"
+    },
+    {
+      "name": "升级CANN版本",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_104.html"
+    },
+    {
+      "name": "改图优化",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_191.html"
+    },
+    {
+      "name": "整体思路",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_106.html"
+    },
+    {
+      "name": "纯模型性能调优",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_107.html"
+    },
+    {
+      "name": "明确优化目标",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_109.html"
+    },
+    {
+      "name": "针对目标进行调优",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_110.html"
+    },
+    {
+      "name": "框架调度耗时导致性能劣化",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_112.html"
+    },
+    {
+      "name": "模型执行耗时优化案例",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_113.html"
+    },
+    {
+      "name": "显存瓶颈分析案例",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_114.html"
+    },
+    {
+      "name": "服务化参数优化案例",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_200.html"
+    },
+    {
+      "name": "DeepSeek进阶调优",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_115.html"
+    },
+    {
+      "name": "确认主要性能瓶颈",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_117.html"
+    },
+    {
+      "name": "算子性能劣化对比分析",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_118.html"
+    },
+    {
+      "name": "通信时间（未被掩盖的）劣化对比分析",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_119.html"
+    },
+    {
+      "name": "内存劣化对比分析",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_120.html"
+    },
+    {
+      "name": "空闲时间劣化对比分析",
+      "url": "zh/mindstudio/830/practicalcases/GeneralPerformanceIssue/toolsample6_121.html"
+    }
+  ]
+}

@@ -1,0 +1,740 @@
+{
+  "section": "operator_tools",
+  "total_pages": 183,
+  "success": 183,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "工具概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0006.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0007.html"
+    },
+    {
+      "name": "原理概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0152.html"
+    },
+    {
+      "name": "算子特性建模",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0009.html"
+    },
+    {
+      "name": "算子计算搬运规格分析",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0010.html"
+    },
+    {
+      "name": "极限性能分析",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0011.html"
+    },
+    {
+      "name": "算子tiling初步设计",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0012.html"
+    },
+    {
+      "name": "接口列表",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0001.html"
+    },
+    {
+      "name": "Chip",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0003.html"
+    },
+    {
+      "name": "Core",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0004.html"
+    },
+    {
+      "name": "Tensor",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0005.html"
+    },
+    {
+      "name": "Tensor.load",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0006.html"
+    },
+    {
+      "name": "set_flag",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_00073.html"
+    },
+    {
+      "name": "wait_flag",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_00074.html"
+    },
+    {
+      "name": "mmad",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0007.html"
+    },
+    {
+      "name": "vadd",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0008.html"
+    },
+    {
+      "name": "vbrcb",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0009.html"
+    },
+    {
+      "name": "vconv",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0010.html"
+    },
+    {
+      "name": "vconv_deq",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0011.html"
+    },
+    {
+      "name": "vconv_vdeq",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0012.html"
+    },
+    {
+      "name": "vector_dup",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0013.html"
+    },
+    {
+      "name": "vexp",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0014.html"
+    },
+    {
+      "name": "vln",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0015.html"
+    },
+    {
+      "name": "vmax",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0016.html"
+    },
+    {
+      "name": "vmul",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0017.html"
+    },
+    {
+      "name": "vmuls",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0018.html"
+    },
+    {
+      "name": "vsub",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0019.html"
+    },
+    {
+      "name": "vdiv",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0020.html"
+    },
+    {
+      "name": "vcadd",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0021.html"
+    },
+    {
+      "name": "vabs",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0022.html"
+    },
+    {
+      "name": "vaddrelu",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0023.html"
+    },
+    {
+      "name": "vaddreluconv",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0024.html"
+    },
+    {
+      "name": "vadds",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0025.html"
+    },
+    {
+      "name": "vand",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0026.html"
+    },
+    {
+      "name": "vaxpy",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0027.html"
+    },
+    {
+      "name": "vbitsort",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0028.html"
+    },
+    {
+      "name": "vcgadd",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0029.html"
+    },
+    {
+      "name": "vcgmax",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0030.html"
+    },
+    {
+      "name": "vcgmin",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0031.html"
+    },
+    {
+      "name": "vcmax",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0032.html"
+    },
+    {
+      "name": "vcmin",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0033.html"
+    },
+    {
+      "name": "vcmp_xxx",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0034.html"
+    },
+    {
+      "name": "vcmpv_xxx",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0035.html"
+    },
+    {
+      "name": "vcmpvs_xxx",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0036.html"
+    },
+    {
+      "name": "vcopy",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0037.html"
+    },
+    {
+      "name": "vcpadd",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0038.html"
+    },
+    {
+      "name": "vgather",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0039.html"
+    },
+    {
+      "name": "vgatherb",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0040.html"
+    },
+    {
+      "name": "vlrelu",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0041.html"
+    },
+    {
+      "name": "vmadd",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0042.html"
+    },
+    {
+      "name": "vmaddrelu",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0043.html"
+    },
+    {
+      "name": "vmaxs",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0044.html"
+    },
+    {
+      "name": "vmin",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0045.html"
+    },
+    {
+      "name": "vmins",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0046.html"
+    },
+    {
+      "name": "vmla",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0047.html"
+    },
+    {
+      "name": "vmrgsort",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0048.html"
+    },
+    {
+      "name": "vmulconv",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0049.html"
+    },
+    {
+      "name": "vnot",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0050.html"
+    },
+    {
+      "name": "vor",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0051.html"
+    },
+    {
+      "name": "vrec",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0052.html"
+    },
+    {
+      "name": "vreduce",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0053.html"
+    },
+    {
+      "name": "vreducev2",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0054.html"
+    },
+    {
+      "name": "vrelu",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0055.html"
+    },
+    {
+      "name": "vrsqrt",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0056.html"
+    },
+    {
+      "name": "vsel",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0057.html"
+    },
+    {
+      "name": "vshl",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0058.html"
+    },
+    {
+      "name": "vshr",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0059.html"
+    },
+    {
+      "name": "vsqrt",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0060.html"
+    },
+    {
+      "name": "vsubrelu",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0061.html"
+    },
+    {
+      "name": "vsubreluconv",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0062.html"
+    },
+    {
+      "name": "vtranspose",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdevapi_16_0063.html"
+    },
+    {
+      "name": "功能介绍",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0173.html"
+    },
+    {
+      "name": "调用示例",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0174.html"
+    },
+    {
+      "name": "mskpp.tiling_func",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0185.html"
+    },
+    {
+      "name": "mskpp.get_kernel_from_binary",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0186.html"
+    },
+    {
+      "name": "功能介绍",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0154.html"
+    },
+    {
+      "name": "快速入门",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0155.html"
+    },
+    {
+      "name": "自动调优示例",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0168.html"
+    },
+    {
+      "name": "autotune",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0163.html"
+    },
+    {
+      "name": "code_gen",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0161.html"
+    },
+    {
+      "name": "compile",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0162.html"
+    },
+    {
+      "name": "autotune_v2",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0171.html"
+    },
+    {
+      "name": "compile_executable",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0170.html"
+    },
+    {
+      "name": "basic_matmul_autotune.py",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0157.html"
+    },
+    {
+      "name": "jit_build.sh",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0164.html"
+    },
+    {
+      "name": "basic_matmul_executable_autotune.py",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0183.html"
+    },
+    {
+      "name": "jit_build_executable.sh",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0182.html"
+    },
+    {
+      "name": "运行Kernel时提示权限错误",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0166.html"
+    },
+    {
+      "name": "工具概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0018.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0019.html"
+    },
+    {
+      "name": "创建算子工程",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0021.html"
+    },
+    {
+      "name": "算子开发",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0023.html"
+    },
+    {
+      "name": "算子编译部署",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0024.html"
+    },
+    {
+      "name": "查看算子仿真流水图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0025.html"
+    },
+    {
+      "name": "Ascend C自定义算子开发实践",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0027.html"
+    },
+    {
+      "name": "工具概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0029.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0030.html"
+    },
+    {
+      "name": "生成测试用例定义文件",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0032.html"
+    },
+    {
+      "name": "生成/执行测试用例",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0033.html"
+    },
+    {
+      "name": "生成单算子上板测试框架",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0034.html"
+    },
+    {
+      "name": "测试用例定义文件",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0036.html"
+    },
+    {
+      "name": "工具概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0039.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0040.html"
+    },
+    {
+      "name": "内存检测",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0042.html"
+    },
+    {
+      "name": "竞争检测",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0043.html"
+    },
+    {
+      "name": "未初始化检测",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0128.html"
+    },
+    {
+      "name": "同步检测",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0181.html"
+    },
+    {
+      "name": "检测内核调用符方式的Ascend C算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0045.html"
+    },
+    {
+      "name": "检测API调用的单算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0046.html"
+    },
+    {
+      "name": "检测PyTorch接口调用的算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0136.html"
+    },
+    {
+      "name": "检测Triton算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0176.html"
+    },
+    {
+      "name": "检测CANN软件栈的内存",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0047.html"
+    },
+    {
+      "name": "msSanitizer工具异常报告中未打印正确的文件名和行号",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0134.html"
+    },
+    {
+      "name": "msSanitizer工具使用\"--cce-enable-sanitizer -g\"编译算子时出现\"InputSection too large\"错误",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0135.html"
+    },
+    {
+      "name": "msSanitizer工具提示--cache-size异常",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0138.html"
+    },
+    {
+      "name": "接口列表",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0150.html"
+    },
+    {
+      "name": "sanitizerRtMalloc",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0050.html"
+    },
+    {
+      "name": "sanitizerRtMallocCached",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0051.html"
+    },
+    {
+      "name": "sanitizerRtFree",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0052.html"
+    },
+    {
+      "name": "sanitizerRtMemset",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0053.html"
+    },
+    {
+      "name": "sanitizerRtMemsetAsync",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0054.html"
+    },
+    {
+      "name": "sanitizerRtMemcpy",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0055.html"
+    },
+    {
+      "name": "sanitizerRtMemcpyAsync",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0056.html"
+    },
+    {
+      "name": "sanitizerRtMemcpy2d",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0057.html"
+    },
+    {
+      "name": "sanitizerRtMemcpy2dAsync",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0058.html"
+    },
+    {
+      "name": "sanitizerReportMalloc",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0059.html"
+    },
+    {
+      "name": "sanitizerReportFree",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0060.html"
+    },
+    {
+      "name": "mstx扩展功能",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0142.html"
+    },
+    {
+      "name": "工具概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0062.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0063.html"
+    },
+    {
+      "name": "指定Device ID（通算融合算子场景）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0169.html"
+    },
+    {
+      "name": "断点设置",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0066.html"
+    },
+    {
+      "name": "内存与变量打印",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0067.html"
+    },
+    {
+      "name": "单步调试",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0068.html"
+    },
+    {
+      "name": "中断运行",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0069.html"
+    },
+    {
+      "name": "核切换",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0070.html"
+    },
+    {
+      "name": "读取寄存器",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0071.html"
+    },
+    {
+      "name": "调试信息展示",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0072.html"
+    },
+    {
+      "name": "解析异常算子dump文件",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0149.html"
+    },
+    {
+      "name": "上板调试Vector算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0074.html"
+    },
+    {
+      "name": "调用Ascend CL单算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0075.html"
+    },
+    {
+      "name": "调试PyTorch接口调用的算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0076.html"
+    },
+    {
+      "name": "上板调试模板库的算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0184.html"
+    },
+    {
+      "name": "msDebug工具打印Tensor变量功能不可用，提示“unavailable”或“memory read failed”",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0079.html"
+    },
+    {
+      "name": "msDebug工具在容器环境中调试运行失败，提示需安装HDK驱动包",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0080.html"
+    },
+    {
+      "name": "msDebug工具断点设置在核函数内，命中断点后执行continue命令，算子运行失败",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0116.html"
+    },
+    {
+      "name": "msDebug工具在docker中执行\"run\"命令运行程序后，提示“'A' packet returned an error: 8”",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0132.html"
+    },
+    {
+      "name": "算子使用\"-O0 -g\"编译选项编译后，运行出错，\"min stack size is xxx, larger than current process default size 32768. Please modify aclInit json, and reboot process.\"",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0145.html"
+    },
+    {
+      "name": "工具概述",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0082.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0083.html"
+    },
+    {
+      "name": "工具使用",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_00851.html"
+    },
+    {
+      "name": "计算内存热力图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0086.html"
+    },
+    {
+      "name": "Roofline瓶颈分析图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0119.html"
+    },
+    {
+      "name": "Cache热力图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0158.html"
+    },
+    {
+      "name": "通算流水图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0139.html"
+    },
+    {
+      "name": "指令流水图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0087.html"
+    },
+    {
+      "name": "算子代码热点图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0088.html"
+    },
+    {
+      "name": "内存通路吞吐率波形图",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0160.html"
+    },
+    {
+      "name": "ArithmeticUtilization（Cube及Vector类型指令耗时和占比）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0093.html"
+    },
+    {
+      "name": "L2Cache（L2 Cache命中率）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0094.html"
+    },
+    {
+      "name": "Memory（内存读写带宽速率）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0095.html"
+    },
+    {
+      "name": "MemoryL0（L0读写带宽速率）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0096.html"
+    },
+    {
+      "name": "MemoryUB（UB读写带宽速率）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0097.html"
+    },
+    {
+      "name": "OpBasicInfo（算子基础信息）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0098.html"
+    },
+    {
+      "name": "PipeUtilization（计算单元和搬运单元耗时占比）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0099.html"
+    },
+    {
+      "name": "ResourceConflictRatio（资源冲突占比）",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0100.html"
+    },
+    {
+      "name": "代码行耗时数据文件",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0101.html"
+    },
+    {
+      "name": "代码指令信息文件",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0102.html"
+    },
+    {
+      "name": "json配置文件说明",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0104.html"
+    },
+    {
+      "name": "采集Ascend C算子的性能数据",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0090.html"
+    },
+    {
+      "name": "通过指令流水图优化算子",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0091.html"
+    },
+    {
+      "name": "采集MC2算子的性能数据",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0140.html"
+    },
+    {
+      "name": "配合mstx接口实现范围级重放",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0187.html"
+    },
+    {
+      "name": "mstx扩展功能",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0115.html"
+    },
+    {
+      "name": "基于msOpGen工具创建算子工程",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0024.html"
+    },
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0088.html"
+    },
+    {
+      "name": "算子工程编译",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0089.html"
+    },
+    {
+      "name": "算子交付件独立编译",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0090.html"
+    },
+    {
+      "name": "算子包部署",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0091.html"
+    },
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0096.html"
+    },
+    {
+      "name": "生成测试用例定义文件",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0097.html"
+    },
+    {
+      "name": "生成/执行测试用例",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0098.html"
+    },
+    {
+      "name": "测试用例定义文件配置样例",
+      "url": "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0099.html"
+    }
+  ]
+}

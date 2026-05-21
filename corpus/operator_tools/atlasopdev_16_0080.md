@@ -1,0 +1,35 @@
+---
+title: "msDebug工具在容器环境中调试运行失败，提示需安装HDK驱动包"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0080.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0080.html"
+---
+
+# msDebug工具在容器环境中调试运行失败，提示需安装HDK驱动包
+
+#### 现象描述
+
+提示msdebug failed to initialize. please install HDK with --debug before debugging。
+
+#### 原因分析
+
+未使用--debug选项安装HDK驱动包或msDebug工具依赖的驱动设备节点/dev/drv_debug未映射至容器环境内。
+
+#### 解决措施
+
+1. 检查宿主机是否使用--debug选项安装HDK驱动包。
+若回显一致，则调试驱动已安装；否则需要使用--debug命令安装配套的HDK驱动包。****
+```
+[mindstudio@localhost ~]$ ls /dev/drv_debug     #查看是否存在/dev/drv_debug设备节点
+/dev/drv_debug
+```
+
+2. 若驱动包已安装，算子运行环境为容器环境，那么请检查该容器环境中是否满足以下条件。
+
+  - 能找到调试依赖的设备节点/dev/drv_debug。
+  - 容器环境具有该设备节点的访问权限。
+
+建议在容器启动命令中增加选项--privileged --device=/dev/drv_debug，可保证调试依赖的设备节点被映射，且允许容器环境访问该节点。
+
+**父主题：**[FAQ](atlasopdev_16_0077.html)

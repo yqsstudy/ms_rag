@@ -1,0 +1,51 @@
+---
+title: "算子tiling初步设计"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0012.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0012.html"
+---
+
+# 算子tiling初步设计
+
+tiling策略的模拟体现在算子功能函数的for循环中，进行切分时，需确保每次for循环处理的数据量相同。
+
+*文档中的Ascendxxxyy*需替换为实际使用的处理器类型。
+
+#### 具体操作
+以matmul算子为例，该用例表示模拟一个大矩阵被切分成小矩阵进行矩阵乘计算。需根据用户算子逻辑方案实现算子功能函数。tiling策略的模拟体现在算子功能函数的for循环中（以下代码中加粗部分），例如单核处理[160, 240]和[240, 80]的矩阵乘，切割为25个[32, 48]和[48, 16]的小矩阵分批处理，就需要for循环25次并每次创建大小为[32, 48]和[48, 16]的Tensor矩阵（在GM上）。******************************
+```
+from mskpp import mmad, Tensor, Chip
+def my_mmad(gm_x, gm_y, gm_z):
+    # 矩阵乘的基本数据通路：
+    # 左矩阵A：GM-L1-L0A
+    # 右矩阵B：GM-L1-L0B
+    # 结果矩阵C： L0C(初始化)-GM
+    l1_x = Tensor("L1")
+    l1_y = Tensor("L1")
+    l1_x.load(gm_x)
+    l1_y.load(gm_y)
+    x = Tensor("L0A")
+    y = Tensor("L0B")
+    x.load(l1_x)
+    y.load(l1_y)
+    z = Tensor("L0C", "FP32", [32, 16], format="NC1HWC0")
+    out = mmad(x, y, z, True)() # 对于输出需要返回传出
+    z = out[0]
+    return z
+
+if __name__ == '__main__':
+    with Chip("Ascendxxxyy") as chip:
+        chip.enable_trace()    # 使能算子模拟流水图的功能，生成trace.json文件
+        chip.enable_metrics()   # 使能单指令及分Pipe的流水信息，生成Instruction_statistic.csv和Pipe_statistic.csv文件
+        # 这里进入了对数据切分逻辑的处理，对一大块GM的数据，如何经过拆分成小数据分批次搬入，如何对
+        # 内存进行分片多buffer搬运，都是属于tiling策略的范畴，这里模拟了单buffer情况，
+        # 将[160, 240]和[240, 80]的矩阵乘，切割为25个[32, 48]和[48, 16]的小矩阵分批次进行运算的一个tiling策略
+        for _ in range(25):
+            in_x = Tensor("GM", "FP16", [32, 48], format="ND")
+            in_y = Tensor("GM", "FP16", [48, 16], format="ND")
+            in_z = Tensor("GM", "FP32", [32, 16], format="NC1HWC0")
+            out_z = my_mmad(in_x, in_y, in_z)
+            in_z.load(out_z)
+```
+**父主题：**[性能建模](atlasopdev_16_0151.html)

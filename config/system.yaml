@@ -55,3 +55,30 @@ logging:
   level: "INFO"
   format: "json"
   file: "./logs/app.log"
+
+# Cache settings
+cache:
+  enabled: true
+  l1_max_size: 1000
+  l1_ttl: 3600
+  l2_max_size: 500
+  l2_ttl: 1800
+  l2_threshold: 0.92
+  l3_max_size: 2000
+  l3_ttl: 7200
+
+# Knowledge graph settings
+knowledge_graph:
+  enabled: true
+  graph_path: "./data/graph.json"
+  expand_parent: true
+  expand_sibling: true
+  expand_child: true
+  expand_reference: true
+  max_expand_per_direction: 1
+  max_enhanced_results: 3
+  expand_weight_parent: 0.5
+  expand_weight_sibling: 0.3
+  expand_weight_child: 0.3
+  expand_weight_reference: 0.4
+  related_topics_count: 5

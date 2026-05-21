@@ -1,0 +1,49 @@
+---
+title: "jit_build_executable.sh"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0182.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_16_0182.html"
+---
+
+# jit_build_executable.sh
+
+```
+#!/bin/sh
+# default input file
+LAUNCH_SRC_FILE="_gen_launch.cpp"
+# OUTPUT_LIB_FILE="_gen_module.so"
+OUTPUT_LIB_FILE="_gen_executable"
+if [ $# -ge 1 ] ; then
+    LAUNCH_SRC_FILE=$1
+fi
+if [ $# -ge 2 ]; then
+    OUTPUT_LIB_FILE=$2
+fi
+LAUNCH_OBJ_FILE="${LAUNCH_SRC_FILE%.cpp}.o"
+PYTHON_INCLUDE=$(python3 -c "import sysconfig; print(sysconfig.get_path('include'))")
+cd "$(dirname "$0")"
+bisheng -O2 -std=c++17 -xcce --cce-aicore-arch=dav-c220 \
+    -mllvm -cce-aicore-stack-size=0x8000 \
+    -mllvm -cce-aicore-function-stack-size=0x8000 \
+    -mllvm -cce-aicore-record-overflow=true \
+    -mllvm -cce-aicore-addr-transform \
+    -mllvm -cce-aicore-dcci-insert-for-scalar=false \
+    -DL2_CACHE_HINT \
+    -I$ASCEND_HOME_PATH/compiler/tikcpp \
+    -I$ASCEND_HOME_PATH/include/aclnn \
+    -I$ASCEND_HOME_PATH/compiler/tikcpp/tikcfw \
+    -I$ASCEND_HOME_PATH/compiler/tikcpp/tikcfw/impl \
+    -I$ASCEND_HOME_PATH/compiler/tikcpp/tikcfw/interface \
+    -I$ASCEND_HOME_PATH/include \
+    -I$ASCEND_HOME_PATH/include/experiment/runtime \
+    -I$ASCEND_HOME_PATH/include/experiment/msprof \
+    -I../../../include \
+    -I../../common \
+    -L${ASCEND_HOME_PATH}/lib64 \
+    -Wno-macro-redefined -Wno-ignored-attributes \
+    -lruntime -lstdc++ -lascendcl -lm -ltiling_api -lplatform -lc_sec -ldl -lnnopbase \
+    $LAUNCH_SRC_FILE -o $OUTPUT_LIB_FILE
+exit $?
+```
+**父主题：**[附录](atlasopdev_16_0165.html)

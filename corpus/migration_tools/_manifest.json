@@ -1,0 +1,64 @@
+{
+  "section": "migration_tools",
+  "total_pages": 14,
+  "success": 14,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "工具简介",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0001.html"
+    },
+    {
+      "name": "环境准备",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0017.html"
+    },
+    {
+      "name": "快速入门",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0030.html"
+    },
+    {
+      "name": "迁移分析",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0018.html"
+    },
+    {
+      "name": "自动迁移方式",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0019.html"
+    },
+    {
+      "name": "PyTorch GPU2Ascend工具迁移方式",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0020.html"
+    },
+    {
+      "name": "训练配置",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0022.html"
+    },
+    {
+      "name": "使用torch.utils.data.DataLoader方式加载数据的场景说明",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0023.html"
+    },
+    {
+      "name": "GPU单卡脚本迁移为NPU多卡脚本",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0038.html"
+    },
+    {
+      "name": "“Segmentation fault”错误",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0025.html"
+    },
+    {
+      "name": "引用库找不到的问题",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0026.html"
+    },
+    {
+      "name": "Muls算子不支持int64",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0027.html"
+    },
+    {
+      "name": "对于报错“No supported Ops kernel and engine are found for [ReduceStdV2A], optype [ReduceStdV2A]”，算子ReduceStdV2A不支持的问题",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0028.html"
+    },
+    {
+      "name": "运行报错",
+      "url": "zh/mindstudio/830/T&ITools/MigrationTool/atlasfmkt_16_0029.html"
+    }
+  ]
+}

@@ -45,10 +45,18 @@
         <ImageGallery :images="message.images" />
       </div>
 
+      <!-- 相关主题 -->
+      <RelatedTopics
+        v-if="message.relatedTopics && message.relatedTopics.length > 0"
+        :topics="message.relatedTopics"
+        @select="handleRelatedTopicSelect"
+      />
+
       <!-- 元信息 -->
       <div v-if="message.questionType || message.responseTime" class="mt-4 pt-4 border-t border-gray-100 text-xs text-gray-400 flex gap-4">
         <span v-if="message.questionType">问题类型: {{ message.questionType }}</span>
         <span v-if="message.responseTime">响应时间: {{ message.responseTime }}ms</span>
+        <span v-if="message.cached" class="text-green-500">缓存命中 ({{ message.cacheLevel }})</span>
       </div>
     </div>
   </div>
@@ -58,12 +66,17 @@
 import { computed } from 'vue'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import type { Message } from '@/types'
+import type { Message, RelatedTopic } from '@/types'
 import SourceCard from './SourceCard.vue'
 import ImageGallery from './ImageGallery.vue'
+import RelatedTopics from './RelatedTopics.vue'
 
 const props = defineProps<{
   message: Message
+}>()
+
+const emit = defineEmits<{
+  'related-topic-select': [topic: RelatedTopic]
 }>()
 
 const renderedContent = computed(() => {
@@ -71,4 +84,8 @@ const renderedContent = computed(() => {
   const raw = marked.parse(props.message.content) as string
   return DOMPurify.sanitize(raw)
 })
+
+function handleRelatedTopicSelect(topic: RelatedTopic) {
+  emit('related-topic-select', topic)
+}
 </script>

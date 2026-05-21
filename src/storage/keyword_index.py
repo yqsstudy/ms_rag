@@ -40,6 +40,11 @@ class BM25Index:
         self._corpus = [self._tokenize(chunk.content) for chunk in chunks]
         self._bm25 = BM25Okapi(self._corpus, k1=self.k1, b=self.b)
 
+    async def asearch(self, query: str, k: int = 10) -> List[dict]:
+        import asyncio
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, self.search, query, k)
+
     def search(self, query: str, k: int = 10) -> List[dict]:
         """Search for documents using BM25"""
         if self._bm25 is None:

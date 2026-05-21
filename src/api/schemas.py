@@ -67,3 +67,12 @@ class HealthResponse(BaseModel):
     version: str
     vector_store_count: int
     keyword_index_count: int
+
+
+class CacheClearRequest(BaseModel):
+    """Cache clear request"""
+
+    level: Optional[str] = Field(
+        default="all",
+        description="Cache level to clear: 'all', 'l1', 'l2', 'l3'",
+    )

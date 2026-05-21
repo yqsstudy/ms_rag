@@ -1,0 +1,156 @@
+{
+  "section": "quickstart",
+  "total_pages": 37,
+  "success": 37,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "MindStudio是什么",
+      "url": "zh/mindstudio/830/msquickstart/tools_qucikstart_0001.html"
+    },
+    {
+      "name": "选择框架场景",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0001.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0002.html"
+    },
+    {
+      "name": "模型开发&迁移",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0003.html"
+    },
+    {
+      "name": "训练前配置检查",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0006.html"
+    },
+    {
+      "name": "精度数据采集",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0008.html"
+    },
+    {
+      "name": "精度预检",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0009.html"
+    },
+    {
+      "name": "compare精度比对",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0011.html"
+    },
+    {
+      "name": "分级可视化构图比对",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0012.html"
+    },
+    {
+      "name": "性能数据采集",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0015.html"
+    },
+    {
+      "name": "使用msprof-analyze工具分析性能数据",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0017.html"
+    },
+    {
+      "name": "使用MindStudio Insight工具可视化性能数据",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0018.html"
+    },
+    {
+      "name": "代码样例",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0019.html"
+    },
+    {
+      "name": "模型开发&迁移",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0020.html"
+    },
+    {
+      "name": "训练前配置检查",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0023.html"
+    },
+    {
+      "name": "训练状态监控",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0024.html"
+    },
+    {
+      "name": "精度数据采集",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0025.html"
+    },
+    {
+      "name": "精度预检",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0026.html"
+    },
+    {
+      "name": "compare精度比对",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0028.html"
+    },
+    {
+      "name": "分级可视化构图比对",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0029.html"
+    },
+    {
+      "name": "性能数据采集",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0032.html"
+    },
+    {
+      "name": "使用msprof-analyze工具分析性能数据",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0034.html"
+    },
+    {
+      "name": "使用MindStudio Insight工具可视化性能数据",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0035.html"
+    },
+    {
+      "name": "代码样例",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_train_0036.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0001.html"
+    },
+    {
+      "name": "模型量化",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0003.html"
+    },
+    {
+      "name": "精度调试",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0004.html"
+    },
+    {
+      "name": "性能调优",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0005.html"
+    },
+    {
+      "name": "服务化调优",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0006.html"
+    },
+    {
+      "name": "进阶开发",
+      "url": "zh/mindstudio/830/msquickstart/atlasquick_infer_0007.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0004.html"
+    },
+    {
+      "name": "算子设计（msKPP）",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0003.html"
+    },
+    {
+      "name": "创建算子工程（msOpGen）",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0009.html"
+    },
+    {
+      "name": "算子功能测试（msOpST）",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0005.html"
+    },
+    {
+      "name": "算子异常检测（msSanitizer）",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0006.html"
+    },
+    {
+      "name": "算子调试（msDebug）",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0007.html"
+    },
+    {
+      "name": "算子调优（msProf）",
+      "url": "zh/mindstudio/830/msquickstart/atlasopdev_16_0008.html"
+    }
+  ]
+}

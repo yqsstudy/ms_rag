@@ -1,0 +1,60 @@
+---
+title: "npu_module_mem（NPU组件内存占用）"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0160.html"
+date_collected: "2026-05-04"
+category: "profiling_tools"
+original_path: "zh/mindstudio/830/T&ITools/Profiling/atlasprofiling_16_0160.html"
+---
+
+# npu_module_mem（NPU组件内存占用）
+
+NPU组件内存占用数据无timeline信息，summary信息在npu_module_mem_*.csv文件汇总。
+
+#### 支持的型号
+
+Atlas 200I/500 A2 推理产品
+
+Atlas 推理系列产品
+
+Atlas 训练系列产品
+
+Atlas A2 训练系列产品/Atlas A2 推理系列产品
+
+Atlas A3 训练系列产品/Atlas A3 推理系列产品
+
+#### npu_module_mem_*.csv文件数据说明
+
+npu_module_mem_*.csv文件内容格式示例如下：
+**图1**
+npu_module_mem_*.csv**表1**字段说明
+字段名
+
+字段含义
+
+Device_id
+
+设备ID。
+
+Component
+
+组件名称。
+
+Timestamp(us)
+
+时间戳，单位us。可查看组件在当前时刻占用的内存。
+
+Total Reserved(KB)
+
+内存占用大小，单位KB。若为-1，则可能是该组件只采集到了释放的内存。
+
+Device
+
+设备类型和设备ID，仅涉及NPU。
+|  |  |
+| --- | --- |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+**父主题：**[性能数据文件参考](atlasprofiling_16_0140.html)

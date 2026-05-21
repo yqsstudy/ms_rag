@@ -8,6 +8,8 @@ from typing import List, Optional
 from ..storage.keyword_index import BM25Index
 from ..storage.vector_store import SearchResult, VectorStore
 
+from ..storage.document_store import DocumentStore
+
 logger = logging.getLogger("ms_rag")
 
 
@@ -26,6 +28,7 @@ class HybridResult:
     final_score: float = 0.0
     parent_topic: Optional[str] = None
     images: list[dict] = field(default_factory=list)  # 新增图片字段
+    parent_id: Optional[str] = None
 
     def to_dict(self) -> dict:
         return {
@@ -50,13 +53,40 @@ class HybridRetriever:
         self,
         vector_store: VectorStore,
         keyword_index: BM25Index,
+        document_store: Optional[DocumentStore] = None,
         vector_weight: float = 0.6,
         keyword_weight: float = 0.4,
     ):
         self.vector_store = vector_store
         self.keyword_index = keyword_index
+        self.document_store = document_store
         self.vector_weight = vector_weight
         self.keyword_weight = keyword_weight
+
+    async def aretrieve(
+        self,
+        query: str,
+        query_embedding: List[float],
+        k: int = 10,
+    ) -> List[HybridResult]:
+        """Retrieve documents using hybrid search concurrently"""
+        import asyncio
+        t0 = time.time()
+
+        # Concurrent vector and keyword search
+        vector_task = self.vector_store.asearch(query_embedding, k=k * 2)
+        keyword_task = self.keyword_index.asearch(query, k=k * 2)
+        
+        vector_results, keyword_results = await asyncio.gather(vector_task, keyword_task)
+        
+        logger.debug(f"[Retriever] Vector search returned {len(vector_results)} results")
+        logger.debug(f"[Retriever] Keyword search returned {len(keyword_results)} results")
+
+        # Merge and rank using RRF (Reciprocal Rank Fusion)
+        merged = self._merge_results(vector_results, keyword_results)
+
+        logger.debug(f"[Retriever] Merged {len(merged)} results in {time.time()-t0:.3f}s")
+        return merged[:k]
 
     def retrieve(
         self,
@@ -102,7 +132,8 @@ class HybridRetriever:
                     content=result.content,
                     source_url=result.metadata.get("source_url", ""),
                     parent_topic=result.metadata.get("parent_topic"),
-                    images=result.metadata.get("images", []),  # 图片信息
+                    images=result.metadata.get("images", []),
+                    parent_id=result.metadata.get("parent_id", ""),
                 )
             result_map[chunk_id].vector_score = result.score
 
@@ -117,7 +148,8 @@ class HybridRetriever:
                     section_title=result.get("section_title", ""),
                     content=result.get("content", ""),
                     source_url=result.get("source_url", ""),
-                    images=result.get("images", []),  # 图片信息
+                    images=result.get("images", []),
+                    parent_id=result.get("parent_id", ""),
                 )
             result_map[chunk_id].keyword_score = result.get("score", 0.0)
 
@@ -133,11 +165,29 @@ class HybridRetriever:
                 self.keyword_weight * kw_score
             )
 
-        # Sort by final score
         sorted_results = sorted(
             result_map.values(),
             key=lambda x: x.final_score,
             reverse=True,
         )
+
+        if self.document_store:
+            final_results = []
+            seen_parents = set()
+            
+            for res in sorted_results:
+                parent_id = res.parent_id
+                if parent_id and parent_id not in seen_parents:
+                    parent_doc = self.document_store.get_document(parent_id)
+                    if parent_doc:
+                        seen_parents.add(parent_id)
+                        res.content = parent_doc.get("content", res.content)
+                        res.images = parent_doc.get("images", res.images)
+                        res.chunk_id = parent_id
+                        final_results.append(res)
+                elif not parent_id:
+                    final_results.append(res)
+            
+            return final_results
 
         return sorted_results

@@ -1,0 +1,236 @@
+{
+  "section": "accuracy_tools",
+  "total_pages": 57,
+  "success": 57,
+  "failed": 0,
+  "pages": [
+    {
+      "name": "简介",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0001.html"
+    },
+    {
+      "name": "使用前准备",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0002.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_1001.html"
+    },
+    {
+      "name": "准备GPU侧npy文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0006.html"
+    },
+    {
+      "name": "准备NPU侧dump数据和计算图文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0007.html"
+    },
+    {
+      "name": "比对操作和分析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0008.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0014.html"
+    },
+    {
+      "name": "准备TensorFlow模型npy文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0015.html"
+    },
+    {
+      "name": "准备全网层信息文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0016.html"
+    },
+    {
+      "name": "比对操作和分析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0018.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0020.html"
+    },
+    {
+      "name": "准备ONNX模型npy文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0021.html"
+    },
+    {
+      "name": "准备全网层信息文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0022.html"
+    },
+    {
+      "name": "比对操作和分析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0024.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0026.html"
+    },
+    {
+      "name": "Caffe模型npy文件准备",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0027.html"
+    },
+    {
+      "name": "准备模型文件和量化信息文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0030.html"
+    },
+    {
+      "name": "比对操作和分析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0031.html"
+    },
+    {
+      "name": "总体说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0033.html"
+    },
+    {
+      "name": "准备离线模型文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0034.html"
+    },
+    {
+      "name": "准备离线模型dump数据文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0028.html"
+    },
+    {
+      "name": "比对操作和分析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0035.html"
+    },
+    {
+      "name": "比对结果说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0036.html"
+    },
+    {
+      "name": "比对结果分析指导",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0038.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0040.html"
+    },
+    {
+      "name": "使用前必读",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0041.html"
+    },
+    {
+      "name": "通过命令行方式分析比对结果",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0042.html"
+    },
+    {
+      "name": "通过脚本工具方式分析比对结果",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0043.html"
+    },
+    {
+      "name": "输出结果和优化建议",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0044.html"
+    },
+    {
+      "name": "计算精度评价指标",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0045.html"
+    },
+    {
+      "name": "npy与npy文件之间的精度比对",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0046.html"
+    },
+    {
+      "name": "概述",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0048.html"
+    },
+    {
+      "name": "比对操作",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0049.html"
+    },
+    {
+      "name": "结果文件说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0050.html"
+    },
+    {
+      "name": "溢出算子数据采集与解析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0052.html"
+    },
+    {
+      "name": "Top溢出算子解析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0053.html"
+    },
+    {
+      "name": "dump数据文件Format转换",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0054.html"
+    },
+    {
+      "name": "查看dump数据文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0055.html"
+    },
+    {
+      "name": "GPU/NPU映射表获取",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0056.html"
+    },
+    {
+      "name": "自定义算法.py文件准备",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0057.html"
+    },
+    {
+      "name": "AICPU自定义算子日志解析",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0058.html"
+    },
+    {
+      "name": "生成npy文件名异常情况批量处理",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0059.html"
+    },
+    {
+      "name": "Windows dump文件转换为Linux dump文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0060.html"
+    },
+    {
+      "name": "数据格式要求",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0062.html"
+    },
+    {
+      "name": "命令格式说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0063.html"
+    },
+    {
+      "name": "完整比对结果参数说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0064.html"
+    },
+    {
+      "name": "数据格式要求",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0067.html"
+    },
+    {
+      "name": "准备离线模型dump数据文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0068.html"
+    },
+    {
+      "name": "准备Caffe模型npy文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0069.html"
+    },
+    {
+      "name": "准备TensorFlow模型npy文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0070.html"
+    },
+    {
+      "name": "说明与约束",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0072.html"
+    },
+    {
+      "name": "比对数据说明",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0073.html"
+    },
+    {
+      "name": "整网比对",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0074.html"
+    },
+    {
+      "name": "单算子比对",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0075.html"
+    },
+    {
+      "name": "如何进行npy文件转dump文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0076.html"
+    },
+    {
+      "name": "如何进行dump数据文件Format转换",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0077.html"
+    },
+    {
+      "name": "如何查看dump数据文件",
+      "url": "zh/mindstudio/830/T&ITools/ModelAccuracyAnalyzer/atlasaccuracy_16_0078.html"
+    }
+  ]
+}

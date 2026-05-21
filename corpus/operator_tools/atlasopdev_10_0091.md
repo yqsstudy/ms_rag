@@ -1,0 +1,117 @@
+---
+title: "算子包部署"
+source: "https://www.hiascend.com/document/detail/zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0091.html"
+date_collected: "2026-05-04"
+category: "operator_tools"
+original_path: "zh/mindstudio/830/ODtools/Operatordevelopmenttools/atlasopdev_10_0091.html"
+---
+
+# 算子包部署
+
+#### 简介
+
+算子部署指将算子编译生成的自定义算子安装包（*.run）部署到CANN算子库中。
+
+推理场景下，自定义算子直接部署到开发环境的CANN算子库。
+
+训练场景下，自定义算子安装包需要部署到运行环境的CANN算子库中。
+
+编译生成算子包的操作系统版本和架构需要与执行算子包部署操作的操作系统版本和架构相同。
+
+#### 命令行环境
+
+1. *训练场景下，以用户身份运行，将算子工程编译生成的自定义算子包（custom_opp_<target_os>_<target_architecture>*.run）拷贝到运行环境下的任一路径，然后参照如下步骤部署自定义算子安装包，如果您的开发环境即为运行环境，此操作可跳过。
+2. 在自定义算子包所在路径下，执行如下命令，安装自定义算子包。
+
+***./custom_opp_<target_os>_<target_architecture>*.run*****--install-path=<path>***
+
+  - *--install-path**为可选参数，用于指定自定义算子包的安装目录，运行用户需要对指定的安装路径有可读写权限。下文描述中的<vendor_name>*为算子工程编译时build.sh脚本中字段“vendor_name”的取值，默认为"customize"。
+    - **默认安装场景***，不配置--install-path**参数，安装成功后会将编译生成的自定义算子相关文件部署到${INSTALL_DIR}/opp/vendors/<vendor_name>*目录。${INSTALL_DIR}请替换为CANN软件安装后文件存储路径。例如，若安装的Ascend-cann-toolkit软件包，安装后文件存储路径示例为：$HOME/Ascend/cann。
+*自定义算子包默认安装路径${INSTALL_DIR}/opp/vendors的目录权限与CANN软件包安装用户和安装配置有关。如果因权限不足导致自定义算子包安装失败，可使用--install-path*参数并配置环境变量ASCEND_CUSTOM_OPP_PATH来指定安装目录（参考指定目录安装）或者联系CANN软件包的安装用户修改vendors目录权限来解决。
+
+    - **指定目录安装场景***，配置--install-path**参数，安装成功后会将编译生成的自定义算子相关文件部署到<path**>/<vendor_name>**目录，并在<**path**>/**<vendor_name>/**bin*目录下新增set_env.bash，写入当前自定义算子包相关的环境变量。
+      - *如果部署算子包时通过配置--install-path****参数指定了算子包的安装目录，则在使用自定义算子前，需要执行source <**path**>/**<vendor_name>/******bin/set_env.bash*****命令，set_env.bash**脚本中将自定义算子包的安装路径追加到环境变量ASCEND_CUSTOM_OPP_PATH中，使自定义算子在当前环境中生效。
+      - 对算子样例工程进行编译生成的算子包，支持指定绝对路径和相对路径的安装方式。
+      - 对msOpGen工具创建的算子工程进行编译生成的算子包，支持指定绝对路径的安装方式。
+      - 对MindStudio创建的算子工程进行编译生成的算子包，暂不支持指定目录安装方式。
+
+  - 若同一安装目录下已存在相同“vendor_name”的自定义算子，会出现类似如下提示信息（以更新framework为例）：
+```
+[ops_custom]upgrade framework
+caffe onnx tensorflow [INFO]: has old version in /usr/local/xxx/vendors/customize/framework:
+- Overlay Installation , please enter:[o]
+- Replace directory installation , please enter: [r]
+- Do not install , please enter:[n]
+```
+
+    - 输入“o”，代表覆盖安装，即若安装包中文件与已存在文件名称相同，使用安装包中文件替换原文件；若安装包中不包含已存在文件，则已存在文件保留。
+    - 输入“r”，代表全新安装，即删除安装路径下的所有文件，然后使用安装包全新安装。
+    - 输入“n”，代表退出安装。
+
+**说明：**后续若存在“op proto”、“op impl”、“custom.proto”等文件的安装模式选择，请分别根据提示信息输入相应的字符。
+
+以默认安装场景为例，部署后目录结构示例如下所示：
+************************
+```
+├── opp    //算子库目录
+│   ├── vendors    //自定义算子所在目录
+│       ├── config.ini     // 自定义算子优先级配置文件
+│       ├── vendor_name1   // 存储对应厂商部署的自定义算子，此名字为编译自定义算子安装包时配置的vendor_name，若未配置，默认值为customize
+│           ├── op_impl
+│               ├── ai_core    // TBE自定义算子实现文件及算子信息库所在目录
+│                   ├── tbe      
+│                       ├── config
+│                           ├── ${soc_version}     //昇腾AI处理器类型
+│                               ├── aic-${soc_version}-ops-info.json     //TBE自定义算子信息库文件
+│                       ├── vendor_name1_impl               //TBE自定义算子实现代码文件
+│                           ├── xx.py
+│               ├── cpu          //AI CPU自定义算子实现库及算子信息库所在目录
+│                   ├── aicpu_kernel
+│                       ├── impl
+│                           ├── libcust_aicpu_kernels.so    //AI CPU自定义算子实现库文件
+│                   ├── config   
+│                       ├── cust_aicpu_kernel.json          //AI CPU自定义算子信息库文件
+│               ├── vector_core   //此目录预留，无需关注
+│           ├── framework
+│               ├── caffe       //存放Caffe框架的自定义算子插件库
+│                   ├── libcust_caffe_parsers.so      //算子插件库文件，包含了自定义算子的插件解析函数
+│                   ├── custom.proto  //自定义算子的原始定义，算子编译过程中会读取此文件自动解析算子原始定义
+│               ├── onnx       //存放ONNX框架的自定义算子插件库
+│                   ├── libcust_onnx_parsers.so      //算子插件库文件，包含了自定义算子的插件解析函数
+│               ├── tensorflow         //存放TensorFlow框架的自定义算子插件库及npu对相关自定义算子支持度的配置文件
+│                   ├── libcust_tf_parsers.so         //算子插件库文件
+│                   ├── libcust_tf_scope_fusion.so    //scope融合规则定义库文件
+│                   ├── npu_supported_ops.json   //Atlas 训练系列产品使用的文件
+│           ├── op_proto        //自定义算子原型库所在目录
+│               ├── libcust_op_proto.so   
+│       ├── vendor_name2   // 存储厂商vendor_name2部署的自定义算子
+```
+
+注：其他目录与文件，开发者无需关注。
+
+3. 配置自定义算子优先级。
+多算子包共存的情况下，若不同的算子包目录下存在相同OpType的自定义算子，则以优先级高的算子包目录下的算子为准。下面介绍如何配置算子包优先级：
+  - 默认安装场景
+当“opp/vendors”目录下存在多个厂商的自定义算子时，您可通过配置“opp/vendors”目录下的“config.ini”文件，配置自定义算子包的优先级。
+
+“config.ini”文件的配置示例如下：
+**********
+```
+load_priority=vendor_name1,vendor_name2,vendor_name3
+```
+
+    - “load_priority”：优先级配置序列的关键字，不允许修改。
+    - *“vendor_name**1,vendor_name**2,vendor_name*3”：自定义算子厂商的优先级序列，按照优先级从高到低的顺序进行排列。
+
+  - 指定目录安装场景
+**指定目录安装场景下，如果需要多个自定义算子包同时生效，分别执行各算子包安装路径下的s****et_env.bash**脚本即可。每次脚本执行都会将当前算子包的安装路径追加到ASCEND_CUSTOM_OPP_PATH环境变量的最前面。因此可以按照脚本执行顺序确定优先级：脚本执行顺序越靠后，算子包优先级越高。
+
+***比如先执行source <**path**>/**vendor_name1/******bin/set_env.bash******，后执行source <**path**>/**vendor_name2/******bin/set_env.bash***，vendor_name2算子包的优先级高于vendor_name1。ASCEND_CUSTOM_OPP_PATH示例如下：
+********
+```
+ASCEND_CUSTOM_OPP_PATH=<path>/vendor_name2:<path>/vendor_name1
+```
+
+  - 指定目录安装场景下安装的算子包优先级高于默认方式安装的算子包。
+
+**父主题：**[算子编译部署](atlasopdev_10_0087.html)

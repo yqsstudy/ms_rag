@@ -1,64 +1,62 @@
-# MS-RAG: 性能定位指南RAG系统
+# MS-RAG: 昇腾性能定位指南 RAG 系统
 
-基于RAG技术的昇腾AI计算平台性能问题智能问答系统。
+基于 RAG 技术的昇腾 AI 计算平台性能问题智能问答系统，面向 MindStudio、msprof、算子性能、通信性能、快慢卡等场景，提供文档检索、结构化问答、来源引用、相关主题推荐和流式输出。
 
 ## 功能特性
 
-- 📄 **智能文档处理**：自动切分、清洗、元数据提取、图片信息提取
-- 🔍 **混合检索**：向量检索 + BM25关键词检索 + 重排序
-- 🤖 **多LLM支持**：Claude / OpenAI / DeepSeek 可切换
-- 🌊 **流式输出**：支持SSE流式响应
-- 🖼️ **图片展示**：回答中展示相关图片
-- ⚡ **高性能**：响应时间 < 3秒
+- **文档处理与增量索引**：加载 `corpus/` 下 Markdown 文档，清洗文本、提取元数据和图片信息，按父子 chunk 构建索引，并通过文件 hash 跳过未变更文档。
+- **混合检索**：Chroma 向量检索 + BM25 关键词检索，支持异步并发检索、重排序和父 chunk 回填。
+- **知识图谱增强**：基于父子主题、兄弟主题和文档引用关系扩展检索结果，并返回相关主题推荐。
+- **多级缓存**：L1 精确问答缓存、L2 语义相似问答缓存、L3 query embedding 缓存，支持统计查询和手动清理。
+- **多 LLM 支持**：Claude、OpenAI、DeepSeek 可通过配置切换，支持自定义兼容 API base URL。
+- **流式问答**：后端通过 SSE 推送 metadata、answer、done、error 事件，前端实时展示回答。
+- **前端交互**：Vue 3 + TypeScript + Tailwind，支持快捷问题、Markdown 安全渲染、来源文档、图片和相关主题展示。
 
 ## 系统架构
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      前端 (Vue 3 + Tailwind)                │
-│                    http://localhost:8000                    │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    后端 API (FastAPI)                        │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │  问答接口    │  │  检索接口    │  │  流式接口    │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      RAG Pipeline                            │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │  混合检索    │  │  重排序      │  │  LLM生成     │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      数据存储                                │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │  Chroma      │  │  BM25索引    │  │  文档语料    │      │
-│  │  (向量库)    │  │  (关键词)    │  │  (41个文档)  │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
+```text
+Vue 3 前端 / FastAPI 静态托管
+        │
+        ▼
+FastAPI API 层
+  ├─ /api/v1/qa
+  ├─ /api/v1/qa/stream
+  ├─ /api/v1/retrieve
+  ├─ /api/v1/cache/stats
+  └─ /api/v1/cache/clear
+        │
+        ▼
+RAGPipeline
+  ├─ CacheManager：L1 精确缓存 / L2 语义缓存 / L3 Embedding 缓存
+  ├─ EmbeddingService：BAAI/bge-large-zh
+  ├─ HybridRetriever：Chroma + BM25
+  ├─ Reranker
+  ├─ KnowledgeGraphEnhancer：父子/兄弟/引用扩展与相关主题
+  ├─ ContextBuilder
+  ├─ PromptTemplateManager
+  └─ LLMService：anthropic / openai / deepseek
+        │
+        ▼
+数据目录
+  ├─ data/chroma/       Chroma 向量库（子 chunk）
+  ├─ data/indexes/      BM25 索引
+  ├─ data/docstore/     父 chunk 文档存储
+  ├─ data/graph.json    文档关系图
+  └─ data/index_state.json 增量索引状态
 ```
 
-## 快速开始
-
-### 环境要求
+## 环境要求
 
 - Python 3.10+
-- Node.js 18+ (仅前端开发需要)
+- Node.js 18+（前端开发或构建需要）
+
+## 快速开始
 
 ### 1. 安装依赖
 
 ```bash
-# 后端依赖
 pip install -r requirements.txt
 
-# 前端依赖 (可选，仅开发时需要)
 cd frontend
 npm install
 ```
@@ -69,16 +67,20 @@ npm install
 cp .env.example .env
 ```
 
-编辑 `.env` 文件，设置 LLM API Key：
+至少配置一个 LLM API Key：
 
 ```bash
-# 选择一个提供商设置 API Key
+LLM_PROVIDER=anthropic
+LLM_MODEL=claude-sonnet-4-6
 LLM_API_KEY=your_api_key_here
 
-# 或者设置提供商特定的 Key
+# 也可使用 provider-specific key
 ANTHROPIC_API_KEY=your_anthropic_key
 OPENAI_API_KEY=your_openai_key
 DEEPSEEK_API_KEY=your_deepseek_key
+
+# 如使用代理或兼容 API
+LLM_BASE_URL=
 ```
 
 ### 3. 构建索引
@@ -87,92 +89,53 @@ DEEPSEEK_API_KEY=your_deepseek_key
 python scripts/build_index.py
 ```
 
-输出示例：
-```
-Loaded 41 documents
-Created 136 chunks
-Generated 136 embeddings
-Stored 136 chunks in vector store
-Built BM25 index with 136 documents
-```
-
-### 4. 构建前端 (生产模式)
+常用参数：
 
 ```bash
-cd frontend
-npm install
-npm run build
+python scripts/build_index.py --force          # 强制重建全部索引
+python scripts/build_index.py --corpus ./corpus --output ./data/chroma
 ```
 
-### 5. 启动服务
+构建过程会生成或更新：
+
+- `data/chroma/`：Chroma 向量库
+- `data/indexes/`：BM25 索引
+- `data/docstore/doc_store.json`：父 chunk 文档存储
+- `data/graph.json`：知识图谱增强使用的关系图
+- `data/index_state.json`：增量索引状态
+
+如果 HuggingFace 模型下载较慢，可使用镜像：
+
+```bash
+HF_ENDPOINT=https://hf-mirror.com python scripts/build_index.py
+```
+
+### 4. 启动服务
 
 ```bash
 python -m src.main
 ```
 
-服务启动后访问：
-- **前端界面**: http://localhost:8000
-- **API文档**: http://localhost:8000/docs
-- **健康检查**: http://localhost:8000/api/v1/health
+访问：
 
-## 开发模式
+- 前端界面：http://localhost:8000
+- API 文档：http://localhost:8000/docs
+- 健康检查：http://localhost:8000/api/v1/health
 
-### 前后端分离开发
+### 5. 前后端分离开发
 
 ```bash
-# 终端1: 启动后端 (端口 8000)
+# 终端 1：后端，端口 8000
 python -m src.main
 
-# 终端2: 启动前端开发服务器 (端口 3000)
+# 终端 2：前端，端口 3000
 cd frontend
 npm run dev
 ```
 
-访问 http://localhost:3000，前端会自动代理 API 请求到后端。
+前端开发服务器会代理 `/api` 和 `/corpus` 请求到后端。
 
 ## API 接口
-
-### 问答接口 (同步)
-
-```bash
-curl -X POST http://localhost:8000/api/v1/qa \
-  -H "Content-Type: application/json" \
-  -d '{"query": "模型训练很慢，怎么定位问题？"}'
-```
-
-响应示例：
-```json
-{
-  "code": 0,
-  "data": {
-    "answer": "针对模型训练速度慢的问题，建议按以下步骤定位...",
-    "question_type": "定位指导",
-    "sources": [
-      {
-        "doc_id": "toolsample6_003",
-        "title": "性能问题的定位流程",
-        "relevance_score": 0.92
-      }
-    ]
-  }
-}
-```
-
-### 问答接口 (流式 SSE)
-
-```bash
-curl -X POST http://localhost:8000/api/v1/qa/stream \
-  -H "Content-Type: application/json" \
-  -d '{"query": "模型训练很慢，怎么定位问题？"}'
-```
-
-### 检索接口
-
-```bash
-curl -X POST http://localhost:8000/api/v1/retrieve \
-  -H "Content-Type: application/json" \
-  -d '{"query": "msprof工具使用", "top_k": 5}'
-```
 
 ### 健康检查
 
@@ -180,195 +143,225 @@ curl -X POST http://localhost:8000/api/v1/retrieve \
 curl http://localhost:8000/api/v1/health
 ```
 
-响应：
-```json
-{
-  "status": "healthy",
-  "version": "0.1.0",
-  "vector_store_count": 136,
-  "keyword_index_count": 136
-}
+返回向量库和 BM25 索引数量。
+
+### 同步问答
+
+```bash
+curl -X POST http://localhost:8000/api/v1/qa \
+  -H "Content-Type: application/json" \
+  -d '{"query":"模型训练很慢，怎么定位问题？","options":{"top_k":5}}'
 ```
+
+响应字段包含：
+
+- `answer`：LLM 生成回答
+- `question_type`：问题类型，如定位指导、问题诊断、工具使用
+- `keywords`：关键词
+- `sources`：来源文档
+- `metadata.response_time_ms`：响应耗时
+- `metadata.related_topics`：相关主题
+- `metadata.cached/cache_level`：缓存命中信息（命中时出现）
+
+### 流式问答 SSE
+
+```bash
+curl -N -X POST http://localhost:8000/api/v1/qa/stream \
+  -H "Content-Type: application/json" \
+  -d '{"query":"msprof 怎么分析通信耗时？"}'
+```
+
+事件类型：
+
+- `metadata`：问题类型、关键词、来源文档、相关主题、缓存状态
+- `answer`：回答文本增量片段
+- `done`：响应耗时和模型信息
+- `error`：错误信息
+
+### 检索
+
+```bash
+curl -X POST http://localhost:8000/api/v1/retrieve \
+  -H "Content-Type: application/json" \
+  -d '{"query":"msprof 工具使用","top_k":5}'
+```
+
+### 缓存统计
+
+```bash
+curl http://localhost:8000/api/v1/cache/stats
+```
+
+### 清理缓存
+
+```bash
+curl -X POST http://localhost:8000/api/v1/cache/clear \
+  -H "Content-Type: application/json" \
+  -d '{"level":"all"}'
+```
+
+`level` 支持 `all`、`l1`、`l2`、`l3`。
 
 ## 项目结构
 
-```
+```text
 ms_rag/
-├── config/                   # 配置文件
-│   ├── system.yaml          # 系统配置
-│   ├── prompts.yaml         # Prompt模板
+├── config/
+│   ├── system.yaml          # 系统、检索、缓存、知识图谱和 LLM 配置
+│   ├── prompts.yaml         # Prompt 模板
 │   └── logging.yaml         # 日志配置
-│
-├── src/                     # 源代码
-│   ├── core/                # 核心配置
-│   │   ├── config.py        # 配置管理
-│   │   └── logging.py       # 日志配置
-│   │
-│   ├── data/                # 数据处理
-│   │   ├── loader.py        # 文档加载
-│   │   ├── splitter.py      # 文档切分
-│   │   ├── cleaner.py       # 文本清洗
-│   │   └── metadata.py      # 元数据提取
-│   │
-│   ├── embeddings/          # 向量化
-│   │   └── embedding.py     # Embedding服务
-│   │
-│   ├── storage/             # 存储
-│   │   ├── vector_store.py  # Chroma向量库
-│   │   └── keyword_index.py # BM25索引
-│   │
-│   ├── retrieval/           # 检索
-│   │   ├── hybrid_retriever.py  # 混合检索
-│   │   └── reranker.py      # 重排序
-│   │
-│   ├── generation/          # 生成
-│   │   ├── llm_service.py   # LLM服务
-│   │   ├── prompt_templates.py  # Prompt模板
-│   │   └── context_builder.py   # 上下文构建
-│   │
-│   ├── pipeline/            # RAG流水线
-│   │   └── rag_pipeline.py
-│   │
-│   ├── api/                 # API接口
-│   │   ├── routes.py        # 路由
-│   │   └── schemas.py       # 数据模型
-│   │
+├── src/
+│   ├── api/                 # FastAPI 路由和 schema
+│   ├── cache/               # L1/L2/L3 缓存实现
+│   ├── core/                # 配置、日志、链路 tracing
+│   ├── data/                # 文档加载、清洗、切分、元数据提取
+│   ├── embeddings/          # Embedding 服务
+│   ├── generation/          # LLM、Prompt、上下文构建
+│   ├── pipeline/            # RAGPipeline
+│   ├── retrieval/           # 混合检索、重排序、KG 增强
+│   ├── storage/             # Chroma、BM25、DocumentStore
 │   └── main.py              # 应用入口
-│
-├── frontend/                # 前端代码
-│   ├── src/
-│   │   ├── components/      # Vue组件
-│   │   ├── composables/     # 组合式函数
-│   │   └── types/           # TypeScript类型
-│   └── package.json
-│
-├── scripts/                 # 脚本
-│   ├── build_index.py       # 构建索引
-│   └── test_api.py          # API测试
-│
-├── tests/                   # 测试
-│
-├── data/                    # 数据目录
-│   ├── chroma/              # Chroma数据
-│   └── indexes/             # 索引文件
-│
-├── corpus/                  # 文档语料
-│   └── performance_guide/   # 性能指南文档
-│
-├── docs/                    # 文档
-│   ├── requirements.md      # 需求文档
-│   ├── system_design.md     # 系统设计
-│   ├── frontend_design.md   # 前端设计
-│   └── task_breakdown.md    # 任务拆分
-│
-├── static/                  # 前端构建产物
-│
-├── requirements.txt         # Python依赖
-└── README.md
+├── frontend/                # Vue 3 前端
+├── scripts/
+│   ├── build_index.py       # 构建/增量更新索引
+│   ├── evaluate.py          # 评估脚本
+│   ├── test_api.py          # API 测试脚本
+│   └── crawl_mindstudio.py  # MindStudio 文档爬取脚本
+├── corpus/                  # Markdown 知识库语料
+├── data/                    # 生成的索引、图谱和文档存储
+├── docs/                    # 需求、设计和实施文档
+├── static/                  # 前端生产构建产物
+├── requirements.txt
+└── pyproject.toml
 ```
 
 ## 配置说明
 
-编辑 `config/system.yaml` 进行配置：
+主要配置位于 `config/system.yaml`。
 
 ```yaml
-# LLM配置
-llm:
-  provider: "anthropic"  # anthropic | openai | deepseek
-  model: "claude-sonnet-4-6"
-  max_tokens: 2000
-  temperature: 0.7
-
-# Embedding配置
 embedding:
   model: "BAAI/bge-large-zh"
-  device: "cpu"  # cpu | cuda | mps
+  device: "cpu"
+  batch_size: 32
+  normalize: true
 
-# 检索配置
 retrieval:
   vector_weight: 0.6
   keyword_weight: 0.4
   top_k: 10
   rerank: true
 
-# 文档处理配置
-document:
-  min_chunk_size: 1500
-  max_chunk_size: 2000
-  chunk_overlap: 200
+llm:
+  provider: "${LLM_PROVIDER:anthropic}"
+  model: "${LLM_MODEL:claude-sonnet-4-6}"
+  api_key: "${LLM_API_KEY}"
+  base_url: "${LLM_BASE_URL:}"
+  max_tokens: 2000
+  temperature: 0.7
+
+cache:
+  enabled: true
+  l1_max_size: 1000
+  l1_ttl: 3600
+  l2_max_size: 500
+  l2_ttl: 1800
+  l2_threshold: 0.92
+  l3_max_size: 2000
+  l3_ttl: 7200
+
+knowledge_graph:
+  enabled: true
+  graph_path: "./data/graph.json"
+  expand_parent: true
+  expand_sibling: true
+  expand_child: true
+  expand_reference: true
+  related_topics_count: 5
+```
+
+也可使用 `MS_RAG_` 前缀和 `__` 嵌套分隔符覆盖配置，例如：
+
+```bash
+MS_RAG_API__PORT=9000 python -m src.main
 ```
 
 ## 数据处理流程
 
+```text
+Markdown 语料
+  ├─ DocumentLoader：加载文档、frontmatter、文件 hash
+  ├─ TextCleaner：清洗正文
+  ├─ DocumentSplitter：父 chunk + 子 chunk 切分
+  ├─ DocumentStore：保存父 chunk 完整上下文
+  ├─ EmbeddingService：对子 chunk 生成向量
+  ├─ VectorStore：写入 Chroma
+  ├─ BM25Index：构建关键词索引
+  ├─ index_state.json：记录文件 hash 和 chunk id
+  └─ graph.json：生成父子/引用关系图
 ```
-原始文档 (Markdown)
-    │
-    ├── 文档加载 (loader.py)
-    │   └── 解析YAML frontmatter
-    │
-    ├── 文本清洗 (cleaner.py)
-    │   └── 移除HTML、规范化空白
-    │
-    ├── 文档切分 (splitter.py)
-    │   ├── 按标题切分
-    │   ├── 处理过长章节
-    │   └── 添加重叠内容
-    │
-    ├── 图片提取
-    │   └── 提取图片标题和路径
-    │
-    ├── 向量化 (embedding.py)
-    │   └── bge-large-zh (1024维)
-    │
-    └── 存储
-        ├── Chroma向量库
-        └── BM25索引
+
+在线问答时，系统先查缓存，再生成 query embedding，执行混合检索、父 chunk 回填、重排序、知识图谱增强、上下文构建和 LLM 生成。
+
+## 常用开发命令
+
+```bash
+python -m src.main              # 启动后端
+python scripts/build_index.py   # 增量构建索引
+python scripts/build_index.py --force
+pytest                          # 运行测试
+ruff check .                    # 静态检查
+
+cd frontend
+npm run dev                     # 前端开发
+npm run build                   # 类型检查并构建到 ../static
+npm run preview                 # 预览前端构建
 ```
 
 ## 常见问题
 
-### 1. 模型下载慢
+### ModuleNotFoundError: No module named 'src'
 
-bge-large-zh 模型约 1.3GB，首次运行需要下载。可以使用镜像站：
+请在仓库根目录执行 Python 命令，例如：
 
 ```bash
-export HF_ENDPOINT=https://hf-mirror.com
+python -m src.main
 python scripts/build_index.py
 ```
 
-### 2. ModuleNotFoundError: No module named 'src'
+### 前端页面空白或不是最新版本
 
-确保在项目根目录执行命令，或使用：
-
-```bash
-python -m scripts.build_index
-```
-
-### 3. LLM API 调用失败
-
-检查 `.env` 文件中的 API Key 是否正确配置。
-
-### 4. 前端页面空白
-
-确保已构建前端：
+生产模式由后端托管 `static/`，需要重新构建前端：
 
 ```bash
 cd frontend
 npm run build
 ```
 
+### LLM API 调用失败
+
+检查 `.env` 中的 `LLM_API_KEY` 或 provider-specific key，并确认 `LLM_PROVIDER`、`LLM_MODEL`、`LLM_BASE_URL` 与所使用服务匹配。
+
+### 索引没有反映语料更新
+
+默认构建会根据文件 hash 增量更新。如需排除状态异常，执行：
+
+```bash
+python scripts/build_index.py --force
+```
+
 ## 技术栈
 
-| 组件 | 技术 |
+| 模块 | 技术 |
 |------|------|
 | 后端框架 | FastAPI |
-| RAG框架 | LangChain |
 | 向量数据库 | Chroma |
 | 关键词检索 | BM25 + jieba |
-| Embedding | bge-large-zh |
-| LLM | Claude / OpenAI / DeepSeek |
+| Embedding | BAAI/bge-large-zh |
+| 生成模型 | Claude / OpenAI / DeepSeek |
 | 前端框架 | Vue 3 + TypeScript |
 | 样式 | Tailwind CSS |
+| Markdown 渲染 | marked + DOMPurify |
 | 构建工具 | Vite |
 
 ## 许可证

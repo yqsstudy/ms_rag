@@ -4,13 +4,14 @@ import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from .api.routes import router
 from .core.config import get_settings
 from .core.logging import setup_logging
+from .core.tracing import TraceContext, trace_context_var
 
 
 @asynccontextmanager
@@ -54,6 +55,20 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    @app.middleware("http")
+    async def trace_middleware(request: Request, call_next):
+        trace_ctx = TraceContext()
+        token = trace_context_var.set(trace_ctx)
+        try:
+            response = await call_next(request)
+            trace_ctx.finish(path=request.url.path, method=request.method, status_code=response.status_code)
+            return response
+        except Exception as e:
+            trace_ctx.finish(path=request.url.path, method=request.method, error=str(e))
+            raise
+        finally:
+            trace_context_var.reset(token)
 
     # Include routers
     app.include_router(router, prefix="/api/v1")
