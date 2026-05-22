@@ -82,7 +82,8 @@ class BM25Index:
                 "bm25": self._bm25,
                 "chunks": [
                     (c.chunk_id, c.doc_id, c.doc_title, c.section_title,
-                     c.content, c.source_url, c.parent_topic, c.images)
+                     c.content, c.source_url, c.parent_topic, c.images,
+                     c.keywords, c.parent_id)
                     for c in self._chunks
                 ],
                 "corpus": self._corpus,
@@ -105,7 +106,9 @@ class BM25Index:
                     content=c[4],
                     source_url=c[5],
                     parent_topic=c[6],
-                    images=c[7] if len(c) > 7 else [],  # 兼容旧版本
+                    images=c[7] if len(c) > 7 else [],
+                    keywords=c[8] if len(c) > 8 else [],
+                    parent_id=c[9] if len(c) > 9 else None,
                 )
                 for c in data["chunks"]
             ]
