@@ -69,3 +69,4 @@ evaluation:
   run_generation: false
   run_llm_judge: false
   compare_configs: []
+  fail_under: {}

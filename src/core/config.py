@@ -69,6 +69,7 @@ class APIConfig(BaseSettings):
     port: int = Field(default=8000, ge=1, le=65535)
     debug: bool = False
     cors_origins: list[str] = ["*"]
+    admin_token: Optional[str] = None
 
 
 class DocumentConfig(BaseSettings):
@@ -163,18 +164,22 @@ class Settings(BaseSettings):
         return os.environ.get(env_var, default)
 
     @classmethod
+    def _resolve_env_vars(cls, value):
+        if isinstance(value, dict):
+            return {key: cls._resolve_env_vars(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [cls._resolve_env_vars(item) for item in value]
+        if isinstance(value, str):
+            return cls._resolve_env_var(value)
+        return value
+
+    @classmethod
     def from_yaml(cls, yaml_path: str) -> "Settings":
         """Load settings from YAML file"""
         with open(yaml_path, encoding="utf-8") as f:
             config_dict = yaml.safe_load(f)
 
-        # Handle environment variable substitution for LLM config
-        if "llm" in config_dict:
-            for key in ("provider", "model", "api_key", "base_url"):
-                if key in config_dict["llm"]:
-                    config_dict["llm"][key] = cls._resolve_env_var(config_dict["llm"][key])
-
-        return cls(**config_dict)
+        return cls(**cls._resolve_env_vars(config_dict))
 
     def get_llm_api_key(self) -> str:
         """Get LLM API key from config or environment"""

@@ -1,6 +1,8 @@
 """Vector store using Chroma"""
 
+import asyncio
 import json
+import logging
 from pathlib import Path
 from typing import List, Optional
 
@@ -8,6 +10,9 @@ import chromadb
 from chromadb.config import Settings as ChromaSettings
 
 from ..data.splitter import Chunk
+
+logger = logging.getLogger("ms_rag")
+MAX_CHROMA_BATCH_SIZE = 5000
 
 
 class SearchResult:
@@ -89,7 +94,6 @@ class VectorStore:
             for chunk in chunks
         ]
 
-        MAX_CHROMA_BATCH_SIZE = 5000
         for i in range(0, len(ids), MAX_CHROMA_BATCH_SIZE):
             collection.add(
                 ids=ids[i:i + MAX_CHROMA_BATCH_SIZE],
@@ -100,15 +104,12 @@ class VectorStore:
 
         return len(chunks)
 
-    import asyncio
-    
     async def asearch(
         self,
         query_embedding: List[float],
         k: int = 10,
         where: Optional[dict] = None,
     ) -> List[SearchResult]:
-        import asyncio
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, self.search, query_embedding, k, where)
 
@@ -157,28 +158,33 @@ class VectorStore:
         if not chunk_ids:
             return
         collection = self._get_collection()
-        
-        MAX_CHROMA_BATCH_SIZE = 5000
+
         for i in range(0, len(chunk_ids), MAX_CHROMA_BATCH_SIZE):
+            batch = chunk_ids[i:i + MAX_CHROMA_BATCH_SIZE]
             try:
-                collection.delete(ids=chunk_ids[i:i + MAX_CHROMA_BATCH_SIZE])
-            except Exception as e:
-                pass
+                collection.delete(ids=batch)
+            except Exception:
+                logger.exception(
+                    "[VectorStore] Failed to delete %s chunks from collection=%s",
+                    len(batch),
+                    self.collection_name,
+                )
+                raise
 
     def delete_all(self) -> None:
-        client = self._get_client()
-        try:
-            client.delete_collection(self.collection_name)
-            self._collection = None
-        except Exception:
-            pass
         """Delete all documents from collection"""
         client = self._get_client()
         try:
             client.delete_collection(self.collection_name)
             self._collection = None
-        except Exception:
-            pass
+        except Exception as exc:
+            message = str(exc).lower()
+            if "does not exist" in message or "not found" in message:
+                logger.info("[VectorStore] Collection already absent: %s", self.collection_name)
+                self._collection = None
+                return
+            logger.exception("[VectorStore] Failed to delete collection=%s", self.collection_name)
+            raise
 
     def count(self) -> int:
         """Get number of documents in collection"""

@@ -1,15 +1,14 @@
 """API routes"""
 
+import asyncio
 import json
 import logging
 import time
 from typing import AsyncIterator
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
 
-from ..core.config import get_settings
 from ..pipeline.rag_pipeline import RAGPipeline
 from .schemas import (
     CacheClearRequest,
@@ -23,24 +22,44 @@ from .schemas import (
 logger = logging.getLogger("ms_rag")
 
 router = APIRouter()
-
-# Global pipeline instance
-_pipeline: RAGPipeline = None
+_ALLOWED_CACHE_LEVELS = {"all", "l1", "l2", "l3"}
 
 
-def get_pipeline() -> RAGPipeline:
-    """Get or create pipeline instance"""
-    global _pipeline
-    if _pipeline is None:
-        settings = get_settings()
-        _pipeline = RAGPipeline(settings)
-    return _pipeline
+def get_pipeline(request: Request) -> RAGPipeline:
+    pipeline = getattr(request.app.state, "pipeline", None)
+    if pipeline is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="RAG pipeline is not ready",
+        )
+    return pipeline
+
+
+def require_admin(request: Request) -> None:
+    admin_token = getattr(request.app.state.settings.api, "admin_token", None)
+    if not admin_token:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin API is disabled",
+        )
+    if request.headers.get("x-admin-token") != admin_token:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid admin token",
+        )
+
+
+def internal_error(endpoint: str, exc: Exception) -> HTTPException:
+    logger.error("[%s] Internal error: %s", endpoint, exc, exc_info=True)
+    return HTTPException(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        detail="Internal server error",
+    )
 
 
 @router.get("/health", response_model=HealthResponse)
-async def health_check():
+async def health_check(pipeline: RAGPipeline = Depends(get_pipeline)):
     """Health check endpoint"""
-    pipeline = get_pipeline()
     return HealthResponse(
         status="healthy",
         version="0.1.0",
@@ -50,13 +69,12 @@ async def health_check():
 
 
 @router.post("/qa", response_model=QAResponse)
-async def qa_endpoint(request: QARequest):
+async def qa_endpoint(request: QARequest, pipeline: RAGPipeline = Depends(get_pipeline)):
     """Question answering endpoint"""
     start_time = time.time()
-    logger.info(f"[QA] Received query: {request.query}")
+    logger.info("[QA] Received query length=%s", len(request.query))
 
     try:
-        pipeline = get_pipeline()
         top_k = request.options.get("top_k", 5)
 
         response = await pipeline.aquery(request.query, top_k=top_k)
@@ -79,21 +97,21 @@ async def qa_endpoint(request: QARequest):
             },
         )
 
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"[QA] Error: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error("QA", e)
 
 
 @router.post("/qa/stream")
-async def qa_stream_endpoint(request: QARequest):
+async def qa_stream_endpoint(request: QARequest, pipeline: RAGPipeline = Depends(get_pipeline)):
     """Streaming question answering endpoint"""
 
     async def generate() -> AsyncIterator[str]:
         start_time = time.time()
-        logger.info(f"[Stream] Received query: {request.query}")
+        logger.info("[Stream] Received query length=%s", len(request.query))
 
         try:
-            pipeline = get_pipeline()
             top_k = request.options.get("top_k", 5)
 
             # Get streaming response
@@ -120,8 +138,6 @@ async def qa_stream_endpoint(request: QARequest):
                     if chunk:
                         yield f"event: answer\ndata: {json.dumps({'content': chunk}, ensure_ascii=False)}\n\n"
                         chunk_count += 1
-                        # simulate async yield for sync generators
-                        import asyncio
                         await asyncio.sleep(0)
 
             logger.info(f"[Stream] Stream finished, sent {chunk_count} chunks")
@@ -129,7 +145,6 @@ async def qa_stream_endpoint(request: QARequest):
             # Send done event
             response_time_ms = int((time.time() - start_time) * 1000)
             done_data = {
-                "tokens_used": 0,
                 "response_time_ms": response_time_ms,
                 "model": model_info.get("model"),
             }
@@ -137,8 +152,8 @@ async def qa_stream_endpoint(request: QARequest):
             logger.info(f"[Stream] Completed in {response_time_ms}ms")
 
         except Exception as e:
-            logger.error(f"[Stream] Error: {e}", exc_info=True)
-            error_data = {"error": str(e)}
+            logger.error("[Stream] Error: %s", e, exc_info=True)
+            error_data = {"error": "Internal server error"}
             yield f"event: error\ndata: {json.dumps(error_data, ensure_ascii=False)}\n\n"
 
     return StreamingResponse(
@@ -152,12 +167,9 @@ async def qa_stream_endpoint(request: QARequest):
 
 
 @router.post("/retrieve", response_model=RetrieveResponse)
-async def retrieve_endpoint(request: RetrieveRequest):
+async def retrieve_endpoint(request: RetrieveRequest, pipeline: RAGPipeline = Depends(get_pipeline)):
     """Document retrieval endpoint"""
     try:
-        pipeline = get_pipeline()
-
-        import asyncio
         loop = asyncio.get_running_loop()
         query_embedding = await loop.run_in_executor(
             None, pipeline.embedding_service.embed_query, request.query
@@ -182,30 +194,41 @@ async def retrieve_endpoint(request: RetrieveRequest):
             },
         )
 
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error("Retrieve", e)
 
 
-@router.post("/cache/clear")
-async def cache_clear_endpoint(request: CacheClearRequest):
+@router.post("/cache/clear", dependencies=[Depends(require_admin)])
+async def cache_clear_endpoint(
+    request: CacheClearRequest,
+    pipeline: RAGPipeline = Depends(get_pipeline),
+):
     """Clear cache entries"""
     try:
-        pipeline = get_pipeline()
         level = request.level or "all"
+        if level not in _ALLOWED_CACHE_LEVELS:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Invalid cache level",
+            )
         pipeline.cache_manager.clear(level=level)
-        logger.info(f"[Cache] Cleared cache level={level}")
+        logger.info("[Cache] Cleared cache level=%s", level)
         return {"code": 0, "message": f"Cache cleared: {level}"}
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"[Cache] Clear error: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error("Cache", e)
 
 
-@router.get("/cache/stats")
-async def cache_stats_endpoint():
+@router.get("/cache/stats", dependencies=[Depends(require_admin)])
+async def cache_stats_endpoint(pipeline: RAGPipeline = Depends(get_pipeline)):
     """Get cache statistics"""
     try:
-        pipeline = get_pipeline()
         stats = pipeline.cache_manager.get_stats()
         return {"code": 0, "data": stats}
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error("Cache", e)

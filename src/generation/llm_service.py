@@ -11,6 +11,10 @@ from openai import OpenAI
 logger = logging.getLogger("ms_rag")
 
 
+class LLMServiceError(RuntimeError):
+    pass
+
+
 class LLMProvider(ABC):
     """Abstract LLM provider"""
 
@@ -38,35 +42,39 @@ class AnthropicProvider(LLMProvider):
 
     def generate(self, prompt: str, **kwargs) -> str:
         max_tokens = kwargs.get("max_tokens", 2000)
-        logger.info(f"[Anthropic] generate called, model={self.model}, max_tokens={max_tokens}")
+        temperature = kwargs.get("temperature", 0.7)
+        timeout = kwargs.get("timeout")
+        logger.info("[Anthropic] generate called, model=%s, max_tokens=%s", self.model, max_tokens)
         t0 = time.time()
         response = self.client.messages.create(
             model=self.model,
             max_tokens=max_tokens,
+            temperature=temperature,
+            timeout=timeout,
             messages=[{"role": "user", "content": prompt}],
         )
-        logger.info(f"[Anthropic] generate done in {time.time()-t0:.2f}s")
+        logger.info("[Anthropic] generate done in %.2fs", time.time() - t0)
         return response.content[0].text
 
     def generate_stream(self, prompt: str, **kwargs) -> Iterator[str]:
         max_tokens = kwargs.get("max_tokens", 2000)
-        logger.info(f"[Anthropic] generate_stream called, model={self.model}, max_tokens={max_tokens}")
+        temperature = kwargs.get("temperature", 0.7)
+        timeout = kwargs.get("timeout")
+        logger.info("[Anthropic] generate_stream called, model=%s, max_tokens=%s", self.model, max_tokens)
         t0 = time.time()
         chunk_count = 0
-        try:
-            with self.client.messages.stream(
-                model=self.model,
-                max_tokens=max_tokens,
-                messages=[{"role": "user", "content": prompt}],
-            ) as stream:
-                logger.info(f"[Anthropic] Stream opened in {time.time()-t0:.2f}s")
-                for text in stream.text_stream:
-                    chunk_count += 1
-                    yield text
-            logger.info(f"[Anthropic] Stream finished, {chunk_count} chunks in {time.time()-t0:.2f}s")
-        except Exception as e:
-            logger.error(f"[Anthropic] Stream error: {e}", exc_info=True)
-            raise
+        with self.client.messages.stream(
+            model=self.model,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            timeout=timeout,
+            messages=[{"role": "user", "content": prompt}],
+        ) as stream:
+            logger.info("[Anthropic] Stream opened in %.2fs", time.time() - t0)
+            for text in stream.text_stream:
+                chunk_count += 1
+                yield text
+        logger.info("[Anthropic] Stream finished, %s chunks in %.2fs", chunk_count, time.time() - t0)
 
 
 class OpenAIProvider(LLMProvider):
@@ -88,6 +96,8 @@ class OpenAIProvider(LLMProvider):
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=max_tokens,
+            temperature=kwargs.get("temperature", 0.7),
+            timeout=kwargs.get("timeout"),
         )
         logger.info(f"[OpenAI] generate done in {time.time()-t0:.2f}s")
         return response.choices[0].message.content
@@ -100,6 +110,8 @@ class OpenAIProvider(LLMProvider):
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=max_tokens,
+            temperature=kwargs.get("temperature", 0.7),
+            timeout=kwargs.get("timeout"),
             stream=True,
         )
         chunk_count = 0
@@ -129,6 +141,8 @@ class DeepSeekProvider(LLMProvider):
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=max_tokens,
+            temperature=kwargs.get("temperature", 0.7),
+            timeout=kwargs.get("timeout"),
         )
         logger.info(f"[DeepSeek] generate done in {time.time()-t0:.2f}s")
         return response.choices[0].message.content
@@ -141,6 +155,8 @@ class DeepSeekProvider(LLMProvider):
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=max_tokens,
+            temperature=kwargs.get("temperature", 0.7),
+            timeout=kwargs.get("timeout"),
             stream=True,
         )
         chunk_count = 0
@@ -168,6 +184,7 @@ class LLMService:
         base_url: Optional[str] = None,
         max_tokens: int = 2000,
         temperature: float = 0.7,
+        timeout: int = 60,
     ):
         if provider not in self.PROVIDERS:
             raise ValueError(f"Unknown provider: {provider}. "
@@ -176,6 +193,7 @@ class LLMService:
         self.provider_name = provider
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.timeout = timeout
 
         # Use default model for provider if not specified
         if model is None:
@@ -196,12 +214,22 @@ class LLMService:
         """Generate response"""
         kwargs.setdefault("max_tokens", self.max_tokens)
         kwargs.setdefault("temperature", self.temperature)
-        logger.info(f"[LLM] generate via {self.provider_name}")
-        return self.provider.generate(prompt, **kwargs)
+        kwargs.setdefault("timeout", self.timeout)
+        logger.info("[LLM] generate via %s", self.provider_name)
+        try:
+            return self.provider.generate(prompt, **kwargs)
+        except Exception as exc:
+            logger.exception("[LLM] generate failed via %s", self.provider_name)
+            raise LLMServiceError("LLM generation failed") from exc
 
     def generate_stream(self, prompt: str, **kwargs) -> Iterator[str]:
         """Generate response as stream"""
         kwargs.setdefault("max_tokens", self.max_tokens)
         kwargs.setdefault("temperature", self.temperature)
-        logger.info(f"[LLM] generate_stream via {self.provider_name}")
-        return self.provider.generate_stream(prompt, **kwargs)
+        kwargs.setdefault("timeout", self.timeout)
+        logger.info("[LLM] generate_stream via %s", self.provider_name)
+        try:
+            yield from self.provider.generate_stream(prompt, **kwargs)
+        except Exception as exc:
+            logger.exception("[LLM] stream generation failed via %s", self.provider_name)
+            raise LLMServiceError("LLM stream generation failed") from exc

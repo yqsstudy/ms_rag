@@ -123,6 +123,7 @@ class EvaluationConfig(BaseModel):
     run_generation: bool = False
     run_llm_judge: bool = False
     compare_configs: list[str] = Field(default_factory=list)
+    fail_under: dict[str, float] = Field(default_factory=dict)
 
 
 class RagEvalConfig(BaseModel):
