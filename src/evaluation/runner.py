@@ -16,6 +16,10 @@ from .metrics import evidence_hit_at_k, evidence_recall_at_k, mrr, ndcg_at_k, su
 from .schemas import EvalSample
 
 
+class EvaluationThresholdError(RuntimeError):
+    pass
+
+
 class RetrievalEvaluationRunner:
     def __init__(self, config: RagEvalConfig):
         self.config = config
@@ -55,7 +59,19 @@ class RetrievalEvaluationRunner:
         write_jsonl(run_dir / "retrieval_results.jsonl", results)
         summary = summarize_results(results, self.config.evaluation.top_k)
         write_jsonl(run_dir / "metrics.jsonl", [summary])
+        self._check_thresholds(summary)
         return run_dir
+
+    def _check_thresholds(self, summary: dict) -> None:
+        failures = []
+        for metric_name, threshold in self.config.evaluation.fail_under.items():
+            actual = summary.get(metric_name)
+            if actual is None:
+                failures.append(f"{metric_name} is missing")
+            elif actual < threshold:
+                failures.append(f"{metric_name}={actual:.4f} < {threshold:.4f}")
+        if failures:
+            raise EvaluationThresholdError("; ".join(failures))
 
     def _canonicalize_ids(self, chunk_ids: list[str]) -> list[str]:
         canonical = []

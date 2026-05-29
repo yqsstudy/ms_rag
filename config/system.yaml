@@ -41,6 +41,7 @@ api:
   host: "0.0.0.0"
   port: 8000
   debug: false
+  admin_token: "${MS_RAG_ADMIN_TOKEN:}"
   cors_origins:
     - "*"
 

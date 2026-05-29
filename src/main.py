@@ -12,6 +12,7 @@ from .api.routes import router
 from .core.config import get_settings
 from .core.logging import setup_logging
 from .core.tracing import TraceContext, trace_context_var
+from .pipeline.rag_pipeline import RAGPipeline
 
 
 @asynccontextmanager
@@ -26,13 +27,19 @@ async def lifespan(app: FastAPI):
     )
 
     logger = logging.getLogger("ms_rag")
-    logger.info(f"Starting MS-RAG API server...")
-    logger.info(f"LLM Provider: {settings.llm.provider}")
-    logger.info(f"Embedding Model: {settings.embedding.model}")
+    logger.info("Starting MS-RAG API server...")
+    logger.info("LLM Provider: %s", settings.llm.provider)
+    logger.info("Embedding Model: %s", settings.embedding.model)
+    if settings.api.cors_origins == ["*"] and not settings.api.debug:
+        logger.warning("Wildcard CORS is enabled outside debug mode")
+
+    app.state.settings = settings
+    app.state.pipeline = RAGPipeline(settings)
 
     yield
 
     # Shutdown
+    app.state.pipeline = None
     logger.info("Shutting down MS-RAG API server...")
 
 
@@ -46,6 +53,8 @@ def create_app() -> FastAPI:
         version="0.1.0",
         lifespan=lifespan,
     )
+    app.state.settings = settings
+    app.state.pipeline = None
 
     # Add CORS middleware
     app.add_middleware(
