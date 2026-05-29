@@ -42,6 +42,20 @@ class ReportWriter:
         ]
         for key, value in summary.get("retrieval", {}).items():
             lines.append(f"| {key} | {value:.4f} |")
+        retrieval_by_scope = summary.get("retrieval_by_scope", {})
+        if retrieval_by_scope:
+            lines.extend([
+                "",
+                "## Retrieval Metrics by Question Scope",
+                "",
+                "| Scope | Cases | Metric | Value |",
+                "|---|---:|---|---:|",
+            ])
+            for scope, scope_summary in retrieval_by_scope.items():
+                cases = scope_summary.get("num_cases", 0)
+                for key, value in scope_summary.get("retrieval", {}).items():
+                    lines.append(f"| {scope} | {cases} | {key} | {value:.4f} |")
+
         lines.extend([
             "",
             "## Latency",

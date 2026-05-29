@@ -53,22 +53,22 @@ def main() -> None:
     elif args.command == "build-evidence-pool":
         from src.evaluation.evidence_pool import EvidencePoolBuilder
 
-        count = EvidencePoolBuilder(config).build(args.limit, args.offset)
+        count = EvidencePoolBuilder(config).build(args.limit, args.offset, args.force)
         print(f"Built {count} candidate pools")
     elif args.command == "build-evidence-cards":
         from src.evaluation.evidence_cards import EvidenceCardBuilder
 
-        count = EvidenceCardBuilder(config).build(args.limit, args.offset)
+        count = EvidenceCardBuilder(config).build(args.limit, args.offset, args.force)
         print(f"Built {count} evidence card sets")
     elif args.command == "judge-evidence":
         from src.evaluation.evidence_judge import EvidenceJudge
 
-        count = EvidenceJudge(config, build_client(config)).judge(args.limit, args.offset)
+        count = EvidenceJudge(config, build_client(config)).judge(args.limit, args.offset, args.force)
         print(f"Judged {count} evidence card sets")
     elif args.command == "synthesize-answers":
         from src.evaluation.answer_synthesizer import AnswerSynthesizer
 
-        count = AnswerSynthesizer(config, build_client(config)).synthesize(args.limit, args.offset)
+        count = AnswerSynthesizer(config, build_client(config)).synthesize(args.limit, args.offset, args.force)
         print(f"Synthesized {count} eval samples")
     elif args.command == "finalize-dataset":
         from src.evaluation.dataset_finalizer import DatasetFinalizer

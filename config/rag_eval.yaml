@@ -18,16 +18,16 @@ llm:
 
 question_generation:
   enabled_scopes: [chunk, section, document]
-  questions_per_chunk: 2
-  chunk_questions_per_item: 2
-  section_questions_per_item: 1
-  document_questions_per_item: 1
-  max_chunks: 200
-  max_sections: 50
-  max_documents: 30
+  questions_per_chunk: 1
+  chunk_questions_per_item: 1
+  section_questions_per_item: 2
+  document_questions_per_item: 2
+  max_chunks: 260
+  max_sections: 120
+  max_documents: 80
   min_chunk_chars: 200
-  min_section_chars: 600
-  min_document_chars: 1200
+  min_section_chars: 500
+  min_document_chars: 1000
   allowed_types: [concept, how_to, troubleshooting, parameter, comparison, limitation]
 
 candidate_pool:
@@ -38,8 +38,8 @@ candidate_pool:
   title_match_top_k: 10
 
 card_filter:
-  max_cards_per_question: 10
-  snippet_chars: 240
+  max_cards_per_question: 60
+  snippet_chars: 500
   max_chunks_per_source: 5
   bm25_weight: 0.35
   vector_weight: 0.35
@@ -50,6 +50,7 @@ card_filter:
 llm_judge:
   relevance_threshold: 2
   batch_size: 20
+  cards_per_request: 10
 
 synthesis:
   max_supporting_chunks: 8

@@ -172,7 +172,7 @@ async def retrieve_endpoint(request: RetrieveRequest):
 
         # Rerank if enabled
         if pipeline.settings.retrieval.rerank:
-            results = pipeline.reranker.rerank(results)
+            results = pipeline.reranker.rerank(results, request.query)
 
         return RetrieveResponse(
             code=0,

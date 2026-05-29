@@ -9,7 +9,7 @@ from src.storage.vector_store import VectorStore
 
 from .chunk_source import ChunkSource
 from .config import RagEvalConfig
-from .io import append_jsonl, read_jsonl, write_failed_record
+from .io import append_jsonl, load_existing_ids, read_jsonl, write_failed_record, write_jsonl
 from .schemas import CandidateChunk, CandidatePool, GeneratedQuestion
 
 
@@ -31,17 +31,23 @@ class EvidencePoolBuilder:
             normalize=self.settings.embedding.normalize,
         )
 
-    def build(self, limit: int | None = None, offset: int = 0) -> int:
+    def build(self, limit: int | None = None, offset: int = 0, force: bool = False) -> int:
         input_path = self.config.output_dir / "questions.jsonl"
         output_path = self.config.output_dir / "candidate_pools.jsonl"
+        if force:
+            write_jsonl(output_path, [])
+        existing = set() if force else load_existing_ids(output_path, "question_id")
         questions = read_jsonl(input_path, GeneratedQuestion)[offset:]
         if limit:
             questions = questions[:limit]
         written = 0
         for question in questions:
+            if question.id in existing:
+                continue
             try:
                 pool = self._build_one(question)
                 append_jsonl(output_path, [pool])
+                existing.add(question.id)
                 written += 1
             except Exception as exc:  # noqa: BLE001
                 write_failed_record(self.config.output_dir, "build_evidence_pool", question.model_dump(), str(exc))
@@ -109,5 +115,6 @@ class EvidencePoolBuilder:
             question_id=question.id,
             question=question.question,
             seed_chunk_id=question.seed_chunk_id,
+            question_scope=question.question_scope,
             candidate_chunks=list(candidates.values()),
         )

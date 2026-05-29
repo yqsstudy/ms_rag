@@ -101,6 +101,7 @@ class CardFilterConfig(BaseModel):
 class LLMJudgeConfig(BaseModel):
     relevance_threshold: int = 2
     batch_size: int = 20
+    cards_per_request: int = 10
 
 
 class SynthesisConfig(BaseModel):

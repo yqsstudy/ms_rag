@@ -53,6 +53,7 @@ class CandidatePool(BaseModel):
     question_id: str
     question: str
     seed_chunk_id: str
+    question_scope: str = "chunk"
     candidate_chunks: list[CandidateChunk] = Field(default_factory=list)
 
 
@@ -72,6 +73,7 @@ class EvidenceCardSet(BaseModel):
     question_id: str
     question: str
     seed_chunk_id: str
+    question_scope: str = "chunk"
     cards: list[EvidenceCard] = Field(default_factory=list)
 
 
@@ -95,6 +97,7 @@ class AnswerKeyPoint(BaseModel):
 
 class EvalSample(BaseModel):
     id: str
+    question_id: str = ""
     question: str
     question_type: str = "default"
     difficulty: str = "medium"

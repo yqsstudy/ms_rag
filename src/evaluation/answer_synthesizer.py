@@ -7,7 +7,7 @@ import json
 
 from .chunk_source import ChunkSource
 from .config import RagEvalConfig
-from .io import append_jsonl, read_jsonl, save_raw_response, write_failed_record
+from .io import append_jsonl, load_existing_ids, read_jsonl, save_raw_response, write_failed_record, write_jsonl
 from .openai_client import OpenAICompatibleClient
 from .prompt_templates import SYNTHESIZE_ANSWER_SYSTEM, SYNTHESIZE_ANSWER_USER
 from .schemas import AnswerKeyPoint, EvalSample, EvidenceJudgment, GeneratedQuestion
@@ -28,17 +28,31 @@ class AnswerSynthesizer:
             for item in read_jsonl(self.config.output_dir / "questions.jsonl", GeneratedQuestion)
         }
 
-    def synthesize(self, limit: int | None = None, offset: int = 0) -> int:
+    def synthesize(self, limit: int | None = None, offset: int = 0, force: bool = False) -> int:
         input_path = self.config.output_dir / "evidence_judgments.jsonl"
         output_path = self.config.output_dir / "eval_dataset_draft.jsonl"
+        if force:
+            write_jsonl(output_path, [])
+        existing = set() if force else load_existing_ids(output_path, "question_id")
+        existing_questions = set()
+        if not force:
+            existing_questions = {
+                str(item.get("question"))
+                for item in read_jsonl(output_path)
+                if item.get("question")
+            }
         judgments = read_jsonl(input_path, EvidenceJudgment)[offset:]
         if limit:
             judgments = judgments[:limit]
         written = 0
         for judgment in judgments:
+            if judgment.question_id in existing or judgment.question in existing_questions:
+                continue
             try:
                 sample = self._synthesize_one(judgment)
                 append_jsonl(output_path, [sample])
+                existing.add(judgment.question_id)
+                existing_questions.add(judgment.question)
                 written += 1
             except Exception as exc:  # noqa: BLE001
                 write_failed_record(self.config.output_dir, "synthesize_answers", judgment.model_dump(), str(exc))
@@ -85,6 +99,7 @@ class AnswerSynthesizer:
         acceptable_chunk_ids = data.get("acceptable_chunk_ids", selected_ids) if isinstance(data, dict) else selected_ids
         return EvalSample(
             id=stable_eval_id(judgment.question, acceptable_chunk_ids),
+            question_id=judgment.question_id,
             question=judgment.question,
             question_type=question_meta.question_type if question_meta else "default",
             difficulty=question_meta.difficulty if question_meta else "medium",

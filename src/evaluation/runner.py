@@ -47,6 +47,7 @@ class RetrievalEvaluationRunner:
             results.append({
                 "sample_id": sample.id,
                 "question": sample.question,
+                "question_scope": sample.question_scope,
                 "retrieved_ids": retrieved_ids,
                 "acceptable_chunk_ids": sample.acceptable_chunk_ids,
                 "metrics": metrics,
@@ -68,6 +69,6 @@ class RetrievalEvaluationRunner:
         query_embedding = self.pipeline.embedding_service.embed_query(question)
         results = self.pipeline.retriever.retrieve(question, query_embedding, k=k * 2)
         if self.settings.retrieval.rerank:
-            results = self.pipeline.reranker.rerank(results)
+            results = self.pipeline.reranker.rerank(results, question)
         results = self.pipeline.kg_enhancer.enhance(results, question)
         return results[:k]

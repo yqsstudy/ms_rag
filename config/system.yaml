@@ -25,6 +25,9 @@ retrieval:
   keyword_weight: 0.4
   top_k: 10
   rerank: true
+  reranker_mode: "heuristic"
+  reranker_model: "BAAI/bge-reranker-base"
+  reranker_fallback: "heuristic"
 
 # LLM settings
 llm:

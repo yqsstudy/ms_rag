@@ -45,6 +45,9 @@ class RetrievalConfig(BaseSettings):
     keyword_weight: float = Field(default=0.4, ge=0.0, le=1.0)
     top_k: int = Field(default=10, ge=1, le=50)
     rerank: bool = True
+    reranker_mode: Literal["heuristic", "cross_encoder"] = "heuristic"
+    reranker_model: str = "BAAI/bge-reranker-base"
+    reranker_fallback: Literal["heuristic", "none"] = "heuristic"
 
 
 class LLMConfig(BaseSettings):

@@ -1,8 +1,11 @@
 """Reranker for search results"""
 
-from typing import List
+import logging
+from typing import Any, List, Literal
 
 from .hybrid_retriever import HybridResult
+
+logger = logging.getLogger("ms_rag")
 
 
 class Reranker:
@@ -20,7 +23,6 @@ class Reranker:
         self.authority_weight = authority_weight
         self.completeness_weight = completeness_weight
 
-        # Document authority scores by type
         self.authority_scores = {
             "简介": 1.0,
             "概述": 1.0,
@@ -33,26 +35,16 @@ class Reranker:
             "案例": 0.7,
         }
 
-    def rerank(self, results: List[HybridResult]) -> List[HybridResult]:
+    def rerank(self, results: List[HybridResult], query: str | None = None) -> List[HybridResult]:
         """Rerank search results"""
         for result in results:
             score = 0.0
-
-            # Semantic score (from vector search)
             score += self._semantic_score(result) * self.semantic_weight
-
-            # Keyword match score
             score += self._keyword_score(result) * self.keyword_weight
-
-            # Authority score
             score += self._authority_score(result) * self.authority_weight
-
-            # Completeness score
             score += self._completeness_score(result) * self.completeness_weight
-
             result.final_score = score
 
-        # Sort by final score
         return sorted(results, key=lambda x: x.final_score, reverse=True)
 
     def _semantic_score(self, result: HybridResult) -> float:
@@ -61,7 +53,6 @@ class Reranker:
 
     def _keyword_score(self, result: HybridResult) -> float:
         """Get keyword match score"""
-        # Normalize keyword score (BM25 scores can be large)
         return min(result.keyword_score / 10.0, 1.0)
 
     def _authority_score(self, result: HybridResult) -> float:
@@ -69,25 +60,89 @@ class Reranker:
         doc_title = result.doc_title
         section_title = result.section_title
 
-        # Check both doc title and section title
         for key, score in self.authority_scores.items():
             if key in doc_title or key in section_title:
                 return score
 
-        return 0.6  # Default score
+        return 0.6
 
     def _completeness_score(self, result: HybridResult) -> float:
         """Get content completeness score"""
         content_length = len(result.content)
 
-        # Score based on content length
         if content_length < 200:
             return 0.3
-        elif content_length < 500:
+        if content_length < 500:
             return 0.5
-        elif content_length < 1000:
+        if content_length < 1000:
             return 0.7
-        elif content_length < 2000:
+        if content_length < 2000:
             return 0.9
-        else:
-            return 1.0
+        return 1.0
+
+
+class CrossEncoderReranker:
+    """Query-passage reranker backed by sentence-transformers CrossEncoder."""
+
+    def __init__(
+        self,
+        model_name: str,
+        fallback_reranker: Reranker | None = None,
+        fallback_mode: Literal["heuristic", "none"] = "heuristic",
+    ):
+        self.model_name = model_name
+        self.fallback_reranker = fallback_reranker or Reranker()
+        self.fallback_mode = fallback_mode
+        self.model = self._load_model(model_name)
+
+    def rerank(self, results: List[HybridResult], query: str | None = None) -> List[HybridResult]:
+        """Rerank search results by query-passage relevance."""
+        if not results:
+            return results
+        if not query or not query.strip():
+            return self._fallback(results, "missing query")
+        if self.model is None:
+            return self._fallback(results, "cross-encoder model unavailable")
+
+        try:
+            pairs = [(query, self._passage(result)) for result in results]
+            scores = self.model.predict(pairs)
+            for result, score in zip(results, scores):
+                result.final_score = float(score)
+            return sorted(results, key=lambda item: item.final_score, reverse=True)
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("[Reranker] Cross-encoder rerank failed: %s", exc)
+            return self._fallback(results, "cross-encoder inference failed")
+
+    def _load_model(self, model_name: str) -> Any | None:
+        try:
+            from sentence_transformers import CrossEncoder
+
+            logger.info("[Reranker] Loading cross-encoder reranker: %s", model_name)
+            return CrossEncoder(model_name)
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("[Reranker] Cross-encoder unavailable: %s", exc)
+            return None
+
+    def _fallback(self, results: List[HybridResult], reason: str) -> List[HybridResult]:
+        if self.fallback_mode == "heuristic":
+            logger.info("[Reranker] Falling back to heuristic reranker: %s", reason)
+            return self.fallback_reranker.rerank(results)
+        logger.info("[Reranker] Keeping original order: %s", reason)
+        return results
+
+    def _passage(self, result: HybridResult) -> str:
+        return "\n".join(
+            part for part in (result.doc_title, result.section_title, result.content) if part
+        )
+
+
+def create_reranker(config: Any) -> Reranker | CrossEncoderReranker:
+    """Create a reranker from retrieval config."""
+    mode = getattr(config, "reranker_mode", "heuristic")
+    if mode == "cross_encoder":
+        return CrossEncoderReranker(
+            model_name=getattr(config, "reranker_model", "BAAI/bge-reranker-base"),
+            fallback_mode=getattr(config, "reranker_fallback", "heuristic"),
+        )
+    return Reranker()

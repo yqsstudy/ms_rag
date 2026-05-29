@@ -15,7 +15,7 @@ from ..generation.llm_service import LLMService
 from ..generation.prompt_templates import PromptTemplateManager
 from ..retrieval.hybrid_retriever import HybridRetriever, HybridResult
 from ..retrieval.kg_enhancer import KnowledgeGraphEnhancer
-from ..retrieval.reranker import Reranker
+from ..retrieval.reranker import create_reranker
 from ..storage.keyword_index import BM25Index
 from ..storage.vector_store import VectorStore
 from ..storage.document_store import DocumentStore
@@ -71,7 +71,7 @@ class RAGPipeline:
             keyword_weight=settings.retrieval.keyword_weight,
         )
 
-        self.reranker = Reranker()
+        self.reranker = create_reranker(settings.retrieval)
 
         self.context_builder = ContextBuilder(
             max_tokens=4000,
@@ -179,7 +179,7 @@ class RAGPipeline:
             # 5. Rerank results
             if self.settings.retrieval.rerank:
                 with tracer("rerank"):
-                    results = self.reranker.rerank(results)
+                    results = self.reranker.rerank(results, question)
 
             # 6. Knowledge graph enhancement
             with tracer("kg_enhance"):
@@ -296,7 +296,7 @@ class RAGPipeline:
             # 5. Rerank results
             if self.settings.retrieval.rerank:
                 with tracer("rerank"):
-                    results = self.reranker.rerank(results)
+                    results = self.reranker.rerank(results, question)
 
             # 6. Knowledge graph enhancement
             with tracer("kg_enhance"):
@@ -416,7 +416,7 @@ class RAGPipeline:
 
             if self.settings.retrieval.rerank:
                 with tracer("rerank"):
-                    results = self.reranker.rerank(results)
+                    results = self.reranker.rerank(results, question)
 
             with tracer("kg_enhance"):
                 results = self.kg_enhancer.enhance(results, question)
@@ -525,7 +525,7 @@ class RAGPipeline:
             # 5. Rerank results
             if self.settings.retrieval.rerank:
                 with tracer("rerank"):
-                    results = self.reranker.rerank(results)
+                    results = self.reranker.rerank(results, question)
 
             # 6. Knowledge graph enhancement
             with tracer("kg_enhance"):

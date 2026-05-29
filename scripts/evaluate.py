@@ -367,7 +367,7 @@ class RAGEvaluator:
             k=self.top_k * 2,
         )
         if self.pipeline.settings.retrieval.rerank:
-            retrieval_results = self.pipeline.reranker.rerank(retrieval_results)
+            retrieval_results = self.pipeline.reranker.rerank(retrieval_results, case.question)
         retrieval_results = retrieval_results[: self.top_k]
 
         result.retrieved_ids = [r.chunk_id for r in retrieval_results]
